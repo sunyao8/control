@@ -1,0 +1,14 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\Administrator\Documents\GitHub\407_·Ö²¹\fen_bu\uCOSII2.91+UCGUI3.90A\MDK_Project\Project.uvproj
+Project File Date:  11/29/2013
+
+<h2>Output:</h2>
+Build target 'Target 1'
+linking...
+Program Size: Code=40460 RO-data=26996 RW-data=320 ZI-data=102864  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
