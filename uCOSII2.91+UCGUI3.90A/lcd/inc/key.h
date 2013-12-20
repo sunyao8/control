@@ -12,12 +12,22 @@
 //All rights reserved									  
 //////////////////////////////////////////////////////////////////////////////////   	 
 
-//#define KEY0 PAin(11)   	//PA11为显示板设置按键
-#define KEY0 GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_11)
-#define KEY1 GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_12)
+
+
+
+#define KEY_right GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_13)
+#define KEY_down GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_12) 
+#define KEY_left GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_11)
+#define KEY_up GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_14)
+#define KEY_set GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_8)
+#define KEY_hand GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_10)
+
 
 
 void KEY_Init(void);//IO初始化
-void key_idset(void);					    
+u8 KEY_Scan(u8);  	//按键扫描函数
+void key_idset(void);
+void ParaSet(void);	
+void Graf_display(void);				    
 #endif
 

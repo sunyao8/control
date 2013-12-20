@@ -48,11 +48,11 @@
 #define YELLOW_YELLOW_YELLOW 0X01
 #define OFF_OFF 0X7F
 #define background_light_on 0X80
+				    
+
 
 void HT1621_Init(void);//≥ı ºªØ1621
 void SendBit_1621(u8 data,u8 cnt);
-void HT595_Send_Byte(u8);
-
 void SendDataBit_1621(u8 data,u8 cnt);
 void SendCmd(u8 command);
 void Write_1621(u8 addr,u8 data);
@@ -64,7 +64,15 @@ void Graf_qkvar(u16 qkvar);
 void Graf_temp(u8 temp);
 void Graf_id(u8 hostguest,u8 id);
 void Graf_ver(u8 ver);
-void Graf_setid(u8 idnum);	 				    
+void Graf_setid(u8 idnum);
+void HT595_Send_Byte(u8 state);
+void Graf_cos_volt_current(u8 PF,u16 volt_para,u16 current_para);
+void Graf_powuse_poweunuse_freq(u16 powunuse,u16 powuse,u16 freq);
+void Graf_temp_hv_hi(u16 TEMP,u16 HV,u16 HI);
+void Graf_set_para(void);	 				    
+
+
+
 #endif
 
 
