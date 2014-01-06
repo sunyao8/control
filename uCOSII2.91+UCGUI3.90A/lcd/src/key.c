@@ -7,6 +7,9 @@ extern u8 Work_Flag;
 
 u8 Work_num=0;	  //   设置参数页面数
 u8 Display_num=1;	  //正常显示页面数
+u8 L1_L2_L3_COS=1;
+u8 L1_L2_L3_KAR=1;
+//u8 L1_L2_L3_HV=1;
  u16 CT_para=1;
  u8 DELAY_ON_para=1;
  u8 DELAY_OFF_para=1;
@@ -18,20 +21,19 @@ u8 Display_num=1;	  //正常显示页面数
  u8 HU_PROT_para=1;
  u8 HI_PROT_para=1;
  u8 COMMCAT_para=1;
+u8 CAPA_num,capa1_value,capa2_value;
 //#endif
 /*************************************/
-static u8 grafnum=1;
-u8 zhongduan_flag=1;
-u8 id_num=0;
-u8 grafnum,tempshuzhi,vernum=101,hguestnum=222,gonglvshishu=0;
-u16 dianya_zhi=0,wugongkvar=0;
-u32	dianliuzhi=0;
-//#if (FUNCTION_MODULE == DF_THREE)
-u16 dianya_zhi_A=0,dianya_zhi_B=0,dianya_zhi_C=0,wugongkvar_A=0,wugongkvar_B=0,wugongkvar_C=0;
-u32	dianliuzhi_A=0,dianliuzhi_B=0	,dianliuzhi_C=0;
-u8 gonglvshishu_A=0,gonglvshishu_B=0,gonglvshishu_C=0;
 //#endif
-
+extern u16 dianya_zhi;
+extern u8 hguestnum,gonglvshishu;
+extern u32 idle_time,scan_time,dianliuzhi;
+extern u16 wugongkvar,allkvar,HV,HI;
+extern s8 L_C_flag;
+extern u8 tempshuzhi;
+extern u16 dianya_zhi_A,dianya_zhi_B,dianya_zhi_C,wugongkvar_A,wugongkvar_B,wugongkvar_C;
+extern u32	dianliuzhi_A,dianliuzhi_B,dianliuzhi_C;
+extern u8 gonglvshishu_A,gonglvshishu_B,gonglvshishu_C;
 
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序为控制器设计，未经许可，不得复制外传
@@ -46,20 +48,18 @@ u8 gonglvshishu_A=0,gonglvshishu_B=0,gonglvshishu_C=0;
 								    
 //按键初始化函数
 void KEY_Init(void)
-{/*
-	RCC->APB2ENR|=1<<2;     //使能PORTA时钟
-	GPIOA->CRH&=0XFFF00FFF;	//PA11 PA12设置成输入	  
-	GPIOA->CRH|=0X00088000; 
-	GPIOA->ODR|=1<11;		// 上拉
-	GPIOA->ODR|=1<12;		  //上拉
-	*/
+{
 		 GPIO_InitTypeDef      GPIO_InitStructure;
 RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
-//RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
 	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_8|GPIO_Pin_9| GPIO_Pin_10| GPIO_Pin_11| GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_14;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
- // GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
   GPIO_Init(GPIOD, &GPIO_InitStructure);
+
+/*************************拨码开关*********************************/
+RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7|GPIO_Pin_8|GPIO_Pin_9;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+  GPIO_Init(GPIOE, &GPIO_InitStructure);
 
 } 
 
@@ -71,6 +71,7 @@ void ParaSet(void)
 u8 num567Seg[]={0X0F,0X05,0X06,0X00,0X0B,0X06,0X0F,0X02,0X06,0X03,0X0D,0X03,0X0D,0X07,0X07,0X00,0X0F,0X07,0X0F,0X03};
 u8 num8Seg[]={0X05,0X0F,0X00,0X06,0X06,0X0B,0X02,0X0F,0X03,0X06,0X03,0X0D,0X07,0X0D,0X00,0X07,0X07,0X0F,0X03,0X0F};
 u8 num9_12Seg[]={0X06,0X05,0X06,0X06,0X00,0X00,0X04,0X07,0X02,0X06,0X07,0X00,0X06,0X02,0X04,0X02,0X07,0X04,0X02,0X07,0X06,0X06,0X04,0X00,0X06,0X07,0X06,0X06,0X07,0X04};
+
 u8 num8_dp7Seg[]={0X0D,0X0F,0X08,0X06,0X0E,0X0B,0X0A,0X0F,0X0B,0X06,0X0B,0X0D,0X0F,0X0D,0X08,0X07,0X0F,0X0F,0X0B,0X0F};
 u8 num10dp9_12dp11Seg[]={0X06,0X05,0X07,0X06,0X00,0X01,0X04,0X07,0X03,0X06,0X07,0X01,0X06,0X02,0X05,0X02,0X07,0X05,0X02,0X07,0X07,0X06,0X04,0X01,0X06,0X07,0X07,0X06,0X07,0X05};
 u8 num11_dp22Seg[]={0X0E,0X05,0X06,0X0E,0X00,0X00,0X0C,0X07,0X02,0X0E,0X07,0X00,0X0E,0X02,0X04,0X0A,0X07,0X04,0X0A,0X07,0X06,0X0E,0X04,0X00,0X0E,0X07,0X06,0X0E,0X07,0X04};
@@ -90,6 +91,11 @@ u8 num_setOFF1hold_Seg[]={0x03,0x03,0X05};
 u8 num_sethuhiprot_Seg[]={0x03,0x0F,0X09};
 u8 num_setcommu_Seg[]={0x03,0x0F,0X0C};
 
+
+
+
+
+extern u8 L_C_flag_A;//感性容性标准变量
 	 u8 CT_para_baiwei,CT_para_shiwei,CT_para_gewei;
 	 u8	DELAY_ON_para_baiwei,DELAY_ON_para_shiwei,DELAY_ON_para_gewei;
 	 u8	DELAY_OFF_para_baiwei,DELAY_OFF_para_shiwei,DELAY_OFF_para_gewei;
@@ -121,7 +127,8 @@ u8 num_setcommu_Seg[]={0x03,0x0F,0X0C};
 		 if(Work_Flag==1)WriteAll_1621(29,num_set_Seg,3);
 		 if(Work_Flag==0)WriteAll_1621(29,num_setCT_Seg,3);
    			//CT_para从eeprom读出
-		 
+	//	 AT24CXX_WriteOneByte(0x0010,CT_para);
+
 
 		  
 		  CT_para_baiwei=CT_para/100;
@@ -157,7 +164,8 @@ u8 num_setcommu_Seg[]={0x03,0x0F,0X0C};
 
 		 Write_1621(19,0x08);	//
 
-		 
+		 DELAY_ON_para=AT24CXX_ReadOneByte(0x0020);  //存储DELAY_ON_para到eeprom
+
 
 		  
 		  DELAY_ON_para_baiwei=DELAY_ON_para/100;
@@ -181,7 +189,7 @@ u8 num_setcommu_Seg[]={0x03,0x0F,0X0C};
 			if(DELAY_ON_para<1)DELAY_ON_para=1;
 		 }
 		  
-		  //存储CT_para到eeprom
+		 AT24CXX_WriteOneByte(0x0020,DELAY_ON_para);  //存储DELAY_ON_para到eeprom
 		 break;
 	  }
 	  case 3:		  //切除延时参数设置
@@ -191,6 +199,7 @@ u8 num_setcommu_Seg[]={0x03,0x0F,0X0C};
 		 if(Work_Flag==0)WriteAll_1621(29,num_setdelaytime_Seg,3);
 
 		  Write_1621(16,0x08);	//
+		 DELAY_OFF_para=AT24CXX_ReadOneByte(0x0030);  //存储DELAY_OFF_para到eeprom
 
 		
 		  
@@ -215,7 +224,7 @@ u8 num_setcommu_Seg[]={0x03,0x0F,0X0C};
 			if(DELAY_OFF_para<1)DELAY_OFF_para=1;
 		 }
 
-		  //存储CT_para到eeprom
+			 AT24CXX_WriteOneByte(0x0030,DELAY_OFF_para);  //存储DELAY_ON_para到eeprom
 
 		  break;
 	  }
@@ -227,6 +236,7 @@ u8 num_setcommu_Seg[]={0x03,0x0F,0X0C};
 		 if(Work_Flag==0)WriteAll_1621(29,num_setcos_Seg,3);
 
 		
+		 COS_ON_para=AT24CXX_ReadOneByte(0x0040);  //存储DELAY_OFF_para到eeprom
 
 		  
 		  COS_ON_para_baiwei=COS_ON_para/100;
@@ -249,7 +259,7 @@ u8 num_setcommu_Seg[]={0x03,0x0F,0X0C};
 			while(KEY_down==0);
 			if(COS_ON_para<80)COS_ON_para=80;
 		 }
-		  //存储CT_para到eeprom
+			 AT24CXX_WriteOneByte(0x0040,COS_ON_para);  //存储DELAY_ON_para到eeprom
 		 break;
 
 	  }
@@ -261,7 +271,8 @@ u8 num_setcommu_Seg[]={0x03,0x0F,0X0C};
 		 
 		 Write_1621(16,0x08);	//
 
-		 
+				 COS_OFF_para=AT24CXX_ReadOneByte(0x0050);  //存储DELAY_OFF_para到eeprom
+ 
 
 		  
 		  COS_OFF_para_baiwei=COS_OFF_para/100;
@@ -284,7 +295,8 @@ u8 num_setcommu_Seg[]={0x03,0x0F,0X0C};
 			while(KEY_down==0);
             if(COS_OFF_para<80)COS_OFF_para=80;
 		 } 
-		  //存储CT_para到eeprom
+					 AT24CXX_WriteOneByte(0x0050,COS_OFF_para);  //存储DELAY_ON_para到eeprom
+ 
 		 break;
 
 	  }
@@ -500,9 +512,17 @@ u8 num_setcommu_Seg[]={0x03,0x0F,0X0C};
 	 
 	}
 }
-
 void Graf_display(void)
 {
+	u8 CAPA_num_shiwei,CAPA_num_gewei,capa1_value_shiwei,capa1_value_gewei,capa2_value_shiwei,capa2_value_gewei;
+	u8 numCAP[]={0X00,0X02,0X00,0X00,0X05,0X06};
+u8 num11_p21Seg[]={0X06,0X0D,0X06,0X06,0X08,0X00,0X04,0X0F,0X02,0X06,0X0F,0X00,0X06,0X0A,0X04,0X02,0X0F,0X04,0X02,0X0F,0X06,0X06,0X0C,0X00,0X06,0X0F,0X06,0X06,0X0F,0X04};
+ u8 num1234Seg[]={0X0A,0X0F,0X00,0X06,0X06,0X0D,0X04,0X0F,0X0C,0X06,0X0C,0X0B,0X0E,0X0B,0X00,0X0E,0X0E,0X0F,0X0C,0X0F};
+u8 num567Seg[]={0X0F,0X05,0X06,0X00,0X0B,0X06,0X0F,0X02,0X06,0X03,0X0D,0X03,0X0D,0X07,0X07,0X00,0X0F,0X07,0X0F,0X03};
+u8 num8Seg[]={0X05,0X0F,0X00,0X06,0X06,0X0B,0X02,0X0F,0X03,0X06,0X03,0X0D,0X07,0X0D,0X00,0X07,0X07,0X0F,0X03,0X0F};
+u8 num9_12Seg[]={0X06,0X05,0X06,0X06,0X00,0X00,0X04,0X07,0X02,0X06,0X07,0X00,0X06,0X02,0X04,0X02,0X07,0X04,0X02,0X07,0X06,0X06,0X04,0X00,0X06,0X07,0X06,0X06,0X07,0X04};
+u8 num3_p11Seg[]={0X0B,0X0F,0X01,0X06,0X07,0X0D,0X05,0X0F,0X0D,0X06,0X0D,0X0B,0X0F,0X0B,0X01,0X0E,0X0F,0X0F,0X0D,0X0F};
+
 	if(KEY_up==0)
  		{
 		 Display_num++;
@@ -517,33 +537,172 @@ void Graf_display(void)
 	  }
    switch(Display_num)
    {
-   	 case 1:
+   	 case 1:										   //显示功率因数电流电压
+     {
+  if(KEY_3==0) 
+              {
 		 Clera_lcd();
-		 Graf_cos_volt_current(98,380,532);
+		 Graf_cos_volt_current(gonglvshishu*10,dianya_zhi*10,dianliuzhi*10);
+            	}
+   if(KEY_3==1) 
+   	{
+	if(KEY_right==0)
+ 		{
+		 L1_L2_L3_COS++;
+		 while(KEY_right==0);
+		 if(L1_L2_L3_COS>3)L1_L2_L3_COS=1;
+	    }
+	if(KEY_left==0)
+	  {
+		 L1_L2_L3_COS--;
+		 while(KEY_left==0);
+		 if(L1_L2_L3_COS<1)L1_L2_L3_COS=3;
+	  }
+  if(L1_L2_L3_COS==1)
+   	{
+		 Clera_lcd();
+		 Graf_cos_volt_current_L1(gonglvshishu_A*10,dianya_zhi_A*10,dianliuzhi_A*10);
+  	}
+  if(L1_L2_L3_COS==2)
+   		{ 
+   		Clera_lcd();
+		 Graf_cos_volt_current_L2(gonglvshishu_B*10,dianya_zhi_B*10,dianliuzhi_B*10);
+		}
+  if(L1_L2_L3_COS==3)
+  	{
+		  Clera_lcd();
+		 Graf_cos_volt_current_L3(gonglvshishu_C*10,dianya_zhi_C*10,dianliuzhi_C*10);
+
+  	}
+   }
+
+break;
+     }
+	 case 2:	//显示无功有功频率
+  if(KEY_3==0) 
+		{
+		 Clera_lcd();
+		 Graf_powuse_poweunuse_freq(wugongkvar*10,allkvar*10,501);
+	 	}
+  if(KEY_3==1) 
+              {
+	if(KEY_right==0)
+ 		{
+		 L1_L2_L3_KAR++;
+		 while(KEY_right==0);
+		 if(L1_L2_L3_KAR>3)L1_L2_L3_KAR=1;
+	    }
+	if(KEY_left==0)
+	  {
+		 L1_L2_L3_KAR--;
+		 while(KEY_left==0);
+		 if(L1_L2_L3_KAR<1)L1_L2_L3_KAR=3;
+	  }
+
+		if(L1_L2_L3_KAR==1)
+			{
+		 Clera_lcd();
+		 Graf_powuse_poweunuse_freq_L1(wugongkvar_A*10,allkvar*10,501);
+			}
+		if(L1_L2_L3_KAR==2)
+			{
+		 Clera_lcd();
+		 Graf_powuse_poweunuse_freq_L2(wugongkvar_B*10,allkvar*10,501);
+			}
+		if(L1_L2_L3_KAR==3)
+			{
+		 Clera_lcd();
+		 Graf_powuse_poweunuse_freq_L3(wugongkvar_C*10,allkvar*10,501);
+			}
+		}
+  
+		 break;
+	 case 3:											  //显示温度电压谐波电流谐波
+           if(KEY_3==0)
+           	{
+		   Clera_lcd();
+		 Graf_temp_hv_hi(tempshuzhi*10,HV*10,HI*10);
+           	}
+	  if(KEY_3==1)
+           	{
+           		if(KEY_right==0)
+ 		{
+		 L1_L2_L3_KAR++;
+		 while(KEY_right==0);
+		 if(L1_L2_L3_KAR>3)L1_L2_L3_KAR=1;
+	    }
+	if(KEY_left==0)
+	  {
+		 L1_L2_L3_KAR--;
+		 while(KEY_left==0);
+		 if(L1_L2_L3_KAR<1)L1_L2_L3_KAR=3;
+	  }
+	
+		 if(L1_L2_L3_KAR==1)
+		 	{
+		 	Clera_lcd();
+		 Graf_temp_hv_hi_L1(tempshuzhi*10,HV*10,HI*10);
+		 	}
+		  if(L1_L2_L3_KAR==2)
+		 	{
+		 	Clera_lcd();
+		 Graf_temp_hv_hi_L2(tempshuzhi*10,HV*10,HI*10);
+		 	}
+		  if(L1_L2_L3_KAR==3)
+		 	{
+		 	Clera_lcd();
+		 Graf_temp_hv_hi_L3(tempshuzhi*10,HV*10,HI*10);
+		 	}
+		 }	   
+		 break;
+	 case 4:											//显示版本号
+		  Clera_lcd();
+		  Graf_VER(1);
 		 break;
 
-	 case 2:
-		 Clera_lcd();
-		 Graf_powuse_poweunuse_freq(2536,5431,501);
-		 break;
-	 case 3:
-   		 Clera_lcd();
-		 Graf_temp_hv_hi(65,99,98);
-		 break;
-	 case 4:
+	 case 5:											//显示电容组号及容量
 		  Clera_lcd();
-		 Graf_cos_volt_current(98,380,532);
-		 break;
 
-	 case 5:
-		  Clera_lcd();
-		 Graf_powuse_poweunuse_freq(2536,5431,501);
+			Write_1621(29,0x04);	//	p0显示电容符号		
+			Write_1621(28,0x01);	//	p25显示“动控制”
+			
+
+		  WriteAll_1621(22,numCAP,6);
+
+   		  CAPA_num_shiwei=CAPA_num/10;
+		  CAPA_num_gewei=CAPA_num%10;
+	   	  capa1_value_shiwei=capa1_value/10;
+		  capa1_value_gewei=capa1_value%10;
+		  capa2_value_shiwei=capa2_value/10;
+		  capa2_value_gewei=capa2_value%10;
+
+		  WriteAll_1621(19,num11_p21Seg+3*CAPA_num_shiwei,3);
+		  WriteAll_1621(16,num9_12Seg+3*CAPA_num_gewei,3);
+		  WriteAll_1621(8,num567Seg+2*capa1_value_shiwei,2);
+		  WriteAll_1621(14,num8Seg+2*capa1_value_gewei,2);
+		  WriteAll_1621(4,num3_p11Seg+2*capa2_value_shiwei,2);
+		  WriteAll_1621(6,num1234Seg+2*capa2_value_gewei,2);
+//		  Graf_capa_value(0,15,35);
+		  
+		  if(KEY_right==0)
+		  {
+			CAPA_num++;
+			while(KEY_right==0);
+		  	if(CAPA_num>32)CAPA_num=1;
+		  }
+		  if(KEY_left==0)
+		  {
+			CAPA_num--;
+			while(KEY_left==0);
+		  	if(CAPA_num<1)CAPA_num=32;
+		  }
+
 		  break;
 
-	 case 6:
+	 case 6:										   //显示进柜三相电流
 
 	 Clera_lcd();
-	 Graf_temp_hv_hi(65,99,98);
+	 Graf_current_value(dianya_zhi_A*10,dianya_zhi_B*10,dianya_zhi_C*10);
 	 break;
    
    }

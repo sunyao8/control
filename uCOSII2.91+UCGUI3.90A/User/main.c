@@ -26,7 +26,7 @@ static  OS_STK         App_TaskStartStk[APP_TASK_START_STK_SIZE];
 #define  APP_TASK_START_PRIO                               10
 
 
-#define  APP_TASK_LCD_STK_SIZE                          256u
+#define  APP_TASK_LCD_STK_SIZE                          1024u
 static  OS_STK         App_TaskLCDStk[APP_TASK_LCD_STK_SIZE];
 #define  APP_TASK_LCD_PRIO                               3
 
@@ -48,6 +48,8 @@ OS_STK urgent_TASK_STK[urgent_STK_SIZE];
 
 
 //任务函数
+
+
 
 /***************************************************/
  typedef struct  
@@ -101,17 +103,14 @@ static  void urgent_task(void *pdata);
 u16 ADC_Converted_VValue=0;
 u16 ADC_Converted_CValue=0;
 u16 ADC_Converted_base=0;
-extern u16 dianya_zhi;
-extern u8 hguestnum,gonglvshishu;
-extern u32 idle_time,scan_time,dianliuzhi;
-extern u16 wugongkvar;
-extern s8 L_C_flag;
-extern u8 id_num,tempshuzhi;
-#if (FUNCTION_MODULE == DF_THREE)
-extern u16 dianya_zhi_A,dianya_zhi_B,dianya_zhi_C,wugongkvar_A,wugongkvar_B,wugongkvar_C;
-extern u32	dianliuzhi_A,dianliuzhi_B,dianliuzhi_C;
-extern u8 gonglvshishu_A,gonglvshishu_B,gonglvshishu_C;
-#endif
+
+u8 tempshuzhi,vernum=101,hguestnum=222,gonglvshishu=0;
+u16 dianya_zhi=0,wugongkvar=0,allkvar=0,HV=0,HI=0;
+u32	dianliuzhi=0;
+//#if (FUNCTION_MODULE == DF_THREE)
+u16 dianya_zhi_A=0,dianya_zhi_B=0,dianya_zhi_C=0,wugongkvar_A=0,wugongkvar_B=0,wugongkvar_C=0;
+u32	dianliuzhi_A=0,dianliuzhi_B=0	,dianliuzhi_C=0;
+u8 gonglvshishu_A=0,gonglvshishu_B=0,gonglvshishu_C=0;
 
 void ADC3_CH10_DMA_Config_VA(void);
 void ADC2_CH8_DMA_Config_VEE(void);
@@ -238,7 +237,7 @@ u8 L_C_flag_A=1;//感性容性标准变量
  
 u8 phase_flag=0;
 u16 T=10;
-u8 RT_FLAG=3;
+u8 RT_FLAG=2;
 u16 scan_init=20;
 u8 MASTER=1;
 INT32S main (void)
@@ -393,9 +392,10 @@ OSSemPost(computer_sem);
 if(scan_init!=0) {scan_init--;order_trans_rs485(mybox.myid,0,1,1,0,CONTROL);order_trans_rs485(mybox.myid,0,1,2,0,CONTROL);}
 if(scan_init==1)
 {
-RT_FLAG=0;
+RT_FLAG=2;
 scan_init=0;
 }
+
 
 	
  	}
@@ -1278,7 +1278,7 @@ void initmybox()//初始化自身信息
 {  	 
   
   mybox.master=0;
-  mybox.myid=AT24CXX_ReadOneByte(0x0010);
+  mybox.myid=1;
  mybox.source=0;
  mybox.destination=0;
  mybox.send=0;
@@ -1441,9 +1441,9 @@ u16 phase;
 s32 gl[2];
 u16 wugongkvar_95,wugongkvar_95A,wugongkvar_95B,wugongkvar_95C;
 
-float32_t HU_SUM_A=0,HI_SUM_A=0,HU_A=0,HI_A=0;
-float32_t HU_SUM_B=0,HI_SUM_B=0,HU_B=0,HI_B=0;
-float32_t HU_SUM_C=0,HI_SUM_C=0,HU_C=0,HI_C=0;
+float32_t HU_SUM_A=0,HI_SUM_A=0,HU_A=0,HI_A=0,HVA=0,HIA=0;
+float32_t HU_SUM_B=0,HI_SUM_B=0,HU_B=0,HI_B=0,HVB=0,HIB=0;
+float32_t HU_SUM_C=0,HI_SUM_C=0,HU_C=0,HI_C=0,HVC=0,HIC=0;
 
 
 /*********************判断相序*******************************/
@@ -1552,7 +1552,7 @@ dianya_zhi_A=dianya_zhi_A/2.6125;
 {
 for(i=3;i<=21;i=i+2){HU_SUM_A=(reslut[i]*reslut[i])+HU_SUM_A;}
 arm_sqrt_f32(HU_SUM_A,&HU_A);
-dianya_zhi_A=(HU_A/maxValue)*10000;
+HVA=(HU_A/maxValue);
 }
 /******************************************************************/
 
@@ -1583,7 +1583,7 @@ else gonglvshishu_A=arm_cos_f32(angle[0]-angle[1])*100;//功率因素
 {
 for(i=3;i<=21;i=i+2){HI_SUM_A=(reslut[i]*reslut[i])+HI_SUM_A;}
 arm_sqrt_f32(HI_SUM_A,&HI_A);
-dianya_zhi_A=(HI_A/maxValue)*10000;
+HIA=(HI_A/maxValue);
 }
 /******************************************************************/
 
@@ -1674,7 +1674,7 @@ dianya_zhi_B=dianya_zhi_B/2.6125;
 {
 for(i=3;i<=21;i=i+2){HU_SUM_B=(reslut[i]*reslut[i])+HU_SUM_B;}
 arm_sqrt_f32(HU_SUM_B,&HU_B);
-dianya_zhi_B=(HU_B/maxValue)*10000;
+HVB=(HU_B/maxValue);
 }
 /******************************************************************/
 
@@ -1703,7 +1703,7 @@ else gonglvshishu_B=arm_cos_f32(angle[0]-angle[1])*100;//功率因素
 {
 for(i=3;i<=21;i=i+2){HI_SUM_B=(reslut[i]*reslut[i])+HI_SUM_B;}
 arm_sqrt_f32(HI_SUM_B,&HI_B);
-dianya_zhi_B=(HI_B/maxValue)*10000;
+HIB=(HI_B/maxValue);
 }
 /******************************************************************/
 
@@ -1772,7 +1772,7 @@ dianya_zhi_C=dianya_zhi_C/2.6125;
 {
 for(i=3;i<=21;i=i+2){HU_SUM_C=(reslut[i]*reslut[i])+HU_SUM_C;}
 arm_sqrt_f32(HU_SUM_C,&HU_C);
-dianya_zhi_C=(HU_C/maxValue)*10000;
+HVC=(HU_C/maxValue);
 }
 /******************************************************************/
 
@@ -1802,7 +1802,7 @@ else gonglvshishu_C=arm_cos_f32(angle[0]-angle[1])*100;//功率因素
 {
 for(i=3;i<=21;i=i+2){HI_SUM_C=(reslut[i]*reslut[i])+HI_SUM_C;}
 arm_sqrt_f32(HI_SUM_C,&HI_C);
-dianya_zhi_C=(HI_C/maxValue)*10000;
+HIC=(HI_C/maxValue);
 }
 /******************************************************************/
 
@@ -1841,6 +1841,9 @@ dianya_zhi=1.732*(dianya_zhi_A+dianya_zhi_B+dianya_zhi_C)/3;
 dianliuzhi=(dianliuzhi_A+dianliuzhi_B+dianliuzhi_C)/3;
 gonglvshishu=(gonglvshishu_A+gonglvshishu_B+gonglvshishu_C)/3;
 wugongkvar=(a+b+c)/100;
+allkvar=dianya_zhi*dianliuzhi;
+HV=HVA+HVB+HVC;
+HI=HIA+HIB+HIC;
   wugongkvar_95=wugongkvar_95A+wugongkvar_95B+wugongkvar_95C;
 
    order_trans_rs485(mybox.myid,0,0,0,0,CPT_LL);
@@ -2528,7 +2531,7 @@ return 0 ;
        }
  }
 
-if(1)
+   if(KEY_3==1) 
 
   {
 if(gonglvshishu_A<93&&L_C_flag_A==1)
@@ -2689,7 +2692,7 @@ return 0;
 	
   }
 
-if(1)
+   if(KEY_3==1) 
 
 {
 if(gonglvshishu_A>94&&L_C_flag_A==1)
@@ -2914,7 +2917,7 @@ return 0 ;
 
 
        }
-if(1)
+   if(KEY_3==1) 
 {
 /************************A*****************************/
 

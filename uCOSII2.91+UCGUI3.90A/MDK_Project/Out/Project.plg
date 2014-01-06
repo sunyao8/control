@@ -8,10 +8,40 @@ Project File Date:  11/29/2013
 
 <h2>Output:</h2>
 Build target 'Target 1'
+compiling main.c...
+..\User\main.c(1575): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1795): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2086): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2192): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2265): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1418): warning:  #177-D: variable "s" was declared but never referenced
+..\User\main.c(1419): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(1442): warning:  #550-D: variable "wugongkvar_95" was set but never used
+compiling uctsk_Task.c...
+compiling uctsk_OSView.c...
+compiling stm32f4xx_it.c...
+compiling os_cpu_c.c...
+compiling OS_AppHooks.c...
+compiling os_view.c...
+compiling os_viewc.c...
+compiling GUI_X_uCOS.c...
+compiling GUI_X_Touch.c...
+compiling delay.c...
+compiling ht1621.c...
+compiling key.c...
+..\lcd\src\key.c(164): error:  #140: too many arguments in function call
+..\lcd\src\key.c(199): error:  #140: too many arguments in function call
+..\lcd\src\key.c(236): error:  #140: too many arguments in function call
+..\lcd\src\key.c(271): error:  #140: too many arguments in function call
+Target not created
+Build target 'Target 1'
+compiling key.c...
 linking...
-Program Size: Code=11866 RO-data=682 RW-data=200 ZI-data=6120  
+Program Size: Code=42544 RO-data=27000 RW-data=284 ZI-data=50900  
 FromELF: creating hex file...
 ".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
@@ -19,10 +49,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -41,7 +71,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -57,21 +87,72 @@ Verify OK.
 * JLink Info: Found Cortex-M4 r0p1, Little endian.
 Application running ...
 Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(147): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(152): warning:  #177-D: variable "num10_L1seg" was declared but never referenced
+..\lcd\src\ht1621.c(153): warning:  #177-D: variable "num10_L1_dp9seg" was declared but never referenced
+..\lcd\src\ht1621.c(154): warning:  #177-D: variable "num10_L2seg" was declared but never referenced
+..\lcd\src\ht1621.c(155): warning:  #177-D: variable "num10_L2_dp9seg" was declared but never referenced
+..\lcd\src\ht1621.c(156): warning:  #177-D: variable "num11_L3seg" was declared but never referenced
 compiling key.c...
-..\lcd\src\key.c(71): warning:  #177-D: variable "num12345Seg" was declared but never referenced
-..\lcd\src\key.c(72): warning:  #177-D: variable "num67Seg" was declared but never referenced
-..\lcd\src\key.c(74): warning:  #177-D: variable "num1234Seg" was declared but never referenced
-..\lcd\src\key.c(81): warning:  #177-D: variable "num4_dp3Seg" was declared but never referenced
-..\lcd\src\key.c(23): warning:  #177-D: variable "m" was declared but never referenced
+..\lcd\src\key.c(523): warning:  #177-D: variable "num10_L1seg" was declared but never referenced
+..\lcd\src\key.c(524): warning:  #177-D: variable "num10_L1_dp9seg" was declared but never referenced
+..\lcd\src\key.c(525): warning:  #177-D: variable "num10_L2seg" was declared but never referenced
+..\lcd\src\key.c(526): warning:  #177-D: variable "num10_L2_dp9seg" was declared but never referenced
+..\lcd\src\key.c(527): warning:  #177-D: variable "num11_L3seg" was declared but never referenced
 linking...
-Program Size: Code=11854 RO-data=682 RW-data=200 ZI-data=6120  
+Program Size: Code=42944 RO-data=27000 RW-data=284 ZI-data=50900  
 FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 5 Warning(s).
+".\Out\Project.axf" - 0 Error(s), 11 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
 Build target 'Target 1'
-compiling key.c...
-..\lcd\src\key.c(23): warning:  #177-D: variable "m" was declared but never referenced
+compiling ht1621.c...
+..\lcd\src\ht1621.c(147): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
 linking...
-Program Size: Code=11738 RO-data=682 RW-data=200 ZI-data=6120  
+Program Size: Code=42768 RO-data=27000 RW-data=284 ZI-data=50900  
 FromELF: creating hex file...
 ".\Out\Project.axf" - 0 Error(s), 1 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
@@ -81,10 +162,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -103,7 +184,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -120,15 +201,8 @@ Verify OK.
 Application running ...
 Build target 'Target 1'
 compiling key.c...
-..\lcd\src\key.c(23): warning:  #177-D: variable "m" was declared but never referenced
 linking...
-Program Size: Code=11462 RO-data=682 RW-data=200 ZI-data=6120  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Target 1'
-compiling key.c...
-linking...
-Program Size: Code=11462 RO-data=682 RW-data=200 ZI-data=6120  
+Program Size: Code=42592 RO-data=27000 RW-data=284 ZI-data=50900  
 FromELF: creating hex file...
 ".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
@@ -138,10 +212,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -160,7 +234,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -176,11 +250,14 @@ Verify OK.
 * JLink Info: Found Cortex-M4 r0p1, Little endian.
 Application running ...
 Build target 'Target 1'
-compiling key.c...
+compiling ht1621.c...
+..\lcd\src\ht1621.c(147): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(226): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(299): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
 linking...
-Program Size: Code=11466 RO-data=682 RW-data=200 ZI-data=6120  
+Program Size: Code=42672 RO-data=27000 RW-data=284 ZI-data=50900  
 FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
+".\Out\Project.axf" - 0 Error(s), 3 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
@@ -188,10 +265,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -210,7 +287,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -226,11 +303,20 @@ Verify OK.
 * JLink Info: Found Cortex-M4 r0p1, Little endian.
 Application running ...
 Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(147): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(152): warning:  #177-D: variable "num10_L1seg" was declared but never referenced
+..\lcd\src\ht1621.c(153): warning:  #177-D: variable "num10_L1_dp9seg" was declared but never referenced
+..\lcd\src\ht1621.c(154): warning:  #177-D: variable "num10_L2seg" was declared but never referenced
+..\lcd\src\ht1621.c(155): warning:  #177-D: variable "num10_L2_dp9seg" was declared but never referenced
+..\lcd\src\ht1621.c(156): warning:  #177-D: variable "num11_L3seg" was declared but never referenced
+..\lcd\src\ht1621.c(232): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(305): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
 compiling key.c...
 linking...
-Program Size: Code=11738 RO-data=682 RW-data=200 ZI-data=6120  
+Program Size: Code=42848 RO-data=27000 RW-data=284 ZI-data=50900  
 FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
+".\Out\Project.axf" - 0 Error(s), 8 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
@@ -238,10 +324,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -260,7 +346,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -276,11 +362,22 @@ Verify OK.
 * JLink Info: Found Cortex-M4 r0p1, Little endian.
 Application running ...
 Build target 'Target 1'
-compiling key.c...
+compiling ht1621.c...
+..\lcd\src\ht1621.c(152): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(232): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(305): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
 linking...
-Program Size: Code=11714 RO-data=682 RW-data=200 ZI-data=6120  
+.\Out\Project.axf: error: L6002U: Could not open file .\out\ht1621.o: No such file or directory
+Target not created
+Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(152): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(232): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(305): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+linking...
+Program Size: Code=42672 RO-data=27000 RW-data=284 ZI-data=50900  
 FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
+".\Out\Project.axf" - 0 Error(s), 3 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
@@ -288,10 +385,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -310,7 +407,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -326,11 +423,14 @@ Verify OK.
 * JLink Info: Found Cortex-M4 r0p1, Little endian.
 Application running ...
 Build target 'Target 1'
-compiling key.c...
+compiling ht1621.c...
+..\lcd\src\ht1621.c(152): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(232): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(305): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
 linking...
-Program Size: Code=11738 RO-data=682 RW-data=200 ZI-data=6120  
+Program Size: Code=42664 RO-data=27000 RW-data=284 ZI-data=50900  
 FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
+".\Out\Project.axf" - 0 Error(s), 3 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
@@ -338,10 +438,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -360,7 +460,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -376,16 +476,31 @@ Verify OK.
 * JLink Info: Found Cortex-M4 r0p1, Little endian.
 Application running ...
 Build target 'Target 1'
-compiling key.c...
-linking...
-Program Size: Code=11726 RO-data=682 RW-data=200 ZI-data=6120  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
+compiling ht1621.c...
+..\lcd\src\ht1621.c(256): error:  #167: argument of type "int" is incompatible with parameter of type "u8 *"
+..\lcd\src\ht1621.c(241): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(242): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(322): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(395): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+Target not created
 Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(256): error:  #167: argument of type "int" is incompatible with parameter of type "u8 *"
+..\lcd\src\ht1621.c(241): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(242): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(322): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(395): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+Target not created
+Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(241): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(242): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(323): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(396): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
 linking...
-Program Size: Code=11726 RO-data=682 RW-data=200 ZI-data=6120  
+Program Size: Code=42648 RO-data=27000 RW-data=284 ZI-data=50900  
 FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
+".\Out\Project.axf" - 0 Error(s), 4 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
@@ -393,10 +508,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -415,7 +530,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -431,11 +546,15 @@ Verify OK.
 * JLink Info: Found Cortex-M4 r0p1, Little endian.
 Application running ...
 Build target 'Target 1'
-compiling key.c...
+compiling ht1621.c...
+..\lcd\src\ht1621.c(241): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(242): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(323): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(396): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
 linking...
-Program Size: Code=11726 RO-data=682 RW-data=200 ZI-data=6120  
+Program Size: Code=42664 RO-data=27000 RW-data=284 ZI-data=50900  
 FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
+".\Out\Project.axf" - 0 Error(s), 4 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
@@ -443,10 +562,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -465,7 +584,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -481,11 +600,14 @@ Verify OK.
 * JLink Info: Found Cortex-M4 r0p1, Little endian.
 Application running ...
 Build target 'Target 1'
-compiling key.c...
+compiling ht1621.c...
+..\lcd\src\ht1621.c(241): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(322): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(395): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
 linking...
-Program Size: Code=11738 RO-data=682 RW-data=200 ZI-data=6120  
+Program Size: Code=42664 RO-data=27000 RW-data=284 ZI-data=50900  
 FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
+".\Out\Project.axf" - 0 Error(s), 3 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
@@ -493,10 +615,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -515,7 +637,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -531,8 +653,18 @@ Verify OK.
 * JLink Info: Found Cortex-M4 r0p1, Little endian.
 Application running ...
 Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(241): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(242): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(323): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(396): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
 linking...
-Program Size: Code=11738 RO-data=682 RW-data=200 ZI-data=6120  
+Program Size: Code=42656 RO-data=27000 RW-data=284 ZI-data=50900  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 4 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=42656 RO-data=27000 RW-data=284 ZI-data=50900  
 FromELF: creating hex file...
 ".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
@@ -542,10 +674,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -564,7 +696,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -580,11 +712,14 @@ Verify OK.
 * JLink Info: Found Cortex-M4 r0p1, Little endian.
 Application running ...
 Build target 'Target 1'
-compiling key.c...
+compiling ht1621.c...
+..\lcd\src\ht1621.c(158): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(241): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(314): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
 linking...
-Program Size: Code=11746 RO-data=682 RW-data=200 ZI-data=6120  
+Program Size: Code=42664 RO-data=27000 RW-data=284 ZI-data=50900  
 FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
+".\Out\Project.axf" - 0 Error(s), 3 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
@@ -592,10 +727,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -614,7 +749,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -630,11 +765,24 @@ Verify OK.
 * JLink Info: Found Cortex-M4 r0p1, Little endian.
 Application running ...
 Build target 'Target 1'
-compiling key.c...
+compiling ht1621.c...
+..\lcd\src\ht1621.c(158): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(159): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(242): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(315): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
 linking...
-Program Size: Code=11462 RO-data=682 RW-data=200 ZI-data=6120  
+Program Size: Code=42736 RO-data=27000 RW-data=312 ZI-data=50896  
 FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
+".\Out\Project.axf" - 0 Error(s), 4 Warning(s).
+Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(158): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(241): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(314): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+linking...
+Program Size: Code=42704 RO-data=27000 RW-data=284 ZI-data=50900  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 3 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
@@ -642,10 +790,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -662,9 +810,62 @@ ROMTableAddr = 0xE00FF003
 Target info:
 ------------
 Device: STM32F407VE
-VTarget = 3.293V
+VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+compiling ht1621.c...
+..\lcd\src\ht1621.c(158): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(248): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(321): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+Build target 'Target 1'
+linking...
+Program Size: Code=42784 RO-data=27000 RW-data=312 ZI-data=50896  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -681,87 +882,89 @@ Verify OK.
 Application running ...
 Build target 'Target 1'
 compiling main.c...
+..\User\main.c(52): warning:  #47-D: incompatible redefinition of macro "KEY_3" (declared at line 27 of "..\lcd\inc\key.h")
 ..\User\main.c(1575): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 ..\User\main.c(1696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 ..\User\main.c(1795): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2083): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2189): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2262): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2086): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2192): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2265): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 ..\User\main.c(1418): warning:  #177-D: variable "s" was declared but never referenced
 ..\User\main.c(1419): warning:  #550-D: variable "status" was set but never used
 ..\User\main.c(1442): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(35): warning:  #177-D: variable "App_TaskComputerStk" was declared but never referenced
-..\User\main.c(39): warning:  #177-D: variable "App_TaskMasterStk" was declared but never referenced
-..\User\main.c(461): warning:  #177-D: function "App_Taskcomputer" was declared but never referenced
-..\User\main.c(378): warning:  #177-D: function "App_TaskMaster" was declared but never referenced
-..\User\main.c(531): warning:  #177-D: function "urgent_task" was declared but never referenced
-linking...
-Program Size: Code=14994 RO-data=682 RW-data=232 ZI-data=48592  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 14 Warning(s).
-Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.293V
-State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 2000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-Application running ...
+compiling uctsk_Task.c...
+compiling uctsk_OSView.c...
+compiling stm32f4xx_it.c...
+compiling os_cpu_c.c...
+compiling OS_AppHooks.c...
+compiling os_view.c...
+compiling os_viewc.c...
+compiling GUI_X_uCOS.c...
+compiling GUI_X_Touch.c...
+compiling delay.c...
+compiling ht1621.c...
+..\lcd\src\ht1621.c(158): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(248): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(321): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
 compiling key.c...
+linking...
+Program Size: Code=42784 RO-data=27000 RW-data=312 ZI-data=50896  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 13 Warning(s).
 Build target 'Target 1'
 compiling main.c...
+..\User\main.c(52): warning:  #47-D: incompatible redefinition of macro "KEY_3" (declared at line 27 of "..\lcd\inc\key.h")
 ..\User\main.c(1575): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 ..\User\main.c(1696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 ..\User\main.c(1795): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2083): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2189): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2262): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2086): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2192): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2265): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 ..\User\main.c(1418): warning:  #177-D: variable "s" was declared but never referenced
 ..\User\main.c(1419): warning:  #550-D: variable "status" was set but never used
 ..\User\main.c(1442): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(35): warning:  #177-D: variable "App_TaskComputerStk" was declared but never referenced
-..\User\main.c(461): warning:  #177-D: function "App_Taskcomputer" was declared but never referenced
-..\User\main.c(531): warning:  #177-D: function "urgent_task" was declared but never referenced
+compiling uctsk_Task.c...
+compiling uctsk_OSView.c...
+compiling stm32f4xx_it.c...
+compiling os_cpu_c.c...
+compiling OS_AppHooks.c...
+compiling os_view.c...
+compiling os_viewc.c...
+compiling GUI_X_uCOS.c...
+compiling GUI_X_Touch.c...
+compiling delay.c...
+compiling ht1621.c...
+..\lcd\src\ht1621.c(158): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(248): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(321): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+compiling key.c...
 linking...
-Program Size: Code=15406 RO-data=682 RW-data=248 ZI-data=11984  
+Program Size: Code=42784 RO-data=27000 RW-data=312 ZI-data=50896  
 FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 12 Warning(s).
+".\Out\Project.axf" - 0 Error(s), 13 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(1574): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1695): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1794): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2085): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2191): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2264): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1417): warning:  #177-D: variable "s" was declared but never referenced
+..\User\main.c(1418): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(1441): warning:  #550-D: variable "wugongkvar_95" was set but never used
+compiling ht1621.c...
+..\lcd\src\ht1621.c(153): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(156): warning:  #177-D: variable "num10_L1_dp9seg" was declared but never referenced
+..\lcd\src\ht1621.c(157): warning:  #177-D: variable "num10_L2seg" was declared but never referenced
+..\lcd\src\ht1621.c(158): warning:  #177-D: variable "num10_L2_dp9seg" was declared but never referenced
+..\lcd\src\ht1621.c(159): warning:  #177-D: variable "num11_L3seg" was declared but never referenced
+..\lcd\src\ht1621.c(248): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(321): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+linking...
+Program Size: Code=42888 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 16 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
@@ -769,10 +972,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -791,7 +994,220 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(153): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(155): warning:  #177-D: variable "num10_L1seg" was declared but never referenced
+..\lcd\src\ht1621.c(157): warning:  #177-D: variable "num10_L2seg" was declared but never referenced
+..\lcd\src\ht1621.c(158): warning:  #177-D: variable "num10_L2_dp9seg" was declared but never referenced
+..\lcd\src\ht1621.c(159): warning:  #177-D: variable "num11_L3seg" was declared but never referenced
+..\lcd\src\ht1621.c(248): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(321): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+linking...
+Program Size: Code=42888 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 7 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(153): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(225): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(308): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(413): error:  #20: identifier "num10_L2_dp9seg" is undefined
+..\lcd\src\ht1621.c(391): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(480): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(553): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+compiling key.c...
+..\lcd\src\key.c(564): warning:  #223-D: function "Graf_cos_volt_current_L1" declared implicitly
+..\lcd\src\key.c(568): warning:  #223-D: function "Graf_cos_volt_current_L2" declared implicitly
+..\lcd\src\key.c(572): warning:  #223-D: function "Graf_cos_volt_current_L3" declared implicitly
+Target not created
+Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(153): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(225): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(308): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(391): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(480): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(553): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+linking...
+Program Size: Code=44824 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 6 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling key.c...
+..\lcd\src\key.c(564): warning:  #223-D: function "Graf_cos_volt_current_L1" declared implicitly
+..\lcd\src\key.c(568): warning:  #223-D: function "Graf_cos_volt_current_L2" declared implicitly
+..\lcd\src\key.c(572): warning:  #223-D: function "Graf_cos_volt_current_L3" declared implicitly
+linking...
+Program Size: Code=44816 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(1574): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1695): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1794): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2085): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2191): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2264): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1417): warning:  #177-D: variable "s" was declared but never referenced
+..\User\main.c(1418): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(1441): warning:  #550-D: variable "wugongkvar_95" was set but never used
+compiling uctsk_Task.c...
+compiling uctsk_OSView.c...
+compiling stm32f4xx_it.c...
+compiling os_cpu_c.c...
+compiling OS_AppHooks.c...
+compiling os_view.c...
+compiling os_viewc.c...
+compiling GUI_X_uCOS.c...
+compiling GUI_X_Touch.c...
+compiling delay.c...
+compiling ht1621.c...
+..\lcd\src\ht1621.c(153): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(225): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(308): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(391): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(480): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(553): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+compiling key.c...
+linking...
+Program Size: Code=44824 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 15 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -809,7 +1225,7 @@ Application running ...
 Build target 'Target 1'
 compiling key.c...
 linking...
-Program Size: Code=15406 RO-data=682 RW-data=248 ZI-data=11984  
+Program Size: Code=44832 RO-data=27000 RW-data=284 ZI-data=53972  
 FromELF: creating hex file...
 ".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
@@ -819,10 +1235,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -841,7 +1257,597 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(153): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(225): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(308): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(391): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(480): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(553): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+linking...
+Program Size: Code=44816 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 6 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(153): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(225): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(308): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(391): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(480): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(553): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+linking...
+Program Size: Code=44832 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 6 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(153): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(225): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(308): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(391): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(480): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(553): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+linking...
+Program Size: Code=44832 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 6 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(153): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(225): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(308): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(391): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(481): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(554): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+linking...
+Program Size: Code=44872 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 6 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(1574): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1695): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1794): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2085): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2191): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2264): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1417): warning:  #177-D: variable "s" was declared but never referenced
+..\User\main.c(1418): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(1441): warning:  #550-D: variable "wugongkvar_95" was set but never used
+compiling uctsk_Task.c...
+compiling uctsk_OSView.c...
+compiling stm32f4xx_it.c...
+compiling os_cpu_c.c...
+compiling OS_AppHooks.c...
+compiling os_view.c...
+compiling os_viewc.c...
+compiling GUI_X_uCOS.c...
+compiling GUI_X_Touch.c...
+compiling delay.c...
+compiling ht1621.c...
+..\lcd\src\ht1621.c(153): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(225): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(308): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(391): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(481): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(554): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(628): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+compiling key.c...
+linking...
+Program Size: Code=45688 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 16 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(153): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(225): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(308): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(391): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(481): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(554): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(557): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(628): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+linking...
+Program Size: Code=45648 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 8 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(153): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(225): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(308): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(391): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(481): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(554): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(557): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(629): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+linking...
+Program Size: Code=45664 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 8 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(1574): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1695): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1794): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2085): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2191): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2264): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1417): warning:  #177-D: variable "s" was declared but never referenced
+..\User\main.c(1418): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(1441): warning:  #550-D: variable "wugongkvar_95" was set but never used
+compiling uctsk_Task.c...
+compiling uctsk_OSView.c...
+compiling stm32f4xx_it.c...
+compiling os_cpu_c.c...
+compiling OS_AppHooks.c...
+compiling os_view.c...
+compiling os_viewc.c...
+compiling GUI_X_uCOS.c...
+compiling GUI_X_Touch.c...
+compiling delay.c...
+compiling ht1621.c...
+..\lcd\src\ht1621.c(153): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(225): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(308): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(391): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(481): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(554): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(557): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(630): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(633): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(706): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(709): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(779): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+compiling key.c...
+linking...
+Program Size: Code=47312 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 21 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(1574): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1695): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1794): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2085): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2191): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2264): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1417): warning:  #177-D: variable "s" was declared but never referenced
+..\User\main.c(1418): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(1441): warning:  #550-D: variable "wugongkvar_95" was set but never used
+compiling uctsk_Task.c...
+compiling uctsk_OSView.c...
+compiling stm32f4xx_it.c...
+compiling os_cpu_c.c...
+compiling OS_AppHooks.c...
+compiling os_view.c...
+compiling os_viewc.c...
+compiling GUI_X_uCOS.c...
+compiling GUI_X_Touch.c...
+compiling delay.c...
+compiling ht1621.c...
+..\lcd\src\ht1621.c(148): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(220): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(303): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(386): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(476): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(549): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(552): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(625): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(628): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(701): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(704): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(774): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(841): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(843): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(910): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(912): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(978): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(980): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+compiling key.c...
+linking...
+Program Size: Code=47312 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 27 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -859,7 +1865,7 @@ Application running ...
 Build target 'Target 1'
 compiling key.c...
 linking...
-Program Size: Code=15406 RO-data=682 RW-data=248 ZI-data=11984  
+Program Size: Code=49664 RO-data=27000 RW-data=288 ZI-data=53968  
 FromELF: creating hex file...
 ".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
@@ -869,10 +1875,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -891,7 +1897,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -907,23 +1913,11 @@ Verify OK.
 * JLink Info: Found Cortex-M4 r0p1, Little endian.
 Application running ...
 Build target 'Target 1'
-compiling main.c...
-..\User\main.c(1575): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1795): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2083): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2189): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2262): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1418): warning:  #177-D: variable "s" was declared but never referenced
-..\User\main.c(1419): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1442): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(35): warning:  #177-D: variable "App_TaskComputerStk" was declared but never referenced
-..\User\main.c(461): warning:  #177-D: function "App_Taskcomputer" was declared but never referenced
-..\User\main.c(531): warning:  #177-D: function "urgent_task" was declared but never referenced
+compiling key.c...
 linking...
-Program Size: Code=15406 RO-data=682 RW-data=248 ZI-data=11984  
+Program Size: Code=49664 RO-data=27000 RW-data=288 ZI-data=53968  
 FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 12 Warning(s).
+".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
@@ -931,10 +1925,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -953,7 +1947,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -969,23 +1963,11 @@ Verify OK.
 * JLink Info: Found Cortex-M4 r0p1, Little endian.
 Application running ...
 Build target 'Target 1'
-compiling main.c...
-..\User\main.c(1575): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1795): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2083): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2189): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2262): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1418): warning:  #177-D: variable "s" was declared but never referenced
-..\User\main.c(1419): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1442): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(35): warning:  #177-D: variable "App_TaskComputerStk" was declared but never referenced
-..\User\main.c(461): warning:  #177-D: function "App_Taskcomputer" was declared but never referenced
-..\User\main.c(531): warning:  #177-D: function "urgent_task" was declared but never referenced
+compiling key.c...
 linking...
-Program Size: Code=15414 RO-data=682 RW-data=248 ZI-data=11984  
+Program Size: Code=49664 RO-data=27000 RW-data=284 ZI-data=53972  
 FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 12 Warning(s).
+".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
@@ -993,10 +1975,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -1015,7 +1997,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -1032,24 +2014,356 @@ Verify OK.
 Application running ...
 Rebuild target 'Target 1'
 compiling main.c...
-..\User\main.c(1575): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1795): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2083): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2189): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2262): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1418): warning:  #177-D: variable "s" was declared but never referenced
-..\User\main.c(1419): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1442): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(35): warning:  #177-D: variable "App_TaskComputerStk" was declared but never referenced
-..\User\main.c(461): warning:  #177-D: function "App_Taskcomputer" was declared but never referenced
-..\User\main.c(531): warning:  #177-D: function "urgent_task" was declared but never referenced
+..\User\main.c(1574): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1695): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1794): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2085): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2191): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2264): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1417): warning:  #177-D: variable "s" was declared but never referenced
+..\User\main.c(1418): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(1441): warning:  #550-D: variable "wugongkvar_95" was set but never used
 Project build/rebuild aborted.
 Target not created
 Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(148): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(220): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(303): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(386): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(476): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(549): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(552): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(625): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(628): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(701): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(704): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(774): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(860): error:  #20: identifier "num10_L1_dp9seg" is undefined
+..\lcd\src\ht1621.c(841): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(843): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(928): error:  #20: identifier "num10_L2_dp9seg" is undefined
+..\lcd\src\ht1621.c(909): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(911): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(976): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(978): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+Target not created
+Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(148): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(220): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(303): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(386): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(476): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(549): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(552): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(625): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(628): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(701): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(704): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(774): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(841): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(843): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(909): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(911): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(976): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(978): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+linking...
+Program Size: Code=49632 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 18 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(148): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(220): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(303): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(386): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(476): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(549): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(552): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(625): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(628): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(701): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(704): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(774): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(841): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(843): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(910): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(912): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(978): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(980): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+linking...
+Program Size: Code=49664 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 18 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(148): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(220): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(303): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(386): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(476): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(549): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(552): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(625): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(628): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(701): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(704): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(774): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(841): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(843): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(910): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(912): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(978): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(980): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+linking...
+Program Size: Code=49656 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 18 Warning(s).
+Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(148): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(220): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(303): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(386): warning:  #550-D: variable "PF_zhengshu" was set but never used
+..\lcd\src\ht1621.c(386): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(477): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(550): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(553): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(626): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(629): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(702): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(705): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(775): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(842): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(844): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(911): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(913): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(979): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(981): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+linking...
+Program Size: Code=49632 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 19 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+**JLink Warning: RESET (pin 15) high, but should be low. Please check target hardware.
+**JLink Warning: RESET (pin 15) high, but should be low. Please check target hardware.
+**JLink Warning: RESET (pin 15) high, but should be low. Please check target hardware.
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(150): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(223): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(307): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(391): warning:  #550-D: variable "PF_shifenwei" was set but never used
+..\lcd\src\ht1621.c(482): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(555): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(558): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(631): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(634): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(707): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(710): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(780): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(847): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(849): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(916): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(918): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(984): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(986): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+linking...
+Program Size: Code=49752 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 18 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
 compiling key.c...
 linking...
-Program Size: Code=15414 RO-data=682 RW-data=248 ZI-data=11984  
+Program Size: Code=49744 RO-data=27000 RW-data=284 ZI-data=53972  
 FromELF: creating hex file...
 ".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
@@ -1059,10 +2373,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -1081,7 +2395,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -1097,299 +2411,326 @@ Verify OK.
 * JLink Info: Found Cortex-M4 r0p1, Little endian.
 Application running ...
 Build target 'Target 1'
+compiling ht1621.c...
+..\lcd\src\ht1621.c(150): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(482): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(555): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(558): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(631): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(634): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(707): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(710): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(780): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(847): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(849): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(916): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(918): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
+..\lcd\src\ht1621.c(984): warning:  #177-D: variable "num11_p21_p22Seg" was declared but never referenced
+..\lcd\src\ht1621.c(986): warning:  #177-D: variable "num11_p21Seg" was declared but never referenced
 compiling key.c...
 linking...
-Program Size: Code=15414 RO-data=682 RW-data=248 ZI-data=11984  
+Program Size: Code=49808 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 15 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(1574): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1695): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1794): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2085): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2191): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2264): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1417): warning:  #177-D: variable "s" was declared but never referenced
+..\User\main.c(1418): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(1441): warning:  #550-D: variable "wugongkvar_95" was set but never used
+linking...
+Program Size: Code=49792 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(1574): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1695): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1794): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2085): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2191): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2264): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1417): warning:  #177-D: variable "s" was declared but never referenced
+..\User\main.c(1418): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(1441): warning:  #550-D: variable "wugongkvar_95" was set but never used
+linking...
+Program Size: Code=49792 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(1578): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1699): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1798): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2089): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2195): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2268): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1421): warning:  #177-D: variable "s" was declared but never referenced
+..\User\main.c(1422): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(1445): warning:  #550-D: variable "wugongkvar_95" was set but never used
+linking...
+Program Size: Code=49832 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(1578): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1699): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1798): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2089): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2195): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2268): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1421): warning:  #177-D: variable "s" was declared but never referenced
+..\User\main.c(1422): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(1445): warning:  #550-D: variable "wugongkvar_95" was set but never used
+linking...
+Program Size: Code=49792 RO-data=27000 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+linking...
+Program Size: Code=49792 RO-data=27000 RW-data=284 ZI-data=53972  
 FromELF: creating hex file...
 ".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.300V
-State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 2000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-Application running ...
-Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.293V
-State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 2000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-Application running ...
 Build target 'Target 1'
 compiling main.c...
-..\User\main.c(1575): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1795): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2083): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2189): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2262): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1418): warning:  #177-D: variable "s" was declared but never referenced
-..\User\main.c(1419): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1442): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(35): warning:  #177-D: variable "App_TaskComputerStk" was declared but never referenced
-..\User\main.c(461): warning:  #177-D: function "App_Taskcomputer" was declared but never referenced
-..\User\main.c(531): warning:  #177-D: function "urgent_task" was declared but never referenced
-compiling key.c...
+..\User\main.c(1578): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1699): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1798): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2089): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2195): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2268): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1421): warning:  #177-D: variable "s" was declared but never referenced
+..\User\main.c(1422): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(1445): warning:  #550-D: variable "wugongkvar_95" was set but never used
 linking...
-Program Size: Code=15406 RO-data=682 RW-data=248 ZI-data=48848  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 12 Warning(s).
-Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.300V
-State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 2000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-Application running ...
-Build target 'Target 1'
-compiling main.c...
-..\User\main.c(1575): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1795): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2083): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2189): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2262): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1418): warning:  #177-D: variable "s" was declared but never referenced
-..\User\main.c(1419): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1442): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(35): warning:  #177-D: variable "App_TaskComputerStk" was declared but never referenced
-..\User\main.c(461): warning:  #177-D: function "App_Taskcomputer" was declared but never referenced
-..\User\main.c(531): warning:  #177-D: function "urgent_task" was declared but never referenced
-linking...
-Program Size: Code=15114 RO-data=682 RW-data=248 ZI-data=48848  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 12 Warning(s).
-Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.300V
-State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 2000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-Application running ...
-Build target 'Target 1'
-compiling main.c...
-..\User\main.c(1575): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1795): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2083): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2189): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2262): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1418): warning:  #177-D: variable "s" was declared but never referenced
-..\User\main.c(1419): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1442): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(35): warning:  #177-D: variable "App_TaskComputerStk" was declared but never referenced
-..\User\main.c(461): warning:  #177-D: function "App_Taskcomputer" was declared but never referenced
-..\User\main.c(531): warning:  #177-D: function "urgent_task" was declared but never referenced
-linking...
-Program Size: Code=15122 RO-data=682 RW-data=248 ZI-data=48848  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 12 Warning(s).
-Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.300V
-State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 2000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-Application running ...
-Build target 'Target 1'
-compiling main.c...
-..\User\main.c(1575): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1795): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2083): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2189): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2262): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1418): warning:  #177-D: variable "s" was declared but never referenced
-..\User\main.c(1419): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1442): warning:  #550-D: variable "wugongkvar_95" was set but never used
-linking...
-Program Size: Code=40384 RO-data=27000 RW-data=276 ZI-data=90836  
+Program Size: Code=49832 RO-data=27000 RW-data=284 ZI-data=57812  
 FromELF: creating hex file...
 ".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
@@ -1399,10 +2740,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -1421,7 +2762,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -1438,77 +2779,17 @@ Verify OK.
 Application running ...
 Build target 'Target 1'
 compiling main.c...
-..\User\main.c(1575): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1795): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2083): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2189): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2262): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1418): warning:  #177-D: variable "s" was declared but never referenced
-..\User\main.c(1419): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1442): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(531): warning:  #177-D: function "urgent_task" was declared but never referenced
+..\User\main.c(1578): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1699): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1798): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2089): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2195): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2268): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1421): warning:  #177-D: variable "s" was declared but never referenced
+..\User\main.c(1422): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(1445): warning:  #550-D: variable "wugongkvar_95" was set but never used
 linking...
-Program Size: Code=40344 RO-data=27000 RW-data=276 ZI-data=90580  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 10 Warning(s).
-Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.300V
-State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 2000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-Application running ...
-Build target 'Target 1'
-compiling main.c...
-..\User\main.c(1575): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1795): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2083): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2189): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2262): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1418): warning:  #177-D: variable "s" was declared but never referenced
-..\User\main.c(1419): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1442): warning:  #550-D: variable "wugongkvar_95" was set but never used
-linking...
-Program Size: Code=40376 RO-data=27000 RW-data=276 ZI-data=90836  
+Program Size: Code=49808 RO-data=27000 RW-data=284 ZI-data=53972  
 FromELF: creating hex file...
 ".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
@@ -1518,10 +2799,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -1540,7 +2821,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -1560,14 +2841,14 @@ compiling main.c...
 ..\User\main.c(1575): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 ..\User\main.c(1696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 ..\User\main.c(1795): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2083): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2189): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2262): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2086): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2192): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2265): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 ..\User\main.c(1418): warning:  #177-D: variable "s" was declared but never referenced
 ..\User\main.c(1419): warning:  #550-D: variable "status" was set but never used
 ..\User\main.c(1442): warning:  #550-D: variable "wugongkvar_95" was set but never used
 linking...
-Program Size: Code=40376 RO-data=27000 RW-data=276 ZI-data=53972  
+Program Size: Code=49792 RO-data=27000 RW-data=284 ZI-data=53972  
 FromELF: creating hex file...
 ".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
@@ -1577,10 +2858,10 @@ Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSI
 JLink info:
 ------------
 DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
  
 * JLink Info: Found SWD-DP with ID 0x2BA01477
 * JLink Info: TPIU fitted.
@@ -1599,249 +2880,7 @@ Target info:
 Device: STM32F407VE
 VTarget = 3.300V
 State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 2000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-Application running ...
-Build target 'Target 1'
-compiling main.c...
-..\User\main.c(1575): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1795): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2083): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2189): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2262): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1418): warning:  #177-D: variable "s" was declared but never referenced
-..\User\main.c(1419): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1442): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(35): warning:  #177-D: variable "App_TaskComputerStk" was declared but never referenced
-..\User\main.c(461): warning:  #177-D: function "App_Taskcomputer" was declared but never referenced
-linking...
-Program Size: Code=15158 RO-data=682 RW-data=248 ZI-data=12240  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 11 Warning(s).
-Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.300V
-State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 2000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-Application running ...
-Build target 'Target 1'
-compiling main.c...
-..\User\main.c(1575): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1795): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2083): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2189): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2262): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1418): warning:  #177-D: variable "s" was declared but never referenced
-..\User\main.c(1419): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1442): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(35): warning:  #177-D: variable "App_TaskComputerStk" was declared but never referenced
-..\User\main.c(461): warning:  #177-D: function "App_Taskcomputer" was declared but never referenced
-linking...
-Program Size: Code=15158 RO-data=682 RW-data=248 ZI-data=52944  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 11 Warning(s).
-Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.300V
-State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 2000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-Application running ...
-Build target 'Target 1'
-compiling main.c...
-..\User\main.c(1575): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1795): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2083): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2189): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2262): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1418): warning:  #177-D: variable "s" was declared but never referenced
-..\User\main.c(1419): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1442): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(35): warning:  #177-D: variable "App_TaskComputerStk" was declared but never referenced
-..\User\main.c(461): warning:  #177-D: function "App_Taskcomputer" was declared but never referenced
-linking...
-Program Size: Code=15150 RO-data=682 RW-data=248 ZI-data=12240  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 11 Warning(s).
-Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.300V
-State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 2000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-Application running ...
-Build target 'Target 1'
-compiling main.c...
-..\User\main.c(1575): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1795): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2083): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2189): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2262): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1418): warning:  #177-D: variable "s" was declared but never referenced
-..\User\main.c(1419): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1442): warning:  #550-D: variable "wugongkvar_95" was set but never used
-linking...
-Program Size: Code=40376 RO-data=27000 RW-data=276 ZI-data=50900  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
-Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM V8 compiled Dec  6 2011 18:57:44
-Hardware: V8.00
-S/N : 17892859 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.300V
-State of Pins: 
-TCK: 0, TDI: 1, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4

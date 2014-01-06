@@ -22,6 +22,9 @@
 #define KEY_set GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_8)
 #define KEY_hand GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_10)
 
+#define KEY_1 GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_9)
+#define KEY_2 GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_8)
+#define KEY_3 GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_7)
 
 
 void KEY_Init(void);//IO≥ı ºªØ

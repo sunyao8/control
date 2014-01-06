@@ -58,18 +58,25 @@ void SendCmd(u8 command);
 void Write_1621(u8 addr,u8 data);
 void WriteAll_1621(u8 addr,u8 *p,u8 cnt);
 void Clera_lcd(void);
-void Graf_con_u(u8 cos,u16 volt);
-void Graf_cuirrent(u32 current);	
-void Graf_qkvar(u16 qkvar);
-void Graf_temp(u8 temp);
-void Graf_id(u8 hostguest,u8 id);
-void Graf_ver(u8 ver);
-void Graf_setid(u8 idnum);
-void HT595_Send_Byte(u8 state);
-void Graf_cos_volt_current(u8 PF,u16 volt_para,u16 current_para);
+void Graf_cos_volt_current(u16 PF,u16 volt_para,u32 current_para);
+void Graf_cos_volt_current_L1(u16 PF,u16 volt_para,u32 current_para);		 //显示功率因数电压电流
+void Graf_cos_volt_current_L2(u16 PF,u16 volt_para,u32 current_para);		 //显示功率因数电压电流
+void Graf_cos_volt_current_L3(u16 PF,u16 volt_para,u32 current_para);		 //显示功率因数电压电流
+
 void Graf_powuse_poweunuse_freq(u16 powunuse,u16 powuse,u16 freq);
+void Graf_powuse_poweunuse_freq_L1(u16 powunuse,u16 powuse,u16 freq);
+void Graf_powuse_poweunuse_freq_L2(u16 powunuse,u16 powuse,u16 freq);
+void Graf_powuse_poweunuse_freq_L3(u16 powunuse,u16 powuse,u16 freq);
+
 void Graf_temp_hv_hi(u16 TEMP,u16 HV,u16 HI);
-void Graf_set_para(void);	 				    
+void Graf_temp_hv_hi_L1(u16 TEMP,u16 HV,u16 HI);	   //显示温度电压谐波电流谐波
+void Graf_temp_hv_hi_L2(u16 TEMP,u16 HV,u16 HI);	   //显示温度电压谐波电流谐波
+void Graf_temp_hv_hi_L3(u16 TEMP,u16 HV,u16 HI);	   //显示温度电压谐波电流谐波
+
+//void Graf_set_para(void);
+void Graf_VER(u8 VER);
+void Graf_current_value(u32 Current_A,u32 Current_B,u32 Current_C);		 				    
+void HT595_Send_Byte(u8 state);
 
 
 
