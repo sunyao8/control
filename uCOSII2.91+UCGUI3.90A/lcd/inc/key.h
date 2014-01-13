@@ -11,7 +11,15 @@
 //Copyright(C) 济宁市栋达电子科技有限公司 2013-2023
 //All rights reserved									  
 //////////////////////////////////////////////////////////////////////////////////   	 
-
+typedef struct  
+{ 
+  u8 dis_comm;//dis=0 comm=1
+  u8 myid;      //本电容箱ID号
+  u8 size;      //容量单位千法
+  u8 work_status;    //工作状态 1 为投入工作；0 为没有工作
+  u8 work_time;     //工作时间
+  u8 group;// 第几组表示
+}status_comm_node;
 
 
 

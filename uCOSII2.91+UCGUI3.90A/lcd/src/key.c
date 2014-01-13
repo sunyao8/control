@@ -3,28 +3,28 @@
 #include <includes.h>
 
 /* Private variables ---------------------------------------------------------*/	
-extern u8 Work_Flag;
 
 u8 Work_num=0;	  //   设置参数页面数
 u8 Display_num=1;	  //正常显示页面数
 u8 L1_L2_L3_COS=1;
 u8 L1_L2_L3_KAR=1;
-//u8 L1_L2_L3_HV=1;
- u16 CT_para=1;
- u8 DELAY_ON_para=1;
- u8 DELAY_OFF_para=1;
- u8 COS_ON_para=1;
- u8 COS_OFF_para=1;
- u16 V_PROT_para=1;
+u16 CT_para;
+ u8 DELAY_ON_para=10;
+ u8 DELAY_OFF_para=10;
+ u8 COS_ON_para=90;
+ u8 COS_OFF_para=95;
+ u8 V_PROT_para_L=40;
+ u8 V_PROT_para_tri=40;
  u8 ON_HOLD_para=1;
  u8 OFF_HOLD_para=1;
- u8 HU_PROT_para=1;
- u8 HI_PROT_para=1;
+ u8 HU_PROT_para=100;
+ u8 HI_PROT_para=100;
  u8 COMMCAT_para=1;
 u8 CAPA_num,capa1_value,capa2_value;
 //#endif
 /*************************************/
 //#endif
+extern u8 Work_Flag;//设置界面的闪烁标志位
 extern u16 dianya_zhi;
 extern u8 hguestnum,gonglvshishu;
 extern u32 idle_time,scan_time,dianliuzhi;
@@ -34,6 +34,8 @@ extern u8 tempshuzhi;
 extern u16 dianya_zhi_A,dianya_zhi_B,dianya_zhi_C,wugongkvar_A,wugongkvar_B,wugongkvar_C;
 extern u32	dianliuzhi_A,dianliuzhi_B,dianliuzhi_C;
 extern u8 gonglvshishu_A,gonglvshishu_B,gonglvshishu_C;
+extern status_comm_node Comm_list_1[33];
+extern status_comm_node Comm_list_2[33];
 
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序为控制器设计，未经许可，不得复制外传
@@ -96,7 +98,7 @@ u8 num_setcommu_Seg[]={0x03,0x0F,0X0C};
 
 
 extern u8 L_C_flag_A;//感性容性标准变量
-	 u8 CT_para_baiwei,CT_para_shiwei,CT_para_gewei;
+	 u8 CT_para_qianwei,CT_para_baiwei,CT_para_shiwei,CT_para_gewei;
 	 u8	DELAY_ON_para_baiwei,DELAY_ON_para_shiwei,DELAY_ON_para_gewei;
 	 u8	DELAY_OFF_para_baiwei,DELAY_OFF_para_shiwei,DELAY_OFF_para_gewei;
 	 u8	COS_ON_para_baiwei,COS_ON_para_shiwei,COS_ON_para_gewei;
@@ -107,7 +109,8 @@ extern u8 L_C_flag_A;//感性容性标准变量
 	 u8 HU_PROT_para_baiwei,HU_PROT_para_shiwei,HU_PROT_para_gewei;
 	 u8 HI_PROT_para_baiwei,HI_PROT_para_shiwei,HI_PROT_para_gewei;
 	 u8 COMMCAT_para_baiwei,COMMCAT_para_shiwei,COMMCAT_para_gewei;
-
+         s8 a=0;
+u16 TR[]={40,50,60,80,100,120,160,200,240,300,400,500,600,800,1000,1200};
 
 	 if(KEY_set==0)
 	 {
@@ -127,32 +130,34 @@ extern u8 L_C_flag_A;//感性容性标准变量
 		 if(Work_Flag==1)WriteAll_1621(29,num_set_Seg,3);
 		 if(Work_Flag==0)WriteAll_1621(29,num_setCT_Seg,3);
    			//CT_para从eeprom读出
-	//	 AT24CXX_WriteOneByte(0x0010,CT_para);
+a=AT24CXX_ReadOneByte(0xa000);
 
-
-		  
-		  CT_para_baiwei=CT_para/100;
+CT_para=TR[a];
+		  CT_para_qianwei=CT_para/1000;
+		  CT_para_baiwei=(CT_para%1000)/100;
 		  CT_para_shiwei=(CT_para%100)/10;
-		  CT_para_gewei=CT_para%10;
-
+		  CT_para_gewei=0;
+		  WriteAll_1621(12,num567Seg+2*CT_para_qianwei,2);	//
 		  WriteAll_1621(10,num567Seg+2*CT_para_baiwei,2);	//
   		  WriteAll_1621(8,num567Seg+2*CT_para_shiwei,2);	//
 		  WriteAll_1621(14,num8Seg+2*CT_para_gewei,2);	//
 
 		  if(KEY_up==0)
 		 {
-			CT_para++;
+			a++;
 			while(KEY_up==0);
-		    if(CT_para>1200)CT_para=1200;
+		    if(a>15)a=15;
+			CT_para=TR[a];
 		 }
 		 if(KEY_down==0)
 		 {
-		    CT_para--;
+		    a--;
 			while(KEY_down==0);
-			if(CT_para<10)CT_para=10;
+			if(a<1)a=0;
+			CT_para=TR[a];
 		 }
 		  
-		  //存储CT_para到eeprom
+		  AT24CXX_WriteOneByte(0xa000,a);   //存储CT_para到eeprom
 		 break;
 
 	  }
@@ -164,7 +169,7 @@ extern u8 L_C_flag_A;//感性容性标准变量
 
 		 Write_1621(19,0x08);	//
 
-		 DELAY_ON_para=AT24CXX_ReadOneByte(0x0020);  //存储DELAY_ON_para到eeprom
+		 DELAY_ON_para=AT24CXX_ReadOneByte(0x1000);  //存储DELAY_ON_para到eeprom
 
 
 		  
@@ -189,7 +194,7 @@ extern u8 L_C_flag_A;//感性容性标准变量
 			if(DELAY_ON_para<1)DELAY_ON_para=1;
 		 }
 		  
-		 AT24CXX_WriteOneByte(0x0020,DELAY_ON_para);  //存储DELAY_ON_para到eeprom
+		 AT24CXX_WriteOneByte(0x1000,DELAY_ON_para);  //存储DELAY_ON_para到eeprom
 		 break;
 	  }
 	  case 3:		  //切除延时参数设置
@@ -199,7 +204,7 @@ extern u8 L_C_flag_A;//感性容性标准变量
 		 if(Work_Flag==0)WriteAll_1621(29,num_setdelaytime_Seg,3);
 
 		  Write_1621(16,0x08);	//
-		 DELAY_OFF_para=AT24CXX_ReadOneByte(0x0030);  //存储DELAY_OFF_para到eeprom
+		 DELAY_OFF_para=AT24CXX_ReadOneByte(0x2000);  //存储DELAY_OFF_para到eeprom
 
 		
 		  
@@ -224,7 +229,7 @@ extern u8 L_C_flag_A;//感性容性标准变量
 			if(DELAY_OFF_para<1)DELAY_OFF_para=1;
 		 }
 
-			 AT24CXX_WriteOneByte(0x0030,DELAY_OFF_para);  //存储DELAY_ON_para到eeprom
+			 AT24CXX_WriteOneByte(0x2000,DELAY_OFF_para);  //存储DELAY_ON_para到eeprom
 
 		  break;
 	  }
@@ -236,7 +241,7 @@ extern u8 L_C_flag_A;//感性容性标准变量
 		 if(Work_Flag==0)WriteAll_1621(29,num_setcos_Seg,3);
 
 		
-		 COS_ON_para=AT24CXX_ReadOneByte(0x0040);  //存储DELAY_OFF_para到eeprom
+		 COS_ON_para=AT24CXX_ReadOneByte(0x3000);  //存储DELAY_OFF_para到eeprom
 
 		  
 		  COS_ON_para_baiwei=COS_ON_para/100;
@@ -259,7 +264,7 @@ extern u8 L_C_flag_A;//感性容性标准变量
 			while(KEY_down==0);
 			if(COS_ON_para<80)COS_ON_para=80;
 		 }
-			 AT24CXX_WriteOneByte(0x0040,COS_ON_para);  //存储DELAY_ON_para到eeprom
+			 AT24CXX_WriteOneByte(0x3000,COS_ON_para);  //存储DELAY_ON_para到eeprom
 		 break;
 
 	  }
@@ -271,7 +276,7 @@ extern u8 L_C_flag_A;//感性容性标准变量
 		 
 		 Write_1621(16,0x08);	//
 
-				 COS_OFF_para=AT24CXX_ReadOneByte(0x0050);  //存储DELAY_OFF_para到eeprom
+				 COS_OFF_para=AT24CXX_ReadOneByte(0x4000);  //存储DELAY_OFF_para到eeprom
  
 
 		  
@@ -295,12 +300,13 @@ extern u8 L_C_flag_A;//感性容性标准变量
 			while(KEY_down==0);
             if(COS_OFF_para<80)COS_OFF_para=80;
 		 } 
-					 AT24CXX_WriteOneByte(0x0050,COS_OFF_para);  //存储DELAY_ON_para到eeprom
+					 AT24CXX_WriteOneByte(0x4000,COS_OFF_para);  //存储DELAY_ON_para到eeprom
  
 		 break;
 
 	  }
 	  case 6:	   //电压保护参数设置
+   if(KEY_3==1) 
 	  {
 	  	Clera_lcd();
 		if(Work_Flag==1)WriteAll_1621(29,num_set_Seg,3);
@@ -308,44 +314,94 @@ extern u8 L_C_flag_A;//感性容性标准变量
 
 		//CT_para从eeprom读出
 
-		
+		V_PROT_para_L=AT24CXX_ReadOneByte(0xb000);
 
-		  
-		  V_PROT_para_baiwei=V_PROT_para/100;
-		  V_PROT_para_shiwei=(V_PROT_para%100)/10;
-		  V_PROT_para_gewei=V_PROT_para%10;
-
+		  if(V_PROT_para_L==0)
+		  	{V_PROT_para_baiwei=0;
+                      V_PROT_para_shiwei=0;
+                     V_PROT_para_gewei=0;
+		      }
+         else
+		  {
+		  V_PROT_para_baiwei=(V_PROT_para_L+200)/100;
+		  V_PROT_para_shiwei=((V_PROT_para_L+200)%100)/10;
+		  V_PROT_para_gewei=(V_PROT_para_L+200)%10;
+		  	}
 		  WriteAll_1621(10,num567Seg+2*V_PROT_para_baiwei,2);	//
   		  WriteAll_1621(8,num567Seg+2*V_PROT_para_shiwei,2);	//
 		  WriteAll_1621(14,num8Seg+2*V_PROT_para_gewei,2);	//
 		  
 		   if(KEY_up==0)
 		 {
-			if(V_PROT_para==0)V_PROT_para=400;
-			if((V_PROT_para>=400)&&(V_PROT_para<480))V_PROT_para=V_PROT_para+10;
+			if(V_PROT_para_L==0)V_PROT_para_L=20;
+			if((V_PROT_para_L>=20)&&(V_PROT_para_L<90))V_PROT_para_L=V_PROT_para_L+10;
 			while(KEY_up==0);
-			if(V_PROT_para>=490)V_PROT_para=0;
+			if(V_PROT_para_L>=90)V_PROT_para_L=0;
 		 }
 		 if(KEY_down==0)
 		 {
-			if(V_PROT_para==0)V_PROT_para=480;
-			if((V_PROT_para>400)&&(V_PROT_para<=480))V_PROT_para=V_PROT_para-10;
+			if(V_PROT_para_L==0)V_PROT_para_L=90;
+			if((V_PROT_para_L>20)&&(V_PROT_para_L<=90))V_PROT_para_L=V_PROT_para_L-10;
 			while(KEY_down==0);
-			if(V_PROT_para<=390)V_PROT_para=0;
+			if(V_PROT_para_L<=20)V_PROT_para_L=0;
 
 		 }
 		  //存储CT_para到eeprom
-
+ AT24CXX_WriteOneByte(0xb000,V_PROT_para_L);
 
 		 break;
 	  }
+	   if(KEY_3==0) 
+	  {
+	  	Clera_lcd();
+		if(Work_Flag==1)WriteAll_1621(29,num_set_Seg,3);
+		if(Work_Flag==0)WriteAll_1621(29,num_setvoltprot_Seg,3);
+
+		//CT_para从eeprom读出
+
+		V_PROT_para_tri=AT24CXX_ReadOneByte(0xc000);
+
+		  if(V_PROT_para_tri==0)
+		  	{V_PROT_para_baiwei=0;
+                      V_PROT_para_shiwei=0;
+                     V_PROT_para_gewei=0;
+		      }
+         else
+		  {
+		  V_PROT_para_baiwei=(V_PROT_para_tri+400)/100;
+		  V_PROT_para_shiwei=((V_PROT_para_tri+400)%100)/10;
+		  V_PROT_para_gewei=(V_PROT_para_tri+400)%10;
+		  	}
+		  WriteAll_1621(10,num567Seg+2*V_PROT_para_baiwei,2);	//
+  		  WriteAll_1621(8,num567Seg+2*V_PROT_para_shiwei,2);	//
+		  WriteAll_1621(14,num8Seg+2*V_PROT_para_gewei,2);	//
+		  
+		   if(KEY_up==0)
+		 {
+			if((V_PROT_para_tri>=0)&&(V_PROT_para_tri<90))V_PROT_para_tri=V_PROT_para_tri+10;
+			while(KEY_up==0);
+			if(V_PROT_para_tri>=90)V_PROT_para_tri=0;
+		 }
+		 if(KEY_down==0)
+		 {
+			if((V_PROT_para_tri>0)&&(V_PROT_para_tri<=80))V_PROT_para_tri=V_PROT_para_tri-10;
+			while(KEY_down==0);
+			if(V_PROT_para_tri==0)V_PROT_para_tri=0;
+
+		 }
+		  //存储CT_para到eeprom
+ AT24CXX_WriteOneByte(0xc000,V_PROT_para_tri);
+
+		 break;
+	  }  
 	  case 7:	   //投入门限参数设置
 	  {
 	  	Clera_lcd();
 		if(Work_Flag==1)WriteAll_1621(29,num_setON0hold_Seg,3);
 		if(Work_Flag==0)WriteAll_1621(29,num_setON1hold_Seg,3);
 
-		 
+		ON_HOLD_para=AT24CXX_ReadOneByte(0x5000); 
+ 
 
 		  
 		  ON_HOLD_para_shiwei=ON_HOLD_para/10;
@@ -369,6 +425,7 @@ extern u8 L_C_flag_A;//感性容性标准变量
 			if(ON_HOLD_para<2)ON_HOLD_para=12;
 		 }
 		  //存储CT_para到eeprom
+		 AT24CXX_WriteOneByte(0x5000,ON_HOLD_para);  //存储DELAY_ON_para到eeprom
 
 		break;
 
@@ -382,6 +439,7 @@ extern u8 L_C_flag_A;//感性容性标准变量
 	
 
 		 
+		OFF_HOLD_para=AT24CXX_ReadOneByte(0x6000); 
 
 		  
 		  OFF_HOLD_para_shiwei=OFF_HOLD_para/10;
@@ -403,6 +461,7 @@ extern u8 L_C_flag_A;//感性容性标准变量
 			if(OFF_HOLD_para<2)OFF_HOLD_para=12;
 		 }
 		  //存储CT_para到eeprom
+		 AT24CXX_WriteOneByte(0x6000,OFF_HOLD_para);  //存储DELAY_ON_para到eeprom
 
 		break;
 
@@ -416,7 +475,8 @@ extern u8 L_C_flag_A;//感性容性标准变量
 		WriteAll_1621(25,numHU_prot,3);
 		WriteAll_1621(22,numHU_prot+3,3);
 
-		  
+			HU_PROT_para=AT24CXX_ReadOneByte(0x7000); 
+	  
 
 		  HU_PROT_para_baiwei=HU_PROT_para/100;
 		  HU_PROT_para_shiwei=(HU_PROT_para%100)/10;
@@ -438,6 +498,8 @@ extern u8 L_C_flag_A;//感性容性标准变量
 			while(KEY_down==0);
 			if(HU_PROT_para<1)HU_PROT_para=100;
 		 }
+		 		 AT24CXX_WriteOneByte(0x7000,HU_PROT_para);  //存储DELAY_ON_para到eeprom
+
 		break;
 
 	  }
@@ -451,7 +513,8 @@ extern u8 L_C_flag_A;//感性容性标准变量
 	   WriteAll_1621(25,numHI_prot,3);
 	   WriteAll_1621(22,numHI_prot+3,3);
 
-	   
+	   			HI_PROT_para=AT24CXX_ReadOneByte(0x8000); 
+
 
 		  HI_PROT_para_baiwei=HI_PROT_para/100;
 		  HI_PROT_para_shiwei=(HI_PROT_para%100)/10;
@@ -473,6 +536,8 @@ extern u8 L_C_flag_A;//感性容性标准变量
 			while(KEY_down==0);
 			if(HI_PROT_para<1)HI_PROT_para=100;
 		 }
+		 		 		 AT24CXX_WriteOneByte(0x8000,HI_PROT_para);  //存储DELAY_ON_para到eeprom
+
 	   break;
 
 	  }
@@ -522,7 +587,7 @@ u8 num567Seg[]={0X0F,0X05,0X06,0X00,0X0B,0X06,0X0F,0X02,0X06,0X03,0X0D,0X03,0X0D
 u8 num8Seg[]={0X05,0X0F,0X00,0X06,0X06,0X0B,0X02,0X0F,0X03,0X06,0X03,0X0D,0X07,0X0D,0X00,0X07,0X07,0X0F,0X03,0X0F};
 u8 num9_12Seg[]={0X06,0X05,0X06,0X06,0X00,0X00,0X04,0X07,0X02,0X06,0X07,0X00,0X06,0X02,0X04,0X02,0X07,0X04,0X02,0X07,0X06,0X06,0X04,0X00,0X06,0X07,0X06,0X06,0X07,0X04};
 u8 num3_p11Seg[]={0X0B,0X0F,0X01,0X06,0X07,0X0D,0X05,0X0F,0X0D,0X06,0X0D,0X0B,0X0F,0X0B,0X01,0X0E,0X0F,0X0F,0X0D,0X0F};
-
+u8 j_1,j_2;
 	if(KEY_up==0)
  		{
 		 Display_num++;
@@ -689,12 +754,55 @@ break;
 			CAPA_num++;
 			while(KEY_right==0);
 		  	if(CAPA_num>32)CAPA_num=1;
+				{
+for(j_1=1;j_1<=33;j_1++)
+{
+if(CAPA_num==Comm_list_1[j_1].myid)break;
+}
+
+for(j_2=1;j_2<33;j_2++)
+{
+if(CAPA_num==Comm_list_2[j_2].myid)break;
+}
+if(j_1!=33&&j_2!=33)
+{
+if(1==Comm_list_1[j_1].group)capa1_value=Comm_list_1[j_1].size;
+if(2==Comm_list_1[j_1].group) capa2_value=Comm_list_2[j_1].size;
+
+if(1==Comm_list_2[j_2].group)capa1_value=Comm_list_1[j_2].size;
+if(2==Comm_list_2[j_2].group)capa2_value=Comm_list_2[j_2].size;
+}
+else 
+{capa1_value=0;capa2_value=0;}
+			}
 		  }
 		  if(KEY_left==0)
 		  {
 			CAPA_num--;
 			while(KEY_left==0);
 		  	if(CAPA_num<1)CAPA_num=32;
+			{
+for(j_1=1;j_1<=33;j_1++)
+{
+if(CAPA_num==Comm_list_1[j_1].myid)break;
+}
+
+for(j_2=1;j_2<33;j_2++)
+{
+if(CAPA_num==Comm_list_2[j_2].myid)break;
+}
+if(j_1!=33&&j_2!=33)
+{
+if(1==Comm_list_1[j_1].group)capa1_value=Comm_list_1[j_1].size;
+if(2==Comm_list_1[j_1].group) capa2_value=Comm_list_2[j_1].size;
+
+if(1==Comm_list_2[j_2].group)capa1_value=Comm_list_1[j_2].size;
+if(2==Comm_list_2[j_2].group)capa2_value=Comm_list_2[j_2].size;
+}
+else 
+{capa1_value=0;capa2_value=0;}
+
+			}
 		  }
 
 		  break;
