@@ -21,6 +21,7 @@ u16 CT_para;
  u8 HI_PROT_para=100;
  u8 COMMCAT_para=1;
 u8 CAPA_num,capa1_value,capa2_value;
+u8 capa1_array[33],capa2_array[33];
 //#endif
 /*************************************/
 //#endif
@@ -587,7 +588,6 @@ u8 num567Seg[]={0X0F,0X05,0X06,0X00,0X0B,0X06,0X0F,0X02,0X06,0X03,0X0D,0X03,0X0D
 u8 num8Seg[]={0X05,0X0F,0X00,0X06,0X06,0X0B,0X02,0X0F,0X03,0X06,0X03,0X0D,0X07,0X0D,0X00,0X07,0X07,0X0F,0X03,0X0F};
 u8 num9_12Seg[]={0X06,0X05,0X06,0X06,0X00,0X00,0X04,0X07,0X02,0X06,0X07,0X00,0X06,0X02,0X04,0X02,0X07,0X04,0X02,0X07,0X06,0X06,0X04,0X00,0X06,0X07,0X06,0X06,0X07,0X04};
 u8 num3_p11Seg[]={0X0B,0X0F,0X01,0X06,0X07,0X0D,0X05,0X0F,0X0D,0X06,0X0D,0X0B,0X0F,0X0B,0X01,0X0E,0X0F,0X0F,0X0D,0X0F};
-u8 j_1,j_2;
 	if(KEY_up==0)
  		{
 		 Display_num++;
@@ -754,55 +754,20 @@ break;
 			CAPA_num++;
 			while(KEY_right==0);
 		  	if(CAPA_num>32)CAPA_num=1;
-				{
-for(j_1=1;j_1<=33;j_1++)
-{
-if(CAPA_num==Comm_list_1[j_1].myid)break;
-}
 
-for(j_2=1;j_2<33;j_2++)
-{
-if(CAPA_num==Comm_list_2[j_2].myid)break;
-}
-if(j_1!=33&&j_2!=33)
-{
-if(1==Comm_list_1[j_1].group)capa1_value=Comm_list_1[j_1].size;
-if(2==Comm_list_1[j_1].group) capa2_value=Comm_list_2[j_1].size;
+				capa1_value=capa1_array[CAPA_num];
+				capa2_value=capa2_array[CAPA_num];
 
-if(1==Comm_list_2[j_2].group)capa1_value=Comm_list_1[j_2].size;
-if(2==Comm_list_2[j_2].group)capa2_value=Comm_list_2[j_2].size;
-}
-else 
-{capa1_value=0;capa2_value=0;}
-			}
 		  }
 		  if(KEY_left==0)
 		  {
 			CAPA_num--;
 			while(KEY_left==0);
 		  	if(CAPA_num<1)CAPA_num=32;
-			{
-for(j_1=1;j_1<=33;j_1++)
-{
-if(CAPA_num==Comm_list_1[j_1].myid)break;
-}
+				capa1_value=capa1_array[CAPA_num];
+			capa2_value=capa2_array[CAPA_num];
 
-for(j_2=1;j_2<33;j_2++)
-{
-if(CAPA_num==Comm_list_2[j_2].myid)break;
-}
-if(j_1!=33&&j_2!=33)
-{
-if(1==Comm_list_1[j_1].group)capa1_value=Comm_list_1[j_1].size;
-if(2==Comm_list_1[j_1].group) capa2_value=Comm_list_2[j_1].size;
-
-if(1==Comm_list_2[j_2].group)capa1_value=Comm_list_1[j_2].size;
-if(2==Comm_list_2[j_2].group)capa2_value=Comm_list_2[j_2].size;
-}
-else 
-{capa1_value=0;capa2_value=0;}
-
-			}
+			
 		  }
 
 		  break;

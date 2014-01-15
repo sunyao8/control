@@ -8,10 +8,264 @@ Project File Date:  11/29/2013
 
 <h2>Output:</h2>
 Build target 'Target 1'
+compiling main.c...
+..\User\main.c(1613): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1734): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1833): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2124): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2230): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2303): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1456): warning:  #177-D: variable "s" was declared but never referenced
+..\User\main.c(1457): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(1480): warning:  #550-D: variable "wugongkvar_95" was set but never used
+Project build/rebuild aborted.
+Target not created
+Build target 'Target 1'
+compiling key.c...
+..\lcd\src\key.c(381): warning:  #186-D: pointless comparison of unsigned integer with zero
 linking...
-Program Size: Code=52120 RO-data=27064 RW-data=284 ZI-data=53972  
+Program Size: Code=52000 RO-data=27064 RW-data=284 ZI-data=53972  
 FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
+".\Out\Project.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+**JLink Warning: RESET (pin 15) high, but should be low. Please check target hardware.
+**JLink Warning: RESET (pin 15) high, but should be low. Please check target hardware.
+**JLink Warning: RESET (pin 15) high, but should be low. Please check target hardware.
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+**JLink Warning: RESET (pin 15) high, but should be low. Please check target hardware.
+**JLink Warning: RESET (pin 15) high, but should be low. Please check target hardware.
+**JLink Warning: RESET (pin 15) high, but should be low. Please check target hardware.
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(1613): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1734): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1833): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2124): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2230): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2303): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1456): warning:  #177-D: variable "s" was declared but never referenced
+..\User\main.c(1457): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(1480): warning:  #550-D: variable "wugongkvar_95" was set but never used
+linking...
+Program Size: Code=51956 RO-data=27060 RW-data=284 ZI-data=53972  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Contents missmatch at: 08000908H  (Flash=C9H  Required=08H) !
+Contents missmatch at: 08000909H  (Flash=F8H  Required=F1H) !
+Contents missmatch at: 0800090AH  (Flash=00H  Required=01H) !
+Contents missmatch at: 0800090BH  (Flash=A0H  Required=08H) !
+Contents missmatch at: 0800090CH  (Flash=07H  Required=70H) !
+Contents missmatch at: 0800090DH  (Flash=EBH  Required=EEH) !
+Contents missmatch at: 0800090EH  (Flash=01H  Required=82H) !
+Contents missmatch at: 0800090FH  (Flash=14H  Required=1AH) !
+Contents missmatch at: 08000910H  (Flash=D0H  Required=70H) !
+Contents missmatch at: 08000911H  (Flash=F8H  Required=EEH) !
+Contents missmatch at: 08000912H  (Flash=04H  Required=C2H) !
+Contents missmatch at: 08000913H  (Flash=A0H  Required=0AH) !
+Contents missmatch at: 08000914H  (Flash=25H  Required=95H) !
+Contents missmatch at: 08000915H  (Flash=1FH  Required=EDH) !
+Contents missmatch at: 08000916H  (Flash=A9H  Required=00H) !
+Contents missmatch at: 08000917H  (Flash=F1H  Required=2AH) !
+Contents missmatch at: 08000918H  (Flash=04H  Required=D6H) !
+Contents missmatch at: 08000919H  (Flash=06H  Required=EDH) !
+Contents missmatch at: 0800091AH  (Flash=C9H  Required=00H) !
+Contents missmatch at: 0800091BH  (Flash=F8H  Required=2AH) !
+Contents missmatch at: 0800091CH  (Flash=04H  Required=64H) !
+Contents missmatch at: 0800091DH  (Flash=A0H  Required=1EH) !
+Contents missmatch at: 0800091EH  (Flash=03H  Required=32H) !
+Contents missmatch at: 0800091FH  (Flash=EBH  Required=EEH) !
+Contents missmatch at: 08000920H  (Flash=C8H  Required=22H) !
+Contents missmatch at: 08000921H  (Flash=09H  Required=2AH) !
+Contents missmatch at: 08000922H  (Flash=07H  Required=71H) !
+Contents missmatch at: 08000923H  (Flash=F1H  Required=EEH) !
+Contents missmatch at: 08000924H  (Flash=08H  Required=02H) !
+Contents missmatch at: 08000925H  (Flash=0CH  Required=2AH) !
+Contents missmatch at: 08000926H  (Flash=00H  Required=31H) !
+Contents missmatch at: 08000927H  (Flash=F1H  Required=EEH) !
+Contents missmatch at: 08000928H  (Flash=08H  Required=42H) !
+Contents missmatch at: 08000929H  (Flash=04H  Required=1AH) !
+Contents missmatch at: 0800092AH  (Flash=02H  Required=CAH) !
+Contents missmatch at: 0800092BH  (Flash=EBH  Required=EDH) !
+Contents missmatch at: 0800092CH  (Flash=C8H  Required=00H) !
+Contents missmatch at: 0800092DH  (Flash=02H  Required=2AH) !
+Contents missmatch at: 0800092EH  (Flash=4BH  Required=95H) !
+Contents missmatch at: 0800092FH  (Flash=1EH  Required=EDH) !
+Contents missmatch at: 08000930H  (Flash=31H  Required=01H) !
+Contents missmatch at: 08000931H  (Flash=D0H  Required=2AH) !
+Contents missmatch at: 08000932H  (Flash=00H  Required=D6H) !
+Contents missmatch at: 08000933H  (Flash=BFH  Required=EDH) !
+Contents missmatch at: 08000934H  (Flash=F2H  Required=01H) !
+Contents missmatch at: 08000935H  (Flash=ECH  Required=2AH) !
+Contents missmatch at: 08000936H  (Flash=01H  Required=32H) !
+Contents missmatch at: 08000937H  (Flash=1AH  Required=EEH) !
+Contents missmatch at: 08000938H  (Flash=96H  Required=22H) !
+Contents missmatch at: 08000939H  (Flash=EDH  Required=2AH) !
+Contents missmatch at: 0800093AH  (Flash=00H  Required=71H) !
+Contents missmatch at: 0800093BH  (Flash=2AH  Required=EEH) !
+Contents missmatch at: 0800093CH  (Flash=92H  Required=82H) !
+Contents missmatch at: 0800093DH  (Flash=EDH  Required=2AH) !
+Contents missmatch at: 0800093EH  (Flash=00H  Required=71H) !
+Contents missmatch at: 0800093FH  (Flash=1AH  Required=EEH) !
+Contents missmatch at: 08000940H  (Flash=02H  Required=C2H) !
+Contents missmatch at: 08000941H  (Flash=EBH  Required=1AH) !
+Contents missmatch at: 08000942H  (Flash=C8H  Required=CAH) !
+Contents missmatch at: 08000943H  (Flash=02H  Required=EDH) !
+Contents missmatch at: 08000944H  (Flash=B4H  Required=01H) !
+Contents missmatch at: 08000945H  (Flash=ECH  Required=2AH) !
+Contents missmatch at: 08000946H  (Flash=01H  Required=95H) !
+Contents missmatch at: 08000947H  (Flash=0AH  Required=EDH) !
+Contents missmatch at: 08000948H  (Flash=12H  Required=01H) !
+Contents missmatch at: 08000949H  (Flash=1FH  Required=2AH) !
+Contents missmatch at: 0800094AH  (Flash=F4H  Required=D6H) !
+Contents missmatch at: 0800094BH  (Flash=ECH  Required=EDH) !
+Contents missmatch at: 0800094EH  (Flash=60H  Required=96H) !
+Contents missmatch at: 0800094FH  (Flash=EEH  Required=EDH) !
+Contents missmatch at: 08000950H  (Flash=21H  Required=00H) !
+Contents missmatch at: 08000951H  (Flash=0AH  Required=3AH) !
+Contents missmatch at: 08000952H  (Flash=20H  Required=4FH) !
+Contents missmatch at: 08000953H  (Flash=EEH  Required=EAH) !
+Contents missmatch at: 08000954H  (Flash=01H  Required=47H) !
+Contents missmatch at: 08000958H  (Flash=82H  Required=62H) !
+Contents missmatch at: 08000959H  (Flash=3AH  Required=2AH) !
+Contents missmatch at: 0800095AH  (Flash=02H  Required=D5H) !
+Contents missmatch at: 0800095BH  (Flash=EEH  Required=EDH) !
+Contents missmatch at: 0800095CH  (Flash=A1H  Required=00H) !
+Contents missmatch at: 0800095DH  (Flash=0AH  Required=2AH) !
+Contents missmatch at: 0800095EH  (Flash=D9H  Required=02H) !
+Contents missmatch at: 0800095FH  (Flash=EDH  Required=EBH) !
+Contents missmatch at: 08000960H  (Flash=00H  Required=CAH) !
+Contents missmatch at: 08000961H  (Flash=1AH  Required=0BH) !
+Contents missmatch at: 08000962H  (Flash=43H  Required=72H) !
+Contents missmatch at: 08000964H  (Flash=41H  Required=C3H) !
+Contents missmatch at: 08000965H  (Flash=0AH  Required=2AH) !
+Contents missmatch at: 08000966H  (Flash=09H  Required=9BH) !
+Contents missmatch at: 08000967H  (Flash=EBH  Required=EDH) !
+Contents missmatch at: 08000968H  (Flash=C8H  Required=00H) !
+Contents missmatch at: 08000969H  (Flash=09H  Required=3AH) !
+Contents missmatch at: 0800096AH  (Flash=02H  Required=DBH) !
+Contents missmatch at: 0800096BH  (Flash=EEH  Required=EDH) !
+Contents missmatch at: 0800096CH  (Flash=61H  Required=01H) !
+Contents missmatch at: 0800096DH  (Flash=0AH  Required=3AH) !
+Contents missmatch at: 0800096EH  (Flash=16H  Required=21H) !
+Contents missmatch at: 0800096FH  (Flash=EDH  Required=EEH) !
+Contents missmatch at: 08000970H  (Flash=01H  Required=03H) !
+Contents missmatch at: 08000971H  (Flash=2AH  Required=4AH) !
+Too many errors to display !
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
@@ -59,10 +313,238 @@ Application running ...
 Build target 'Target 1'
 compiling key.c...
 ..\lcd\src\key.c(381): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\lcd\src\key.c(738): error:  #32: expression must have arithmetic type
+..\lcd\src\key.c(739): error:  #31: expression must have integral type
+..\lcd\src\key.c(740): error:  #32: expression must have arithmetic type
+..\lcd\src\key.c(741): error:  #31: expression must have integral type
+Target not created
+Build target 'Target 1'
+compiling key.c...
+..\lcd\src\key.c(382): warning:  #186-D: pointless comparison of unsigned integer with zero
 linking...
-Program Size: Code=52136 RO-data=27064 RW-data=284 ZI-data=53972  
+Program Size: Code=51956 RO-data=27060 RW-data=284 ZI-data=53972  
 FromELF: creating hex file...
 ".\Out\Project.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(1614): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1834): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2125): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2231): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2304): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1457): warning:  #177-D: variable "s" was declared but never referenced
+..\User\main.c(1458): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(1481): warning:  #550-D: variable "wugongkvar_95" was set but never used
+linking...
+Program Size: Code=51980 RO-data=27060 RW-data=284 ZI-data=54036  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling key.c...
+..\lcd\src\key.c(382): warning:  #186-D: pointless comparison of unsigned integer with zero
+linking...
+Program Size: Code=52004 RO-data=27060 RW-data=284 ZI-data=54036  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling key.c...
+..\lcd\src\key.c(382): warning:  #186-D: pointless comparison of unsigned integer with zero
+linking...
+Program Size: Code=52020 RO-data=27060 RW-data=284 ZI-data=54036  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20090928 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(1614): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1834): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2125): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2231): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2304): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(1457): warning:  #177-D: variable "s" was declared but never referenced
+..\User\main.c(1458): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(1481): warning:  #550-D: variable "wugongkvar_95" was set but never used
+linking...
+Program Size: Code=52020 RO-data=27060 RW-data=284 ZI-data=54036  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"

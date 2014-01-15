@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Out\Project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Out\Project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Mon Jan 13 12:44:26 2014
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Wed Jan 15 21:23:13 2014
 <BR><P>
 <H3>Maximum Stack Usage =      14872 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -996,14 +996,15 @@ Global Symbols
 <P><STRONG><a name="[9]"></a>DebugMon_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.DebugMon_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
-<P><STRONG><a name="[23]"></a>EXTI9_5_IRQHandler</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, main.o(i.EXTI9_5_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24 + Unknown Stack Size
-<LI>Call Chain = EXTI9_5_IRQHandler &rArr; OSIntExit
+<P><STRONG><a name="[23]"></a>EXTI9_5_IRQHandler</STRONG> (Thumb, 96 bytes, Stack size 32 bytes, main.o(i.EXTI9_5_IRQHandler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 116 + Unknown Stack Size
+<LI>Call Chain = EXTI9_5_IRQHandler &rArr; order_trans_rs485 &rArr; RS485_Send_Data &rArr; GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSIntExit
 <LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSIntEnter
 <LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_GetITStatus
 <LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_ClearITPendingBit
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;order_trans_rs485
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
@@ -1011,8 +1012,8 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI9_5_IRQHandler
 </UL>
 
-<P><STRONG><a name="[bf]"></a>EXTI_Configuration</STRONG> (Thumb, 106 bytes, Stack size 32 bytes, main.o(i.EXTI_Configuration))
-<BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = EXTI_Configuration &rArr; GPIO_Init
+<P><STRONG><a name="[bf]"></a>EXTI_Configuration</STRONG> (Thumb, 172 bytes, Stack size 48 bytes, main.o(i.EXTI_Configuration))
+<BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = EXTI_Configuration &rArr; GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYSCFG_EXTILineConfig
 <LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
@@ -1171,8 +1172,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Graf_display
 </UL>
 
-<P><STRONG><a name="[cc]"></a>Graf_display</STRONG> (Thumb, 1898 bytes, Stack size 216 bytes, key.o(i.Graf_display))
-<BR><BR>[Stack]<UL><LI>Max Depth = 596<LI>Call Chain = Graf_display &rArr; Graf_temp_hv_hi_L3 &rArr; WriteAll_1621 &rArr; SendDataBit_1621 &rArr; delay_us
+<P><STRONG><a name="[cc]"></a>Graf_display</STRONG> (Thumb, 1638 bytes, Stack size 192 bytes, key.o(i.Graf_display))
+<BR><BR>[Stack]<UL><LI>Max Depth = 572<LI>Call Chain = Graf_display &rArr; Graf_temp_hv_hi_L3 &rArr; WriteAll_1621 &rArr; SendDataBit_1621 &rArr; delay_us
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ReadInputDataBit
 <LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_1621
@@ -2017,7 +2018,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[aa]"></a>ParaSet</STRONG> (Thumb, 3004 bytes, Stack size 304 bytes, key.o(i.ParaSet))
-<BR><BR>[Stack]<UL><LI>Max Depth = 900 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 876 + Unknown Stack Size
 <LI>Call Chain = ParaSet &rArr; Graf_display &rArr; Graf_temp_hv_hi_L3 &rArr; WriteAll_1621 &rArr; SendDataBit_1621 &rArr; delay_us
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
@@ -2593,6 +2594,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scanf_slave_machine
 <LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;inquiry_slave_status_comm
 <LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;computer_gonglu
+<LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI9_5_IRQHandler
 <LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;App_TaskMaster
 </UL>
 
@@ -2624,7 +2626,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;App_Taskcomputer
 </UL>
 
-<P><STRONG><a name="[14b]"></a>set_statuslist</STRONG> (Thumb, 96 bytes, Stack size 20 bytes, main.o(i.set_statuslist))
+<P><STRONG><a name="[14b]"></a>set_statuslist</STRONG> (Thumb, 110 bytes, Stack size 20 bytes, main.o(i.set_statuslist))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = set_statuslist
 </UL>
 <BR>[Called By]<UL><LI><a href="#[154]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rs485_trans_status_dis
@@ -2837,7 +2839,7 @@ Local Symbols
 </UL>
 
 <P><STRONG><a name="[61]"></a>App_TaskLCD</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, main.o(i.App_TaskLCD))
-<BR><BR>[Stack]<UL><LI>Max Depth = 900 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 876 + Unknown Stack Size
  + In Cycle
 <LI>Call Chain = App_TaskLCD &rArr;  App_TaskLCD (Cycle)
 </UL>
@@ -2870,7 +2872,7 @@ Local Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(i.main)
 </UL>
-<P><STRONG><a name="[62]"></a>App_Taskcomputer</STRONG> (Thumb, 114 bytes, Stack size 16 bytes, main.o(i.App_Taskcomputer))
+<P><STRONG><a name="[62]"></a>App_Taskcomputer</STRONG> (Thumb, 118 bytes, Stack size 16 bytes, main.o(i.App_Taskcomputer))
 <BR><BR>[Stack]<UL><LI>Max Depth = 14872 + Unknown Stack Size
 <LI>Call Chain = App_Taskcomputer &rArr; computer_gonglu &rArr; __hardfp_atan2 &rArr; atan &rArr; __hardfp_atan &rArr; __kernel_poly &rArr; __aeabi_dmul
 </UL>
@@ -2886,7 +2888,7 @@ Local Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;computer_gonglu
 </UL>
 
-<P><STRONG><a name="[64]"></a>urgent_task</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, main.o(i.urgent_task))
+<P><STRONG><a name="[64]"></a>urgent_task</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, main.o(i.urgent_task))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56 + Unknown Stack Size
 <LI>Call Chain = urgent_task &rArr; OSSemPend &rArr; OS_Sched
 </UL>

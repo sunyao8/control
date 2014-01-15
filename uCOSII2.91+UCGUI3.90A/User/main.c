@@ -258,6 +258,7 @@ extern u8 HU_PROT_para;
 extern u8 HI_PROT_para;
 extern u8 COMMCAT_para;
 extern u16 CT_para;
+extern u8 capa1_array[33],capa2_array[33];
 
 /**********************************************/
 
@@ -492,13 +493,11 @@ static  void  App_Taskcomputer	 (void		*p_arg )
 {  
 u8 err;
  static status_dis_node     dis_list[33];
- status_comm_node *comm_list_1;
- status_comm_node *comm_list_2;
 
 static  u8 slave_dis[20];
 static  u8 slave_comm[20];
-comm_list_1=Comm_list_1;
-comm_list_2=Comm_list_2;
+static status_comm_node comm_list_1[33];
+static status_comm_node comm_list_2[33];
 for(;;)
    	{
    	OSSemPend(computer_sem,0,&err);
@@ -566,18 +565,9 @@ u8 err;
           while(1)
           	{
        	OSSemPend(urgent_sem,0,&err);      	
-//if(KEY1==1&&auto_on==0)
-	{   
-
-		  auto_on=1;
-
- }
-   //  if(KEY1==0&&auto_on==1)
- 	{
-
-		auto_on=0;
-
-	 }
+//{order_trans_rs485(mybox.myid,0,1,1,0,CONTROL);order_trans_rs485(mybox.myid,0,1,2,0,CONTROL);}
+	
+ 	
 
 
 		  }
@@ -1380,7 +1370,7 @@ if(dis_comm==1)
    	   comm_list_1[count].size=size;
    	   comm_list_1[count].work_status=work_status;
 	   comm_list_1[count].group=group;
-
+capa1_array[id]=size;
       // comm_list[count].work_time[0]=work_time;
   	}
   if(relay==2)
@@ -1389,7 +1379,7 @@ if(dis_comm==1)
    	   comm_list_2[count].size=size;
    	   comm_list_2[count].work_status=work_status;
 	   comm_list_2[count].group=group;
-
+capa2_array[id]=size;
       // comm_list[count].work_time[1]=work_time;
   	}  
 }
@@ -3423,6 +3413,7 @@ if(flag_comm==0)
 	        if(j==1){slave_comm[0]++;break;}
 		}
 			}
+//以下是为了更新从机的投切状态
 if(flag_comm==1||flag_comm==2)
 
 {
@@ -4541,11 +4532,25 @@ EXTI_InitStructure.EXTI_Line = EXTI_Line8;
 	
 	//NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);         	//嵌套分组为组0
 	NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;      	//中断通道为通道10
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;   //抢断优先级为0
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority =2;    		//响应优先级为0
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;     		//开中断
+	NVIC_Init(&NVIC_InitStructure);
+	 EXTI_GenerateSWInterrupt(EXTI_Line8);
+/*********************************************************************/
+	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource9);
+EXTI_InitStructure.EXTI_Line = EXTI_Line9;
+  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;  
+  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+  EXTI_Init(&EXTI_InitStructure);
+	
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;      	//中断通道为通道10
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;   //抢断优先级为0
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority =1;    		//响应优先级为0
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;     		//开中断
 	NVIC_Init(&NVIC_InitStructure);
-	 EXTI_GenerateSWInterrupt(EXTI_Line8);
+	 EXTI_GenerateSWInterrupt(EXTI_Line9);
 
 }
 
@@ -4562,6 +4567,18 @@ void EXTI9_5_IRQHandler(void)
 
 	}
       EXTI_ClearITPendingBit(EXTI_Line8);
+
+  if(EXTI_GetITStatus(EXTI_Line9) != RESET)
+	
+	{
+
+	//OSSemPost(urgent_sem);
+{order_trans_rs485(mybox.myid,0,1,1,0,CONTROL);order_trans_rs485(mybox.myid,0,1,2,0,CONTROL);}
+	}
+      EXTI_ClearITPendingBit(EXTI_Line9);
+
+
+	  
 
 	   	OSIntExit();  
 
