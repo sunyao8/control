@@ -63,9 +63,6 @@ typedef struct
   u8 group;// 第几组表示
 }status_comm_node;
 */
- status_comm_node Comm_list_1[33];
- status_comm_node Comm_list_2[33];
-
  typedef struct  
 { 
   u8 dis_comm;//dis=0 comm=1
@@ -1370,7 +1367,6 @@ if(dis_comm==1)
    	   comm_list_1[count].size=size;
    	   comm_list_1[count].work_status=work_status;
 	   comm_list_1[count].group=group;
-capa1_array[id]=size;
       // comm_list[count].work_time[0]=work_time;
   	}
   if(relay==2)
@@ -1379,7 +1375,6 @@ capa1_array[id]=size;
    	   comm_list_2[count].size=size;
    	   comm_list_2[count].work_status=work_status;
 	   comm_list_2[count].group=group;
-capa2_array[id]=size;
       // comm_list[count].work_time[1]=work_time;
   	}  
 }
@@ -1393,9 +1388,13 @@ u8 inquiry_slave_status_comm(u8 count,u8 id,status_dis_node *dis_list,status_com
 
    order_trans_rs485(mybox.myid,id,3,0,0,CONTROL);
    msg=(u8 *)OSMboxPend(RS485_STUTAS_MBOX,OS_TICKS_PER_SEC/10,&err);
-   if(err==OS_ERR_TIMEOUT){ return 0;}//(u8 id, u8 size, u8 work_status, u8 work_time) 
+   if(err==OS_ERR_TIMEOUT)
+   	{ return 0;}//(u8 id, u8 size, u8 work_status, u8 work_time) 
 	else 
-	{  rs485_trans_status_comm(count,msg,dis_list,comm_list_1,comm_list_2);return 1;}
+	{ 
+	rs485_trans_status_comm(count,msg,dis_list,comm_list_1,comm_list_2);
+	return 1;
+	}
 
 } //查询从机状态并保存到从机状态表中，参数id是要查询的从机号
 
@@ -3385,7 +3384,23 @@ if(flag_dis==0)
 	        if(j==1){slave_dis[0]++;break;}
 		}
 			}
+if(flag_dis==1)
+{
+ computer_trans_rs485(mybox.myid,i,2,0,0,CONTROL);
+   msg=(u8 *)OSMboxPend(RS485_STUTAS_MBOX,OS_TICKS_PER_SEC/10,&err);
+     if(err==OS_ERR_TIMEOUT);
+else
+{
+		for(s=1;s<=slave_dis[0];s++)
+			{
+                   if(i==dis_list[s].myid[0])dis_list[s].work_status[0]=msg[6];
+                   if(i==dis_list[s].myid[1])dis_list[s].work_status[1]=msg[7];
+                   if(i==dis_list[s].myid[2])dis_list[s].work_status[2]=msg[8];
+			}
 
+}
+
+}
 
 	flag_dis=0;
        j=0;
@@ -3395,7 +3410,7 @@ if(flag_dis==0)
 
 j=0;
 {
-for(i=8;i<=32;i++)
+for(i=slave_dis[0]+1;i<=32;i++)
 	{  
 
 for(g=1;g<=slave_comm[0];g++)
@@ -3419,8 +3434,17 @@ if(flag_comm==1||flag_comm==2)
 {
 {order_trans_rs485(mybox.myid,i,3,0,0,CONTROL); 
   msg=(u8 *)OSMboxPend(RS485_STUTAS_MBOX,OS_TICKS_PER_SEC/10,&err);
-     if(err==OS_ERR_TIMEOUT);
+     if(err==OS_ERR_TIMEOUT)
+	 	{capa1_array[i]=0;capa2_array[i]=0;
+	//	for(s=1;s<=slave_comm[0];s++)
+          //         if(i==comm_list_1[s].myid)comm_list_1[g].work_status=2;
+	//	for(s=1;s<=slave_comm[0];s++)
+           //        if(i==comm_list_2[s].myid)comm_list_2[g].work_status=2;
+
+	 }
 else {
+	capa1_array[msg[2]]=msg[3];
+       capa2_array[msg[2]]=msg[4];
 	if(flag_comm==1)
 		{
 	if(comm_list_1[g].group==1)comm_list_1[g].work_status=msg[5];
