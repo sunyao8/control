@@ -71,6 +71,12 @@ typedef struct
   u8 work_status[3];    //工作状态 1 为投入工作；0 为没有工作
 }status_dis_node;
 
+ typedef struct  
+{   u32 dis_comm;//dis=0 comm=1
+  u32 work_status[4];   //工作状态 1 为投入工作；0 为没有工作
+}light_status_node;
+ light_status_node light_status;
+
 /***************************************************/
 /* Private function prototypes -----------------------------------------------*/
 #if (OS_VIEW_MODULE == DEF_ENABLED)
@@ -105,7 +111,7 @@ u16 ADC_Converted_VValue=0;
 u16 ADC_Converted_CValue=0;
 u16 ADC_Converted_base=0;
 
-u8 tempshuzhi=2,vernum=101,hguestnum=222,gonglvshishu=0;
+u8 tempshuzhi=2,vernum=101,gonglvshishu=0;
 u16 dianya_zhi=0,wugongkvar=0,allkvar=0,HV=0,HI=0;
 u32	dianliuzhi=0;
 //#if (FUNCTION_MODULE == DF_THREE)
@@ -144,7 +150,11 @@ u8 computer_gonglu(status_dis_node *dis_list,status_comm_node *comm_list_1,statu
  OS_EVENT * RS485_MBOX,* RS485_STUTAS_MBOX,* RS485_RT;			//	rs485邮箱信号量
  OS_EVENT *computer_sem,*urgent_sem;			 //
 
-static u8 rs485buf[LEN_control];//发送控制信息
+static u8 rs485buf[LEN_control];
+;//发送控制信息
+
+
+u32 hand_light_existence;
 
 
 //接收到的数据长度
@@ -193,8 +203,8 @@ void EXTI_Configuration(void);//初始化函数
 u16 var=0;
 
 u8  subswitchABC_onoff	 (u8 relay,u8 message ,u8 flag);
-void LIGHT_backligt_on(u8 status_1,u8 status_2,u8 status_3);
-void LIGHT_backligt_off(u8 status_1,u8 status_2,u8 status_3);
+void LIGHT_backligt_on(void);
+void LIGHT_backligt_off(void);
 
 /***********************************end*******************************************************/
 
@@ -225,6 +235,9 @@ u8 inquiry_slave_status_comm(u8 count,u8 id,status_dis_node *dis_list,status_com
 
 void change_Queue(u8 list_flag,u8 Level, status_dis_node *dis_list,status_comm_node *comm_list_1,status_comm_node *comm_list_2,u8 *slave_dis,u8 *slave_comm);
 
+void set_bit(u8 b, u8 dis_com,light_status_node *light_status,u8 status_1,u8 status_2,u8 status_3,u8 status_4);
+u8 clear_bit(u8 b,u32 light_pad);
+void set_clear_existence(u8 true_false,u8 b,u32 *exist);
 
 /*************************************MAster data structure_end***************/
 
@@ -241,6 +254,7 @@ u16 T=10;
 u8 RT_FLAG=3;
 u16 scan_init=20;
 u8 MASTER=1;
+u8 light_time=6;
 
 /********************控制器设置参数*************************/
 extern u8 DELAY_ON_para;
@@ -255,7 +269,10 @@ extern u8 HU_PROT_para;
 extern u8 HI_PROT_para;
 extern u8 COMMCAT_para;
 extern u16 CT_para;
-extern u8 capa1_array[33],capa2_array[33];
+extern u8 capa1_array[32],capa2_array[32];
+
+u8 hand_id=1;
+u8 dis_com=0;
 
 /**********************************************/
 
@@ -266,7 +283,7 @@ CPU_INT08U  os_err;
 
 //CPU_IntDis();                   
 /***************  Init hardware ***************/
-
+//u8 i;
 
     OS_CPU_SysTickInit();/* Initialize the SysTick.                              */
 	delay_init();
@@ -277,6 +294,7 @@ GPIO_Configuration();
 
 initmybox();//初始化自身信息
  init_para();
+ init_light_off();
 
 os_err = os_err; 
 
@@ -405,7 +423,6 @@ static  void  App_TaskMaster(void		*p_arg )
  if(MASTER==1)
  	{
  	
-hguestnum=111;
 
 OSSemPost(computer_sem);
 if(KEY_2==1)
@@ -428,6 +445,7 @@ scan_init=0;
  	}
 
 //delay_ms(1500);
+
 delay_ms(100);
 
 	        }
@@ -460,10 +478,108 @@ delay_ms(100);
 static  void  App_TaskLCD	 (void		*p_arg )
 {  
 
-
-
+u8 status_1,status_2,status_3,status_4;
+u8 exist;
+u8 i;
 	for(;;)
 		{  ParaSet();
+	if(COMMCAT_para==1)
+{
+
+
+	if(KEY_right==0)
+ 		{
+        exist=clear_bit(hand_id, hand_light_existence);
+		if(exist==1){
+           status_4=clear_bit(hand_id,light_status.work_status[3]);
+ 	dis_com= clear_bit(hand_id,light_status.dis_comm);
+
+	if(status_4==0)   
+	{
+	status_1= clear_bit(hand_id,light_status.work_status[0]);
+	status_2= clear_bit(hand_id,light_status.work_status[1]);
+	status_3= clear_bit(hand_id,light_status.work_status[2]);
+ Light_pad_on(dis_com,hand_id,status_1,status_2,status_3);
+			}
+	if(status_4==1)Light_pad_on(dis_com,hand_id,2,2,2);
+
+			
+
+		}
+		 hand_id++;
+		 while(KEY_right==0);
+		 if(hand_id>32)hand_id=1;
+		 	for(i=hand_id;i<=32;i++)
+		{exist=clear_bit(i, hand_light_existence);
+	         if(exist==1)
+			 	{
+			 	hand_id=i;
+				rs485buf[13]=0;
+				break;
+				}
+	 
+	  }	
+				//		if(i==33)hand_id=1;
+
+	    }
+	if(KEY_left==0)
+	  {
+	          exist=clear_bit(hand_id, hand_light_existence);
+		if(exist==1){
+           status_4=clear_bit(hand_id,light_status.work_status[3]);
+ 	dis_com= clear_bit(hand_id,light_status.dis_comm);
+
+	if(status_4==0)   
+	{
+	status_1= clear_bit(hand_id,light_status.work_status[0]);
+	status_2= clear_bit(hand_id,light_status.work_status[1]);
+	status_3= clear_bit(hand_id,light_status.work_status[2]);
+ Light_pad_on(dis_com,hand_id,status_1,status_2,status_3);
+			}
+	if(status_4==1)Light_pad_on(dis_com,hand_id,2,2,2);
+
+			
+
+		}
+		 hand_id--;
+		 while(KEY_left==0);
+		 if(hand_id<1)hand_id=32;
+		 		 	for(i=hand_id;i>=1;i--)
+		{exist=clear_bit(i, hand_light_existence);
+	         if(exist==1)
+			 	{
+			 	hand_id=i;
+				rs485buf[13]=0;
+				break;
+				}
+	 
+	  }
+		//	if(i==0)hand_id=32;
+
+	  }
+
+	   if(exist==1)	{
+           status_4=clear_bit(hand_id,light_status.work_status[3]);
+		   dis_com= clear_bit(hand_id,light_status.dis_comm);
+		if(status_4==0)   
+			{
+	status_1= clear_bit(hand_id,light_status.work_status[0]);
+	status_2= clear_bit(hand_id,light_status.work_status[1]);
+	status_3= clear_bit(hand_id,light_status.work_status[2]);
+if(Work_Flag==1)Light_pad_on(dis_com,hand_id,status_1,status_2,status_3);
+if(Work_Flag==0)Light_pad_off(dis_com,hand_id,status_1,status_2,status_3);
+				}
+			if(status_4==1)   
+				{
+if(Work_Flag==1)Light_pad_on(dis_com,hand_id,2,2,2);
+if(Work_Flag==0)Light_pad_off(dis_com,hand_id,2,2,2);
+
+			}
+	   	}
+		  
+		  
+
+}
                      delay_ms(100);//100
 
 	        }
@@ -500,16 +616,19 @@ for(;;)
    	OSSemPend(computer_sem,0,&err);
 #if (FUNCTION_MODULE == DF_THREE)
 
-
  scanf_slave_machine(dis_list,comm_list_1,comm_list_2,slave_dis,slave_comm);
- init_Queue(dis_list,comm_list_1,slave_dis,slave_comm,1);
+init_Queue(dis_list,comm_list_1,slave_dis,slave_comm,1);
   init_Queue(dis_list,comm_list_2,slave_dis,slave_comm,2);
   init_Queue_dis(dis_list,slave_dis);
 
+
+
+if(COMMCAT_para==0)
+{
+
  computer_gonglu(dis_list,comm_list_1,comm_list_2,slave_dis,slave_comm);
+}
 
-
-//inquiry_slave_status_dis(3,dis_list,comm_list);   
 #endif
 
     }	
@@ -609,7 +728,7 @@ GPIO_InitTypeDef GPIO_InitStructure;
 RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
 	
 	/* Configure PF6 PF7 PF8 PF9 in output pushpull mode */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_10|GPIO_Pin_11|GPIO_Pin_12|GPIO_Pin_13;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_10|GPIO_Pin_11|GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_15;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
@@ -620,6 +739,7 @@ RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
 	HT1621_Init();
 AT24CXX_Init();
 	KEY_Init();          //初始化与按键连接的硬件接口  
+	CH452_Init();
 
 /***********************采样和DMA**************************************/	
 #if (FUNCTION_MODULE == DF_THREE)
@@ -1295,7 +1415,7 @@ void initmybox()//初始化自身信息
 {  	 
   
   mybox.master=0;
-  mybox.myid=1;
+  mybox.myid=0;
  mybox.source=0;
  mybox.destination=0;
  mybox.send=0;
@@ -1345,18 +1465,24 @@ if(relay==1)
        dis_list[count].myid[0]=id;
    	   dis_list[count].size[0]=size;
    	   dis_list[count].work_status[0]=work_status;
+	     ///    Light_pad_onoff(1,id,work_status,3,3);
+
        }
 if(relay==2)
         {
 	dis_list[count].myid[1]=id;
    	   dis_list[count].size[1]=size;
    	   dis_list[count].work_status[1]=work_status;
+	  ///       Light_pad_onoff(1,id,3,work_status,3);
+
        }
 if(relay==3)
         {
        dis_list[count].myid[2]=id;
    	   dis_list[count].size[2]=size;
    	   dis_list[count].work_status[2]=work_status;
+	  ///       Light_pad_onoff(1,id,3,3,work_status);
+
        }
 }
 if(dis_comm==1)
@@ -1368,6 +1494,7 @@ if(dis_comm==1)
    	   comm_list_1[count].work_status=work_status;
 	   comm_list_1[count].group=group;
       // comm_list[count].work_time[0]=work_time;
+  ///    Light_pad_onoff(2,id,work_status,3,3);
   	}
   if(relay==2)
   	{
@@ -1376,6 +1503,8 @@ if(dis_comm==1)
    	   comm_list_2[count].work_status=work_status;
 	   comm_list_2[count].group=group;
       // comm_list[count].work_time[1]=work_time;
+    ///        Light_pad_onoff(2,id,3,work_status,3);
+
   	}  
 }
 
@@ -3381,14 +3510,14 @@ if(flag_dis==0)
 //	for(c=1;c<=2;c++)
 		{
 	j=inquiry_slave_status_dis(slave_dis[0]+1,i,dis_list,comm_list_1); 
-	        if(j==1){slave_dis[0]++;break;}
+	        if(j==1){ slave_dis[0]++;break;}
 		}
 			}
 if(flag_dis==1)
 {
  computer_trans_rs485(mybox.myid,i,2,0,0,CONTROL);
    msg=(u8 *)OSMboxPend(RS485_STUTAS_MBOX,OS_TICKS_PER_SEC/10,&err);
-     if(err==OS_ERR_TIMEOUT);
+     if(err==OS_ERR_TIMEOUT){Light_pad_on(0,i,2,2,2);set_bit(i, 0, &light_status, 0,0, 0,2);}
 else
 {
 		for(s=1;s<=slave_dis[0];s++)
@@ -3397,7 +3526,9 @@ else
                    if(i==dis_list[s].myid[1])dis_list[s].work_status[1]=msg[7];
                    if(i==dis_list[s].myid[2])dis_list[s].work_status[2]=msg[8];
 			}
-
+Light_pad_on(0,i,msg[6],msg[7],msg[8]);
+set_clear_existence(1,i,&hand_light_existence);
+set_bit(i, 0,&light_status,msg[6],msg[7], msg[8],0);
 }
 
 }
@@ -3435,16 +3566,22 @@ if(flag_comm==1||flag_comm==2)
 {order_trans_rs485(mybox.myid,i,3,0,0,CONTROL); 
   msg=(u8 *)OSMboxPend(RS485_STUTAS_MBOX,OS_TICKS_PER_SEC/10,&err);
      if(err==OS_ERR_TIMEOUT)
-	 	{capa1_array[i]=0;capa2_array[i]=0;
-	//	for(s=1;s<=slave_comm[0];s++)
-          //         if(i==comm_list_1[s].myid)comm_list_1[g].work_status=2;
-	//	for(s=1;s<=slave_comm[0];s++)
-           //        if(i==comm_list_2[s].myid)comm_list_2[g].work_status=2;
+	 	{
+	 	capa1_array[i-1]=0;capa2_array[i-1]=0;//屏幕显示容量使用
+
+	  Light_pad_on(1,i,2,2,0);//指示灯使用
+set_clear_existence(1,i,&hand_light_existence);
+	 set_bit(i, 1, &light_status, 0,0, 0,2);//手动投切使用
+
 
 	 }
 else {
-	capa1_array[msg[2]]=msg[3];
-       capa2_array[msg[2]]=msg[4];
+	capa1_array[msg[2]-1]=msg[3];
+       capa2_array[msg[2]-1]=msg[4];
+	 Light_pad_on(1,i,msg[5],msg[6],0);
+	 set_bit(i, 1, &light_status, msg[5],msg[6], 0,0);//手动投切使用
+	 set_clear_existence(1,i,&hand_light_existence);
+
 	if(flag_comm==1)
 		{
 	if(comm_list_1[g].group==1)comm_list_1[g].work_status=msg[5];
@@ -4576,6 +4713,36 @@ EXTI_InitStructure.EXTI_Line = EXTI_Line9;
 	NVIC_Init(&NVIC_InitStructure);
 	 EXTI_GenerateSWInterrupt(EXTI_Line9);
 
+
+SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource12);
+EXTI_InitStructure.EXTI_Line = EXTI_Line12;
+  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;  
+  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+  EXTI_Init(&EXTI_InitStructure);
+	
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;      	//中断通道为通道10
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;   //抢断优先级为0
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority =1;    		//响应优先级为0
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;     		//开中断
+	NVIC_Init(&NVIC_InitStructure);
+	 EXTI_GenerateSWInterrupt(EXTI_Line12);
+
+
+SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource14);
+EXTI_InitStructure.EXTI_Line = EXTI_Line14;
+  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;  
+  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+  EXTI_Init(&EXTI_InitStructure);
+	
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;      	//中断通道为通道10
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;   //抢断优先级为0
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority =1;    		//响应优先级为0
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;     		//开中断
+	NVIC_Init(&NVIC_InitStructure);
+	 EXTI_GenerateSWInterrupt(EXTI_Line14);
+
 }
 
 
@@ -4598,6 +4765,8 @@ void EXTI9_5_IRQHandler(void)
 
 	//OSSemPost(urgent_sem);
 {order_trans_rs485(mybox.myid,0,1,1,0,CONTROL);order_trans_rs485(mybox.myid,0,1,2,0,CONTROL);}
+	// init_light_off();
+
 	}
       EXTI_ClearITPendingBit(EXTI_Line9);
 
@@ -4608,38 +4777,84 @@ void EXTI9_5_IRQHandler(void)
 
 }
 
-/*************************************************/
-void LIGHT_backligt_on(u8 status_1,u8 status_2,u8 status_3)
+void EXTI15_10_IRQHandler(void)
 {
-if(status_1==0&&status_2==1&&status_3==0)HT595_Send_Byte((GREEN_RED_GREEN)|background_light_on);
-if(status_1==1&&status_2==0&&status_3==0)HT595_Send_Byte((RED_GREEN_GREEN)|background_light_on);
-if(status_1==0&&status_2==0&&status_3==0)HT595_Send_Byte((GREEN_GREEN_GREEN)|background_light_on);
-if(status_1==1&&status_2==1&&status_3==0)HT595_Send_Byte((RED_RED_GREEN)|background_light_on);
 
-if(status_1==0&&status_2==1&&status_3==1)HT595_Send_Byte((GREEN_RED_RED)|background_light_on);
-if(status_1==1&&status_2==0&&status_3==1)HT595_Send_Byte((RED_GREEN_RED)|background_light_on);
-if(status_1==0&&status_2==0&&status_3==1)HT595_Send_Byte((GREEN_GREEN_RED)|background_light_on);
-if(status_1==1&&status_2==1&&status_3==1)HT595_Send_Byte((RED_RED_RED)|background_light_on);
 
-if(status_1==2&&status_2==2&&status_3==2)HT595_Send_Byte((YELLOW_YELLOW_YELLOW)|background_light_on);
+	OSIntEnter();   
+
+  if(EXTI_GetITStatus(EXTI_Line12) != RESET)
+	
+	{
+	if(COMMCAT_para==1)
+{
+if(dis_com==1)
+{
+order_trans_rs485(mybox.myid,hand_id,1,1,0,CONTROL);
+order_trans_rs485(mybox.myid,hand_id,1,2,0,CONTROL);
+rs485buf[13]=0;
+}
+
+if(dis_com==0)
+{
+computer_trans_rs485(mybox.myid,hand_id,1,1,6,CONTROL);//三相一起切命令
+}
+}
+
+	}
+      EXTI_ClearITPendingBit(EXTI_Line12);
+
+  if(EXTI_GetITStatus(EXTI_Line14) != RESET)
+	
+	{
+	if(COMMCAT_para==1)
+{
+if(dis_com==1)
+{
+if(rs485buf[12]==0&&rs485buf[13]==0)
+{
+order_trans_rs485(mybox.myid,hand_id,1,1,1,CONTROL);
+rs485buf[12]=1;
+rs485buf[13]=1;
+
+}
+
+if(rs485buf[12]==1&&rs485buf[13]==0)
+{
+order_trans_rs485(mybox.myid,hand_id,1,2,1,CONTROL);
+rs485buf[12]=0;
+rs485buf[13]=1;
+
+}
+}
+if(dis_com==0)
+{
+computer_trans_rs485(mybox.myid,hand_id,1,1,7,CONTROL);//三相一起投命令
+}	
+}
+
+	}
+      EXTI_ClearITPendingBit(EXTI_Line14);
+
+
+	  
+
+	   	OSIntExit();  
+
+}
+/*************************************************/
+void LIGHT_backligt_on()
+{
+GPIO_SetBits(GPIOD, GPIO_Pin_15);
+light_time=6;
 
 }
 
 
 /*************************************************/
-void LIGHT_backligt_off(u8 status_1,u8 status_2,u8 status_3)
+void LIGHT_backligt_off()
 {
-if(status_1==0&&status_2==1&&status_3==0)HT595_Send_Byte((GREEN_RED_GREEN));
-if(status_1==1&&status_2==0&&status_3==0)HT595_Send_Byte((RED_GREEN_GREEN));
-if(status_1==0&&status_2==0&&status_3==0)HT595_Send_Byte((GREEN_GREEN_GREEN));
-if(status_1==1&&status_2==1&&status_3==0)HT595_Send_Byte((RED_RED_GREEN));
-
-if(status_1==0&&status_2==1&&status_3==1)HT595_Send_Byte((GREEN_RED_RED));
-if(status_1==1&&status_2==0&&status_3==1)HT595_Send_Byte((RED_GREEN_RED));
-if(status_1==0&&status_2==0&&status_3==1)HT595_Send_Byte((GREEN_GREEN_RED));
-if(status_1==1&&status_2==1&&status_3==1)HT595_Send_Byte((RED_RED_RED));
-
-if(status_1==2&&status_2==2&&status_3==2)HT595_Send_Byte((YELLOW_YELLOW_YELLOW));
+GPIO_ResetBits(GPIOD, GPIO_Pin_15);
 
 }
 
@@ -4681,6 +4896,9 @@ if(status_1==2&&status_2==2&&status_3==2)HT595_Send_Byte((YELLOW_YELLOW_YELLOW))
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)  //检查TIM4更新中断发生与否
 		{	
 			Work_Flag=!Work_Flag;	
+			if(light_time>0)light_time--;
+ if(light_time==0)LIGHT_backligt_off();
+
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update  );  //清除TIMx更新中断标志
 		
 		}
@@ -4688,7 +4906,43 @@ if(status_1==2&&status_2==2&&status_3==2)HT595_Send_Byte((YELLOW_YELLOW_YELLOW))
 
  	}
 
+void set_bit(u8 b, u8 dis_com,light_status_node *light_status,u8 status_1,u8 status_2,u8 status_3 ,u8 status_4)
+{
+b=b-1;
+if(dis_com==0){light_status->dis_comm=(~(0x00000001<<b))&light_status->dis_comm;}
+if(dis_com==1){light_status->dis_comm=(0x00000001<<b)|light_status->dis_comm;}
 
+{
+if(status_1==0)light_status->work_status[0]=(~(0x00000001<<b))&light_status->work_status[0];
+if(status_2==0)light_status->work_status[1]=(~(0x00000001<<b))&light_status->work_status[1];
+if(status_3==0)light_status->work_status[2]=(~(0x00000001<<b))&light_status->work_status[2];
+}
+
+{
+if(status_1==1)light_status->work_status[0]=(0x00000001<<b)|light_status->work_status[0];
+if(status_2==1)light_status->work_status[1]=(0x00000001<<b)|light_status->work_status[1];
+if(status_3==1)light_status->work_status[2]=(0x00000001<<b)|light_status->work_status[2];
+}
+{
+	if(status_4==0)light_status->work_status[3]=(~(0x00000001<<b))&light_status->work_status[3];
+       if(status_4==2)light_status->work_status[3]=(0x00000001<<b)|light_status->work_status[3];
+}
+}
+
+u8 clear_bit(u8 b,u32 light_pad)
+{
+b=b-1;
+if(((light_pad>>b)&0x00000001)==1)return 1;
+if(((light_pad>>b)&0x00000001)==0) return 0;
+else return 2;
+}
+void set_clear_existence(u8 true_false,u8 b,u32 *exist)
+{
+b=b-1;
+if(true_false==0){(*exist)=(~(0x00000001<<b))&(*exist);}
+if(true_false==1){(*exist)=(0x00000001<<b)|(*exist);}
+
+}
 
 #ifdef  USE_FULL_ASSERT
 

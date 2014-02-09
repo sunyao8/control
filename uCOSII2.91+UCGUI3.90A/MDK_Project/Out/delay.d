@@ -55,6 +55,7 @@
 .\Out\delay.o: C:\Keil\ARM\RV31\Inc\errno.h
 .\Out\delay.o: C:\Keil\ARM\RV31\Inc\limits.h
 .\Out\delay.o: ..\lcd\inc\ht1621.h
+.\Out\delay.o: ..\lcd\inc\ch452.h
 .\Out\delay.o: ..\lcd\inc\key.h
 .\Out\delay.o: ..\lcd\inc\24cxx.h
 .\Out\delay.o: ..\lcd\inc\myiic.h

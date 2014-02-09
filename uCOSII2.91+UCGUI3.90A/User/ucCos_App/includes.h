@@ -32,6 +32,7 @@
 #include  <lib_str.h>
 #include "delay.h"
 #include "ht1621.h"
+#include "ch452.h"
 #include "key.h"
 #include "24cxx.h" 
 #include "myiic.h"

@@ -35,6 +35,7 @@
 //初始化PB4 PB5和PB6为输出口.并使能这PE时钟		    
 //HT1621 IO初始化
 extern u8 L_C_flag_A;//感性容性标准变量
+extern u8 COMMCAT_para;
 
 void HT1621_Init(void)
 {		
@@ -43,13 +44,12 @@ void HT1621_Init(void)
 RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 //RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE);
 
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9|GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
   	 GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; 
   //GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
   GPIO_Init(GPIOB, &GPIO_InitStructure);
-  GPIO_SetBits( GPIOB, GPIO_Pin_9);
    GPIO_SetBits( GPIOB, GPIO_Pin_5);
   GPIO_SetBits( GPIOB, GPIO_Pin_6);
   GPIO_SetBits( GPIOB, GPIO_Pin_7);
@@ -193,25 +193,60 @@ WriteAll_1621(19,num11_p21Seg+3*PF_baifenwei,3);		//	带P21△P22投入符号
   current_para_baiwei=(current_para%1000)/100;
   current_para_shiwei=(current_para%100)/10;
   current_para_gewei=current_para%10;
+   if(COMMCAT_para==0)
+	  	  	{
+	  	  	Write_1621(4,0x01);
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  	  Write_1621(2,0x01);
+
+	  	  	}
   WriteAll_1621(2,num1234Seg+2*current_para_baiwei,2);	//
   WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
   WriteAll_1621(6,num1234Seg+2*current_para_gewei,2);	//
   if(current_para_qianwei>0)
     {
 	  WriteAll_1621(0,num1234Seg+2*current_para_qianwei,2);	//
+	  	  if(COMMCAT_para==0)
+	  	  	{
 	  WriteAll_1621(2,num1234Seg+2*current_para_baiwei,2);	//
 	  WriteAll_1621(4,num3_p11Seg+2*current_para_shiwei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
+	  	  	}	  
 	  WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
     }
 	 else if(current_para_baiwei>0)
 	 {
-	   WriteAll_1621(2,num1234Seg+2*current_para_baiwei,2);	//
-	   WriteAll_1621(4,num3_p11Seg+2*current_para_shiwei,2);	//
+	 	  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*current_para_baiwei,2);	//
+	  WriteAll_1621(4,num3_p11Seg+2*current_para_shiwei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
+	  	  	}
 	   WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
 	 }
 	 else
 	 {
+	  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*current_para_baiwei,2);	//
 	  WriteAll_1621(4,num3_p11Seg+2*current_para_shiwei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  		  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
+
+	  	  	}
 	  WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
 	 }
 
@@ -282,19 +317,45 @@ WriteAll_1621(19,num9_12Seg+3*PF_baifenwei,3);		//	带P21L1 P22投入符号
   if(current_para_qianwei>0)
     {
 	  WriteAll_1621(0,num1234Seg+2*current_para_qianwei,2);	//
+		  if(COMMCAT_para==0)
+	  	  	{
 	  WriteAll_1621(2,num1234Seg+2*current_para_baiwei,2);	//
 	  WriteAll_1621(4,num3_p11Seg+2*current_para_shiwei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
+	  	  	}	  
 	  WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
     }
 	 else if(current_para_baiwei>0)
 	 {
-	   WriteAll_1621(2,num1234Seg+2*current_para_baiwei,2);	//
-	   WriteAll_1621(4,num3_p11Seg+2*current_para_shiwei,2);	//
+		  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*current_para_baiwei,2);	//
+	  WriteAll_1621(4,num3_p11Seg+2*current_para_shiwei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
+	  	  	}	  
 	   WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
 	 }
 	 else
 	 {
+	  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*current_para_baiwei,2);	//
 	  WriteAll_1621(4,num3_p11Seg+2*current_para_shiwei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  		  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
+
+	  	  	}
 	  WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
 	 }
 
@@ -366,19 +427,45 @@ WriteAll_1621(19,num9_12Seg+3*PF_baifenwei,3);		//	带P21L1 P22投入符号
   if(current_para_qianwei>0)
     {
 	  WriteAll_1621(0,num1234Seg+2*current_para_qianwei,2);	//
+		  if(COMMCAT_para==0)
+	  	  	{
 	  WriteAll_1621(2,num1234Seg+2*current_para_baiwei,2);	//
 	  WriteAll_1621(4,num3_p11Seg+2*current_para_shiwei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
+	  	  	}	  
 	  WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
     }
 	 else if(current_para_baiwei>0)
 	 {
-	   WriteAll_1621(2,num1234Seg+2*current_para_baiwei,2);	//
-	   WriteAll_1621(4,num3_p11Seg+2*current_para_shiwei,2);	//
+		  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*current_para_baiwei,2);	//
+	  WriteAll_1621(4,num3_p11Seg+2*current_para_shiwei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
+	  	  	}	  
 	   WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
 	 }
 	 else
 	 {
+	  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*current_para_baiwei,2);	//
 	  WriteAll_1621(4,num3_p11Seg+2*current_para_shiwei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  		  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
+
+	  	  	}
 	  WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
 	 }
 
@@ -451,19 +538,45 @@ WriteAll_1621(19,num11_L3seg+3*PF_baifenwei,3);		//	带P21L1 P22投入符号
   if(current_para_qianwei>0)
     {
 	  WriteAll_1621(0,num1234Seg+2*current_para_qianwei,2);	//
+		  if(COMMCAT_para==0)
+	  	  	{
 	  WriteAll_1621(2,num1234Seg+2*current_para_baiwei,2);	//
 	  WriteAll_1621(4,num3_p11Seg+2*current_para_shiwei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
+	  	  	}	  
 	  WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
     }
 	 else if(current_para_baiwei>0)
 	 {
-	   WriteAll_1621(2,num1234Seg+2*current_para_baiwei,2);	//
-	   WriteAll_1621(4,num3_p11Seg+2*current_para_shiwei,2);	//
+		  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*current_para_baiwei,2);	//
+	  WriteAll_1621(4,num3_p11Seg+2*current_para_shiwei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
+	  	  	}	  
 	   WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
 	 }
 	 else
 	 {
+	  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*current_para_baiwei,2);	//
 	  WriteAll_1621(4,num3_p11Seg+2*current_para_shiwei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  		  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
+
+	  	  	}
 	  WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
 	 }
 
@@ -534,8 +647,16 @@ u8 num11_p21Seg[]={0X06,0X0D,0X06,0X06,0X08,0X00,0X04,0X0F,0X02,0X06,0X0F,0X00,0
 	freq_shiwei=freq/100;
 	freq_gewei=(freq%100)/10;
 	freq_shifenwei=freq%10;
-	WriteAll_1621(2,num1234Seg+2*freq_shiwei,2);	//
-    WriteAll_1621(4,num3_p11Seg+2*freq_gewei,2);	//
+	  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*freq_shiwei,2);	//
+	  WriteAll_1621(4,num3_p11Seg+2*freq_gewei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*freq_shiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*freq_gewei,2);	//
+	  	  	}
     WriteAll_1621(6,num4_dp3Seg+2*freq_shifenwei,2);
 
 }
@@ -609,9 +730,17 @@ u8 num10_L1_dp9seg[]={0X06,0X0D,0X07,0X06,0X08,0X01,0X04,0X0F,0X03,0X06,0X0F,0X0
 	freq_shiwei=freq/100;
 	freq_gewei=(freq%100)/10;
 	freq_shifenwei=freq%10;
-	WriteAll_1621(2,num1234Seg+2*freq_shiwei,2);	//
-    WriteAll_1621(4,num3_p11Seg+2*freq_gewei,2);	//
-    WriteAll_1621(6,num4_dp3Seg+2*freq_shifenwei,2);
+	  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*freq_shiwei,2);	//
+	  WriteAll_1621(4,num3_p11Seg+2*freq_gewei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*freq_shiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*freq_gewei,2);	//
+	  	  	}
+		  WriteAll_1621(6,num4_dp3Seg+2*freq_shifenwei,2);
 
 }
 
@@ -685,9 +814,17 @@ u8 num10_L2_dp9seg[]={0X0E,0X05,0X07,0X0E,0X00,0X01,0X0C,0X07,0X03,0X0E,0X07,0X0
 	freq_shiwei=freq/100;
 	freq_gewei=(freq%100)/10;
 	freq_shifenwei=freq%10;
-	WriteAll_1621(2,num1234Seg+2*freq_shiwei,2);	//
-    WriteAll_1621(4,num3_p11Seg+2*freq_gewei,2);	//
-    WriteAll_1621(6,num4_dp3Seg+2*freq_shifenwei,2);
+	  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*freq_shiwei,2);	//
+	  WriteAll_1621(4,num3_p11Seg+2*freq_gewei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*freq_shiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*freq_gewei,2);	//
+	  	  	}
+		  WriteAll_1621(6,num4_dp3Seg+2*freq_shifenwei,2);
 
 }
 
@@ -760,9 +897,17 @@ u8 num11_L3seg[]={0X06,0X05,0X0E,0X06,0X00,0X08,0X04,0X07,0X0A,0X06,0X07,0X08,0X
 	freq_shiwei=freq/100;
 	freq_gewei=(freq%100)/10;
 	freq_shifenwei=freq%10;
-	WriteAll_1621(2,num1234Seg+2*freq_shiwei,2);	//
-    WriteAll_1621(4,num3_p11Seg+2*freq_gewei,2);	//
-    WriteAll_1621(6,num4_dp3Seg+2*freq_shifenwei,2);
+	  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*freq_shiwei,2);	//
+	  WriteAll_1621(4,num3_p11Seg+2*freq_gewei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*freq_shiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*freq_gewei,2);	//
+	  	  	}
+		  WriteAll_1621(6,num4_dp3Seg+2*freq_shifenwei,2);
 
 }
 void Graf_temp_hv_hi(u16 TEMP,u16 HV,u16 HI)	   //显示温度电压谐波电流谐波
@@ -825,11 +970,31 @@ Write_1621(4, 0x01);//字   ‘自    ’
 	HI_shifenwei=HI%10;
 	if(HI_shiwei>0)
 	{
-	WriteAll_1621(2,num1234Seg+2*HI_shiwei,2);	//
-	WriteAll_1621(4,num3_p11Seg+2*HI_gewei,2);	//
+		  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*HI_shiwei,2);	//
+	  WriteAll_1621(4,num3_p11Seg+2*HI_gewei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*HI_shiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*HI_gewei,2);	//
+	  	  	}
 	WriteAll_1621(6,num4_dp3Seg+2*HI_shifenwei,2);	//
 	}
-
+else
+{
+		  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(4,num3_p11Seg+2*HI_gewei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  	  	Write_1621(2,0x01);
+	  WriteAll_1621(4,num1234Seg+2*HI_gewei,2);	//
+	  	  	}
+	WriteAll_1621(6,num4_dp3Seg+2*HI_shifenwei,2);	//
+	}
 }
 
 void Graf_temp_hv_hi_L1(u16 TEMP,u16 HV,u16 HI)	   //显示温度电压谐波电流谐波
@@ -894,8 +1059,29 @@ Write_1621(4, 0x01);//字   ‘自    ’
 	HI_shifenwei=HI%10;
 	if(HI_shiwei>0)
 	{
-	WriteAll_1621(2,num1234Seg+2*HI_shiwei,2);	//
-	WriteAll_1621(4,num3_p11Seg+2*HI_gewei,2);	//
+		  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*HI_shiwei,2);	//
+	  WriteAll_1621(4,num3_p11Seg+2*HI_gewei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*HI_shiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*HI_gewei,2);	//
+	  	  	}
+	WriteAll_1621(6,num4_dp3Seg+2*HI_shifenwei,2);	//
+	}
+else
+{
+		  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(4,num3_p11Seg+2*HI_gewei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  	  	Write_1621(2,0x01);
+	  WriteAll_1621(4,num1234Seg+2*HI_gewei,2);	//
+	  	  	}
 	WriteAll_1621(6,num4_dp3Seg+2*HI_shifenwei,2);	//
 	}
 
@@ -963,8 +1149,29 @@ Write_1621(4, 0x01);//字   ‘自    ’
 	HI_shifenwei=HI%10;
 	if(HI_shiwei>0)
 	{
-	WriteAll_1621(2,num1234Seg+2*HI_shiwei,2);	//
-	WriteAll_1621(4,num3_p11Seg+2*HI_gewei,2);	//
+		  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*HI_shiwei,2);	//
+	  WriteAll_1621(4,num3_p11Seg+2*HI_gewei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*HI_shiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*HI_gewei,2);	//
+	  	  	}
+	WriteAll_1621(6,num4_dp3Seg+2*HI_shifenwei,2);	//
+	}
+else
+{
+		  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(4,num3_p11Seg+2*HI_gewei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  	  	Write_1621(2,0x01);
+	  WriteAll_1621(4,num1234Seg+2*HI_gewei,2);	//
+	  	  	}
 	WriteAll_1621(6,num4_dp3Seg+2*HI_shifenwei,2);	//
 	}
 
@@ -1031,8 +1238,29 @@ Write_1621(4, 0x01);//字   ‘自    ’
 	HI_shifenwei=HI%10;
 	if(HI_shiwei>0)
 	{
-	WriteAll_1621(2,num1234Seg+2*HI_shiwei,2);	//
-	WriteAll_1621(4,num3_p11Seg+2*HI_gewei,2);	//
+		  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*HI_shiwei,2);	//
+	  WriteAll_1621(4,num3_p11Seg+2*HI_gewei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*HI_shiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*HI_gewei,2);	//
+	  	  	}
+	WriteAll_1621(6,num4_dp3Seg+2*HI_shifenwei,2);	//
+	}
+else
+{
+		  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(4,num3_p11Seg+2*HI_gewei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  	  	Write_1621(2,0x01);
+	  WriteAll_1621(4,num1234Seg+2*HI_gewei,2);	//
+	  	  	}
 	WriteAll_1621(6,num4_dp3Seg+2*HI_shifenwei,2);	//
 	}
 
@@ -1053,7 +1281,14 @@ u8 num8_dp7Seg[]={0X0D,0X0F,0X08,0X06,0X0E,0X0B,0X0A,0X0F,0X0B,0X06,0X0B,0X0D,0X
 	VER_baiwei=VER/100;
 	VER_shiwei=(VER%100)/10;
 	VER_gewei=VER%10;
-
+  if(COMMCAT_para==0)
+	  	  	{
+	  Write_1621(4,0x01);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  Write_1621(2,0x01);	//
+	  	  	}
 	WriteAll_1621(10,num567Seg+2*VER_baiwei,2);	//
     WriteAll_1621(8,num567Seg+2*VER_shiwei,2);	//
     WriteAll_1621(14,num8_dp7Seg+2*VER_gewei,2);	//
@@ -1131,24 +1366,50 @@ u8 num3_p11Seg[]={0X0B,0X0F,0X01,0X06,0X07,0X0D,0X05,0X0F,0X0D,0X06,0X0D,0X0B,0X
 	  if(Current_C_qianwei>0)
 		{
 		  WriteAll_1621(0,num1234Seg+2*Current_C_qianwei,2);
-		  WriteAll_1621(2,num1234Seg+2*Current_C_baiwei,2);
-		  WriteAll_1621(4,num3_p11Seg+2*Current_C_shiwei,2);
+		  	  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*Current_C_baiwei,2);	//
+	  WriteAll_1621(4,num3_p11Seg+2*Current_C_shiwei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*Current_C_baiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*Current_C_shiwei,2);	//
+	  	  	}
 		  WriteAll_1621(6,num1234Seg+2*Current_C_gewei,2);
 		}
 			else if(Current_C_baiwei>0)
 			{
-			  WriteAll_1621(2,num1234Seg+2*Current_C_baiwei,2);
-		  	  WriteAll_1621(4,num3_p11Seg+2*Current_C_shiwei,2);
+					  	  if(COMMCAT_para==0)
+	  	  	{
+	  WriteAll_1621(2,num1234Seg+2*Current_C_baiwei,2);	//
+	  WriteAll_1621(4,num3_p11Seg+2*Current_C_shiwei,2);	//
+	  	  	}
+		  if(COMMCAT_para==1)
+	  	  	{
+	  WriteAll_1621(2,num3_p11Seg+2*Current_C_baiwei,2);	//
+	  WriteAll_1621(4,num1234Seg+2*Current_C_shiwei,2);	//
+	  	  	}
 		  	  WriteAll_1621(6,num1234Seg+2*Current_C_gewei,2);	
 			}
 				else if(Current_C_shiwei>0)
 				{
+				
+					  if(COMMCAT_para==0)
+					  	{
 				  WriteAll_1621(4,num3_p11Seg+2*Current_C_shiwei,2);
+					  	}
+						if(COMMCAT_para==1)
+	  	  	{
+	  	  	Write_1621(2,0x01);
+	  WriteAll_1621(4,num1234Seg+2*Current_C_shiwei,2);	//
+	  	  	}
 		  	  	  WriteAll_1621(6,num1234Seg+2*Current_C_gewei,2);
 				}
 					else 
 					{
-					   Write_1621(4,0x01);	// 显示"自"符号
+					  if(COMMCAT_para==0) Write_1621(4,0x01);	// 显示"自"符号
+					   if(COMMCAT_para==1) Write_1621(2,0x01);
 					   WriteAll_1621(6,num1234Seg+2*Current_C_gewei,2);
 					}
 
@@ -1157,7 +1418,6 @@ u8 num3_p11Seg[]={0X0B,0X0F,0X01,0X06,0X07,0X0D,0X05,0X0F,0X0D,0X06,0X0D,0X0B,0X
 void HT595_Send_Byte(u8 state)
 {                        
     u8 t; 
-		RCLK_595_0;		    
     for(t=0;t<8;t++)
     {    
 		DATA_0;          
@@ -1171,5 +1431,4 @@ void HT595_Send_Byte(u8 state)
     }
 
 	delay_us(10);
-	RCLK_595_1;
 }

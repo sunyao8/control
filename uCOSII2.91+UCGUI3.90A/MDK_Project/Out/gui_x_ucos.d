@@ -55,6 +55,7 @@
 .\Out\gui_x_ucos.o: ..\Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_wwdg.h
 .\Out\gui_x_ucos.o: ..\Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h
 .\Out\gui_x_ucos.o: ..\lcd\inc\ht1621.h
+.\Out\gui_x_ucos.o: ..\lcd\inc\ch452.h
 .\Out\gui_x_ucos.o: ..\lcd\inc\key.h
 .\Out\gui_x_ucos.o: ..\lcd\inc\24cxx.h
 .\Out\gui_x_ucos.o: ..\lcd\inc\myiic.h

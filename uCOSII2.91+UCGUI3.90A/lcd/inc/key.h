@@ -35,6 +35,8 @@ typedef struct
 #define KEY_3 GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_7)
 
 
+
+
 void KEY_Init(void);//IO初始化
 u8 KEY_Scan(u8);  	//按键扫描函数
 void key_idset(void);

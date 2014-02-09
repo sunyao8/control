@@ -55,6 +55,7 @@
 .\Out\key.o: ..\Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_wwdg.h
 .\Out\key.o: ..\Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h
 .\Out\key.o: ..\lcd\inc\ht1621.h
+.\Out\key.o: ..\lcd\inc\ch452.h
 .\Out\key.o: ..\lcd\inc\key.h
 .\Out\key.o: ..\lcd\inc\24cxx.h
 .\Out\key.o: ..\lcd\inc\myiic.h

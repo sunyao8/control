@@ -3,7 +3,6 @@
 #include <includes.h>
 
 /* Private variables ---------------------------------------------------------*/	
-
 u8 Work_num=0;	  //   设置参数页面数
 u8 Display_num=1;	  //正常显示页面数
 u8 L1_L2_L3_COS=1;
@@ -19,9 +18,10 @@ u16 CT_para;
  u8 OFF_HOLD_para=1;
  u8 HU_PROT_para=100;
  u8 HI_PROT_para=100;
- u8 COMMCAT_para=1;
+ u8 COMMCAT_para=0;
 u8 CAPA_num,capa1_value,capa2_value;
-u8 capa1_array[33],capa2_array[33];
+u8 capa1_array[32],capa2_array[32];
+
 //#endif
 /*************************************/
 //#endif
@@ -37,6 +37,8 @@ extern u32	dianliuzhi_A,dianliuzhi_B,dianliuzhi_C;
 extern u8 gonglvshishu_A,gonglvshishu_B,gonglvshishu_C;
 extern status_comm_node Comm_list_1[33];
 extern status_comm_node Comm_list_2[33];
+extern void LIGHT_backligt_on(void);
+extern void LIGHT_backligt_off(void);
 
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序为控制器设计，未经许可，不得复制外传
@@ -115,13 +117,21 @@ u16 TR[]={40,50,60,80,100,120,160,200,240,300,400,500,600,800,1000,1200};
 
 	 if(KEY_set==0)
 	 {
+	 LIGHT_backligt_on();
 	    Work_num++;
 	   while(KEY_set==0);
 	   	if(Work_num>11)
 		Work_num=0;
 	 }
-	  
 
+	 if(KEY_hand==0)
+	 {
+	 	 LIGHT_backligt_on();
+	    COMMCAT_para++;
+	   while(KEY_hand==0);
+	   	if(COMMCAT_para>1)COMMCAT_para=0;
+	 }
+	 
 	 switch(Work_num)
 	 {
 	 
@@ -145,6 +155,7 @@ CT_para=TR[a];
 
 		  if(KEY_up==0)
 		 {
+		 	 LIGHT_backligt_on();
 			a++;
 			while(KEY_up==0);
 		    if(a>15)a=15;
@@ -152,6 +163,7 @@ CT_para=TR[a];
 		 }
 		 if(KEY_down==0)
 		 {
+		 	 LIGHT_backligt_on();
 		    a--;
 			while(KEY_down==0);
 			if(a<1)a=0;
@@ -184,12 +196,14 @@ CT_para=TR[a];
 
 		  if(KEY_up==0)
 		 {
+		 	 LIGHT_backligt_on();
 			DELAY_ON_para++;
 			while(KEY_up==0);
 			if(DELAY_ON_para>100)DELAY_ON_para=100;
 		 }
 		 if(KEY_down==0)
 		 {
+		 	 LIGHT_backligt_on();
 			DELAY_ON_para--;
 			while(KEY_down==0);
 			if(DELAY_ON_para<1)DELAY_ON_para=1;
@@ -219,12 +233,14 @@ CT_para=TR[a];
 
 		   if(KEY_up==0)
 		 {
+		 	 LIGHT_backligt_on();
 			DELAY_OFF_para++;
 			while(KEY_up==0);
 			if(DELAY_OFF_para>100)DELAY_OFF_para=100;
 		 }
 		 if(KEY_down==0)
 		 {
+		 	 LIGHT_backligt_on();
 			DELAY_OFF_para--;
 			while(KEY_down==0);
 			if(DELAY_OFF_para<1)DELAY_OFF_para=1;
@@ -255,12 +271,14 @@ CT_para=TR[a];
 
   if(KEY_up==0)
 		 {
+		 	 LIGHT_backligt_on();
 			COS_ON_para++;
 			while(KEY_up==0);
 			if(COS_ON_para>100)COS_ON_para=100;
 		 }
 		 if(KEY_down==0)
 		 {
+		 	 LIGHT_backligt_on();
 			COS_ON_para--;
 			while(KEY_down==0);
 			if(COS_ON_para<80)COS_ON_para=80;
@@ -291,12 +309,14 @@ CT_para=TR[a];
 
 		 if(KEY_up==0)
 		 {
+		 	 LIGHT_backligt_on();
 			COS_OFF_para++;
 			while(KEY_up==0);
 			if(COS_OFF_para>100)COS_OFF_para=100;
 		 }
 		 if(KEY_down==0)
 		 {
+		 	 LIGHT_backligt_on();
 			COS_OFF_para--;
 			while(KEY_down==0);
             if(COS_OFF_para<80)COS_OFF_para=80;
@@ -334,6 +354,7 @@ CT_para=TR[a];
 		  
 		   if(KEY_up==0)
 		 {
+		 	 LIGHT_backligt_on();
 			if(V_PROT_para_L==0)V_PROT_para_L=20;
 			if((V_PROT_para_L>=20)&&(V_PROT_para_L<90))V_PROT_para_L=V_PROT_para_L+10;
 			while(KEY_up==0);
@@ -341,6 +362,7 @@ CT_para=TR[a];
 		 }
 		 if(KEY_down==0)
 		 {
+		 	 LIGHT_backligt_on();
 			if(V_PROT_para_L==0)V_PROT_para_L=90;
 			if((V_PROT_para_L>20)&&(V_PROT_para_L<=90))V_PROT_para_L=V_PROT_para_L-10;
 			while(KEY_down==0);
@@ -378,13 +400,14 @@ CT_para=TR[a];
 		  WriteAll_1621(14,num8Seg+2*V_PROT_para_gewei,2);	//
 		  
 		   if(KEY_up==0)
-		 {
+		 {	 LIGHT_backligt_on();
 			if((V_PROT_para_tri>=0)&&(V_PROT_para_tri<90))V_PROT_para_tri=V_PROT_para_tri+10;
 			while(KEY_up==0);
 			if(V_PROT_para_tri>=90)V_PROT_para_tri=0;
 		 }
 		 if(KEY_down==0)
 		 {
+		 	 LIGHT_backligt_on();
 			if((V_PROT_para_tri>0)&&(V_PROT_para_tri<=80))V_PROT_para_tri=V_PROT_para_tri-10;
 			while(KEY_down==0);
 			if(V_PROT_para_tri==0)V_PROT_para_tri=0;
@@ -413,6 +436,7 @@ CT_para=TR[a];
 		  
 			if(KEY_up==0)
 		 {
+		 	 LIGHT_backligt_on();
 		 	delay_ms(10); 
 			ON_HOLD_para++;
 			while(KEY_up==0);
@@ -421,6 +445,7 @@ CT_para=TR[a];
 		 }
 		 if(KEY_down==0)
 		 {
+		 	 LIGHT_backligt_on();
 			ON_HOLD_para--;
 			while(KEY_down==0);
 			if(ON_HOLD_para<2)ON_HOLD_para=12;
@@ -451,12 +476,14 @@ CT_para=TR[a];
 		  
 		    if(KEY_up==0)
 		 {
+		 	 LIGHT_backligt_on();
 			OFF_HOLD_para++;
 			while(KEY_up==0);
 			if(OFF_HOLD_para>12)OFF_HOLD_para=2;
 		 }
 		 if(KEY_down==0)
 		 {
+		 	 LIGHT_backligt_on();
 			OFF_HOLD_para--;
 			while(KEY_down==0);
 			if(OFF_HOLD_para<2)OFF_HOLD_para=12;
@@ -489,12 +516,14 @@ CT_para=TR[a];
 
 		   if(KEY_up==0)
 		 {
+		 	 LIGHT_backligt_on();
 			HU_PROT_para++;
 		    while(KEY_up==0);
 			if(HU_PROT_para>100)HU_PROT_para=0;
 		 }
 		 if(KEY_down==0)
 		 {
+		 	 LIGHT_backligt_on();
 			HU_PROT_para--;
 			while(KEY_down==0);
 			if(HU_PROT_para<1)HU_PROT_para=100;
@@ -526,13 +555,14 @@ CT_para=TR[a];
 		  WriteAll_1621(14,num8Seg+2*HI_PROT_para_gewei,2);	//
 
 		  if(KEY_up==0)
-		 {
+		 {	 LIGHT_backligt_on();
 			HI_PROT_para++;
 			while(KEY_up==0);
 			if(HI_PROT_para>100)HI_PROT_para=0;
 		 }
 		 if(KEY_down==0)
 		 {
+		 	 LIGHT_backligt_on();
 			HI_PROT_para--;
 			while(KEY_down==0);
 			if(HI_PROT_para<1)HI_PROT_para=100;
@@ -560,15 +590,17 @@ CT_para=TR[a];
 
 		   if(KEY_up==0)
 		 {
-			COMMCAT_para++;
+			//COMMCAT_para++;
+				 LIGHT_backligt_on();
 			while(KEY_up==0);
-			if(COMMCAT_para>250)COMMCAT_para=250;
+			if(COMMCAT_para>250);//COMMCAT_para=250;
 		 }
 		 if(KEY_down==0)
 		 {
-			COMMCAT_para--;
+		//	COMMCAT_para--;
+			 LIGHT_backligt_on();
 			while(KEY_down==0);
-			if(COMMCAT_para<1)COMMCAT_para=0;
+			if(COMMCAT_para<1);//COMMCAT_para=0;
 		 }
 		break;
 
@@ -588,15 +620,17 @@ u8 num567Seg[]={0X0F,0X05,0X06,0X00,0X0B,0X06,0X0F,0X02,0X06,0X03,0X0D,0X03,0X0D
 u8 num8Seg[]={0X05,0X0F,0X00,0X06,0X06,0X0B,0X02,0X0F,0X03,0X06,0X03,0X0D,0X07,0X0D,0X00,0X07,0X07,0X0F,0X03,0X0F};
 u8 num9_12Seg[]={0X06,0X05,0X06,0X06,0X00,0X00,0X04,0X07,0X02,0X06,0X07,0X00,0X06,0X02,0X04,0X02,0X07,0X04,0X02,0X07,0X06,0X06,0X04,0X00,0X06,0X07,0X06,0X06,0X07,0X04};
 u8 num3_p11Seg[]={0X0B,0X0F,0X01,0X06,0X07,0X0D,0X05,0X0F,0X0D,0X06,0X0D,0X0B,0X0F,0X0B,0X01,0X0E,0X0F,0X0F,0X0D,0X0F};
+
 	if(KEY_up==0)
  		{
-		 Display_num++;
+ 		if(COMMCAT_para==0)
+		{ Display_num++;LIGHT_backligt_on();}
 		 while(KEY_up==0);
 		 if(Display_num>6)Display_num=1;
 	    }
 	if(KEY_down==0)
-	  {
-		 Display_num--;
+	  { 	if(COMMCAT_para==0)
+		 {Display_num--;LIGHT_backligt_on();}
 		 while(KEY_down==0);
 		 if(Display_num<1)Display_num=6;
 	  }
@@ -612,13 +646,17 @@ u8 num3_p11Seg[]={0X0B,0X0F,0X01,0X06,0X07,0X0D,0X05,0X0F,0X0D,0X06,0X0D,0X0B,0X
    if(KEY_3==1) 
    	{
 	if(KEY_right==0)
- 		{
+	if(COMMCAT_para==0)
+ 		{	 
+ 		LIGHT_backligt_on();
 		 L1_L2_L3_COS++;
 		 while(KEY_right==0);
 		 if(L1_L2_L3_COS>3)L1_L2_L3_COS=1;
 	    }
 	if(KEY_left==0)
+	   if(COMMCAT_para==0)	
 	  {
+	  	 LIGHT_backligt_on();
 		 L1_L2_L3_COS--;
 		 while(KEY_left==0);
 		 if(L1_L2_L3_COS<1)L1_L2_L3_COS=3;
@@ -652,13 +690,17 @@ break;
   if(KEY_3==1) 
               {
 	if(KEY_right==0)
+	  	if(COMMCAT_para==0)	
  		{
+ 			 LIGHT_backligt_on();
 		 L1_L2_L3_KAR++;
 		 while(KEY_right==0);
 		 if(L1_L2_L3_KAR>3)L1_L2_L3_KAR=1;
 	    }
 	if(KEY_left==0)
+	  	if(COMMCAT_para==0)	
 	  {
+	  	 LIGHT_backligt_on();
 		 L1_L2_L3_KAR--;
 		 while(KEY_left==0);
 		 if(L1_L2_L3_KAR<1)L1_L2_L3_KAR=3;
@@ -691,14 +733,18 @@ break;
 	  if(KEY_3==1)
            	{
            		if(KEY_right==0)
+		  	if(COMMCAT_para==0)				
  		{
+ 			 LIGHT_backligt_on();
 		 L1_L2_L3_KAR++;
 		 while(KEY_right==0);
 		 if(L1_L2_L3_KAR>3)L1_L2_L3_KAR=1;
 	    }
 	if(KEY_left==0)
+		 if(COMMCAT_para==0)	
 	  {
-		 L1_L2_L3_KAR--;
+	  	 LIGHT_backligt_on();
+                 L1_L2_L3_KAR--;
 		 while(KEY_left==0);
 		 if(L1_L2_L3_KAR<1)L1_L2_L3_KAR=3;
 	  }
@@ -745,22 +791,34 @@ break;
 		  WriteAll_1621(16,num9_12Seg+3*CAPA_num_gewei,3);
 		  WriteAll_1621(8,num567Seg+2*capa1_value_shiwei,2);
 		  WriteAll_1621(14,num8Seg+2*capa1_value_gewei,2);
+		  if(COMMCAT_para==0)
+		  	{
 		  WriteAll_1621(4,num3_p11Seg+2*capa2_value_shiwei,2);
+		  	}
+				  if(COMMCAT_para==1)
+	  	  	{
+	  	  	Write_1621(2,0x01);
+	  WriteAll_1621(4,num1234Seg+2*capa2_value_shiwei,2);	//
+				  	}
 		  WriteAll_1621(6,num1234Seg+2*capa2_value_gewei,2);
 //		  Graf_capa_value(0,15,35);
 		  
 		  if(KEY_right==0)
+		  	if(COMMCAT_para==0)	
 		  {
-			CAPA_num++;
+		  	 LIGHT_backligt_on();
+                       CAPA_num++;
 			while(KEY_right==0);
 		  	if(CAPA_num>32)CAPA_num=1;
 
-				capa1_value=capa1_array[CAPA_num];
-				capa2_value=capa2_array[CAPA_num];
+				capa1_value=capa1_array[CAPA_num-1];
+				capa2_value=capa2_array[CAPA_num-1];
 
 		  }
 		  if(KEY_left==0)
+		  if(COMMCAT_para==0)
 		  {
+		  	 LIGHT_backligt_on();
 			CAPA_num--;
 			while(KEY_left==0);
 		  	if(CAPA_num<1)CAPA_num=32;

@@ -55,6 +55,7 @@
 .\Out\uctsk_osview.o: ..\Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_wwdg.h
 .\Out\uctsk_osview.o: ..\Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h
 .\Out\uctsk_osview.o: ..\lcd\inc\ht1621.h
+.\Out\uctsk_osview.o: ..\lcd\inc\ch452.h
 .\Out\uctsk_osview.o: ..\lcd\inc\key.h
 .\Out\uctsk_osview.o: ..\lcd\inc\24cxx.h
 .\Out\uctsk_osview.o: ..\lcd\inc\myiic.h
