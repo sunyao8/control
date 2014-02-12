@@ -3497,6 +3497,7 @@ u8 i,j=0,g,flag_comm=0,flag_dis=0,s;
 //u8 c;
 u8 *msg;
   u8 err;
+  static u8 dis_err[7];
 for(i=1;i<=7;i++)
 {  
 
@@ -3517,9 +3518,15 @@ if(flag_dis==1)
 {
  computer_trans_rs485(mybox.myid,i,2,0,0,CONTROL);
    msg=(u8 *)OSMboxPend(RS485_STUTAS_MBOX,OS_TICKS_PER_SEC/10,&err);
-     if(err==OS_ERR_TIMEOUT){Light_pad_on(0,i,2,2,2);set_bit(i, 0, &light_status, 0,0, 0,2);}
+     if(err==OS_ERR_TIMEOUT)
+	 	{
+	 	dis_err[i-1]++;
+	 	if(dis_err[i-1]==3)//三次确认，如果三次都没有收到数据就认为是从机死了
+	 	{Light_pad_on(0,i,2,2,2);set_bit(i, 0, &light_status, 0,0, 0,2);dis_err[i-1]=0;}
+	     }
 else
 {
+dis_err[i-1]=0;
 		for(s=1;s<=slave_dis[0];s++)
 			{
                    if(i==dis_list[s].myid[0])dis_list[s].work_status[0]=msg[6];
@@ -4762,10 +4769,12 @@ void EXTI9_5_IRQHandler(void)
   if(EXTI_GetITStatus(EXTI_Line9) != RESET)
 	
 	{
-
-	//OSSemPost(urgent_sem);
-{order_trans_rs485(mybox.myid,0,1,1,0,CONTROL);order_trans_rs485(mybox.myid,0,1,2,0,CONTROL);}
-	// init_light_off();
+	delay_us(1000);//按键消抖
+if(GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_9)==0)
+{	
+order_trans_rs485(mybox.myid,0,1,1,0,CONTROL);
+order_trans_rs485(mybox.myid,0,1,2,0,CONTROL);
+}
 
 	}
       EXTI_ClearITPendingBit(EXTI_Line9);
