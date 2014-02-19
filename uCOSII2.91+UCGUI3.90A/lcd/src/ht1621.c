@@ -218,7 +218,7 @@ WriteAll_1621(19,num11_p21Seg+3*PF_baifenwei,3);		//	带P21△P22投入符号
 	  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
 	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
 	  	  	}	  
-	  WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
+	  WriteAll_1621(6,num1234Seg+2*current_para_gewei,2);	//
     }
 	 else if(current_para_baiwei>0)
 	 {
@@ -232,7 +232,7 @@ WriteAll_1621(19,num11_p21Seg+3*PF_baifenwei,3);		//	带P21△P22投入符号
 	  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
 	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
 	  	  	}
-	   WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
+	   WriteAll_1621(6,num1234Seg+2*current_para_gewei,2);	//
 	 }
 	 else
 	 {
@@ -247,7 +247,7 @@ WriteAll_1621(19,num11_p21Seg+3*PF_baifenwei,3);		//	带P21△P22投入符号
 	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
 
 	  	  	}
-	  WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
+	  WriteAll_1621(6,num1234Seg+2*current_para_gewei,2);	//
 	 }
 
 }
@@ -327,7 +327,7 @@ WriteAll_1621(19,num9_12Seg+3*PF_baifenwei,3);		//	带P21L1 P22投入符号
 	  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
 	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
 	  	  	}	  
-	  WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
+	  WriteAll_1621(6,num1234Seg+2*current_para_gewei,2);	//
     }
 	 else if(current_para_baiwei>0)
 	 {
@@ -341,7 +341,7 @@ WriteAll_1621(19,num9_12Seg+3*PF_baifenwei,3);		//	带P21L1 P22投入符号
 	  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
 	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
 	  	  	}	  
-	   WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
+	   WriteAll_1621(6,num1234Seg+2*current_para_gewei,2);	//
 	 }
 	 else
 	 {
@@ -356,7 +356,7 @@ WriteAll_1621(19,num9_12Seg+3*PF_baifenwei,3);		//	带P21L1 P22投入符号
 	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
 
 	  	  	}
-	  WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
+	  WriteAll_1621(6,num1234Seg+2*current_para_gewei,2);	//
 	 }
 
 }
@@ -437,7 +437,7 @@ WriteAll_1621(19,num9_12Seg+3*PF_baifenwei,3);		//	带P21L1 P22投入符号
 	  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
 	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
 	  	  	}	  
-	  WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
+	  WriteAll_1621(6,num1234Seg+2*current_para_gewei,2);	//
     }
 	 else if(current_para_baiwei>0)
 	 {
@@ -451,7 +451,7 @@ WriteAll_1621(19,num9_12Seg+3*PF_baifenwei,3);		//	带P21L1 P22投入符号
 	  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
 	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
 	  	  	}	  
-	   WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
+	   WriteAll_1621(6,num1234Seg+2*current_para_gewei,2);	//
 	 }
 	 else
 	 {
@@ -466,7 +466,7 @@ WriteAll_1621(19,num9_12Seg+3*PF_baifenwei,3);		//	带P21L1 P22投入符号
 	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
 
 	  	  	}
-	  WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
+	  WriteAll_1621(6,num1234Seg+2*current_para_gewei,2);	//
 	 }
 
 }
@@ -548,7 +548,7 @@ WriteAll_1621(19,num11_L3seg+3*PF_baifenwei,3);		//	带P21L1 P22投入符号
 	  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
 	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
 	  	  	}	  
-	  WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
+	  WriteAll_1621(6,num1234Seg+2*current_para_gewei,2);	//
     }
 	 else if(current_para_baiwei>0)
 	 {
@@ -562,7 +562,7 @@ WriteAll_1621(19,num11_L3seg+3*PF_baifenwei,3);		//	带P21L1 P22投入符号
 	  WriteAll_1621(2,num3_p11Seg+2*current_para_baiwei,2);	//
 	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
 	  	  	}	  
-	   WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
+	   WriteAll_1621(6,num1234Seg+2*current_para_gewei,2);	//
 	 }
 	 else
 	 {
@@ -577,7 +577,7 @@ WriteAll_1621(19,num11_L3seg+3*PF_baifenwei,3);		//	带P21L1 P22投入符号
 	  WriteAll_1621(4,num1234Seg+2*current_para_shiwei,2);	//
 
 	  	  	}
-	  WriteAll_1621(6,num4_dp3Seg+2*current_para_gewei,2);	//
+	  WriteAll_1621(6,num1234Seg+2*current_para_gewei,2);	//
 	 }
 
 }

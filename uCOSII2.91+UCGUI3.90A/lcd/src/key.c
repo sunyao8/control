@@ -641,7 +641,7 @@ u8 num3_p11Seg[]={0X0B,0X0F,0X01,0X06,0X07,0X0D,0X05,0X0F,0X0D,0X06,0X0D,0X0B,0X
   if(KEY_3==0) 
               {
 		 Clera_lcd();
-		 Graf_cos_volt_current(gonglvshishu*10,dianya_zhi*10,dianliuzhi*10);
+		 Graf_cos_volt_current(gonglvshishu*10,dianya_zhi*10,dianliuzhi);
             	}
    if(KEY_3==1) 
    	{
@@ -664,17 +664,17 @@ u8 num3_p11Seg[]={0X0B,0X0F,0X01,0X06,0X07,0X0D,0X05,0X0F,0X0D,0X06,0X0D,0X0B,0X
   if(L1_L2_L3_COS==1)
    	{
 		 Clera_lcd();
-		 Graf_cos_volt_current_L1(gonglvshishu_A*10,dianya_zhi_A*10,dianliuzhi_A*10);
+		 Graf_cos_volt_current_L1(gonglvshishu_A*10,dianya_zhi_A*10,dianliuzhi_A);
   	}
   if(L1_L2_L3_COS==2)
    		{ 
    		Clera_lcd();
-		 Graf_cos_volt_current_L2(gonglvshishu_B*10,dianya_zhi_B*10,dianliuzhi_B*10);
+		 Graf_cos_volt_current_L2(gonglvshishu_B*10,dianya_zhi_B*10,dianliuzhi_B);
 		}
   if(L1_L2_L3_COS==3)
   	{
 		  Clera_lcd();
-		 Graf_cos_volt_current_L3(gonglvshishu_C*10,dianya_zhi_C*10,dianliuzhi_C*10);
+		 Graf_cos_volt_current_L3(gonglvshishu_C*10,dianya_zhi_C*10,dianliuzhi_C);
 
   	}
    }
