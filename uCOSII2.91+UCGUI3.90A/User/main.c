@@ -192,6 +192,7 @@ void EXTI_Configuration(void);//初始化函数
  void TIM2_Int_Init(u16 arr,u16 psc);
  void TIM2_IRQHandler(void);   //TIM2
 
+ void TIM4_Int_Init(u16 arr,u16 psc);
 
 /********************************switch_A_B_C**************************************************/
 //#define ON_time 13400//60
@@ -749,6 +750,11 @@ Init_ADC();
 /********************485****************************************/	
 RS485_Init(9600);
 /************************************************************/
+IWDG_Init(4,625); 
+
+
+/*************************TIME*******************************/
+TIM4_Int_Init(4999,7199);//10Khz的计数频率，计数10K次为1000ms 
 
 	TIM2_Int_Init(3999,7199);//10Khz的计数频率，计数10K次为1000ms 
 
@@ -3498,6 +3504,8 @@ u8 i,j=0,g,flag_comm=0,flag_dis=0,s;
 u8 *msg;
   u8 err;
   static u8 dis_err[7];
+    static u8 comm_err[32];
+
 for(i=1;i<=7;i++)
 {  
 
@@ -3517,12 +3525,17 @@ if(flag_dis==0)
 if(flag_dis==1)
 {
  computer_trans_rs485(mybox.myid,i,2,0,0,CONTROL);
-   msg=(u8 *)OSMboxPend(RS485_STUTAS_MBOX,OS_TICKS_PER_SEC/10,&err);
+   msg=(u8 *)OSMboxPend(RS485_STUTAS_MBOX,OS_TICKS_PER_SEC/5,&err);
      if(err==OS_ERR_TIMEOUT)
 	 	{
 	 	dis_err[i-1]++;
 	 	if(dis_err[i-1]==3)//三次确认，如果三次都没有收到数据就认为是从机死了
-	 	{Light_pad_on(0,i,2,2,2);set_bit(i, 0, &light_status, 0,0, 0,2);dis_err[i-1]=0;}
+	 	{Light_pad_on(0,i,2,2,2);
+		set_bit(i, 0, &light_status, 0,0, 0,2);
+		dis_err[i-1]=0;
+set_clear_existence(0,i,&hand_light_existence);
+
+		}
 	     }
 else
 {
@@ -3544,7 +3557,7 @@ set_bit(i, 0,&light_status,msg[6],msg[7], msg[8],0);
        j=0;
     }
 
-
+delay_ms(2000);
 
 j=0;
 {
@@ -3574,15 +3587,22 @@ if(flag_comm==1||flag_comm==2)
   msg=(u8 *)OSMboxPend(RS485_STUTAS_MBOX,OS_TICKS_PER_SEC/10,&err);
      if(err==OS_ERR_TIMEOUT)
 	 	{
-	 	capa1_array[i-1]=0;capa2_array[i-1]=0;//屏幕显示容量使用
-
+	  	comm_err[i-1]++; 
+if(comm_err[i-1]==3)
+	  {
 	  Light_pad_on(1,i,2,2,0);//指示灯使用
-set_clear_existence(1,i,&hand_light_existence);
-	 set_bit(i, 1, &light_status, 0,0, 0,2);//手动投切使用
+	  	 set_bit(i, 1, &light_status, 0,0, 0,2);//手动投切使用
+	  	comm_err[i-1]=0; 
+		set_clear_existence(0,i,&hand_light_existence);
+			 	capa1_array[i-1]=0;capa2_array[i-1]=0;//屏幕显示容量使用
+
+
+     	}
 
 
 	 }
 else {
+		  	comm_err[i-1]=0; 
 	capa1_array[msg[2]-1]=msg[3];
        capa2_array[msg[2]-1]=msg[4];
 	 Light_pad_on(1,i,msg[5],msg[6],0);
@@ -3621,6 +3641,8 @@ else {
 	flag_comm=0;
        j=0;
     }
+delay_ms(2000);
+
 }
 
 }
@@ -4867,8 +4889,52 @@ GPIO_ResetBits(GPIOD, GPIO_Pin_15);
 
 }
 
+/***********************************************************************
+TIME_4
+**********************************************************************/
+ void TIM4_Int_Init(u16 arr,u16 psc)
 
+{
+    TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
+
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE); //时钟使能
+	
+	//定时器TIM4初始化
+	TIM_TimeBaseStructure.TIM_Period = arr; //设置在下一个更新事件装入活动的自动重装载寄存器周期的值	
+	TIM_TimeBaseStructure.TIM_Prescaler =psc; //设置用来作为TIMx时钟频率除数的预分频值
+	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; //设置时钟分割:TDTS = Tck_tim
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  //TIM向上计数模式
+	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure); //根据指定的参数初始化TIMx的时间基数单位
+ 
+	TIM_ITConfig(TIM4,TIM_IT_Update,ENABLE ); //使能指定的TIM4中断,允许更新中断
+
+	//中断优先级NVIC设置
+			NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	//设置NVIC中断分组2:2位抢占优先级，2位响应优先级
+	NVIC_InitStructure.NVIC_IRQChannel = TIM4_IRQn;  //TIM4中断
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority =2;  //先占优先级0级
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;  //从优先级3级
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; //IRQ通道被使能
+	NVIC_Init(&NVIC_InitStructure);  //初始化NVIC寄存器
+
+
+	TIM_Cmd(TIM4, ENABLE);  //使能TIMx					 
+}
+
+ void TIM4_IRQHandler(void)   //TIM3中断
+{	 
+	OSIntEnter();   
+	if (TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET)  //检查TIM4更新中断发生与否
+		{	  
+		TIM_ClearITPendingBit(TIM4, TIM_IT_Update  );  //清除TIMx更新中断标志
+                    IWDG_Feed();
+	
+		}
+	   	OSIntExit();  
+
+ 	}
 /*************************************************/
+
 
  void TIM2_Int_Init(u16 arr,u16 psc)
 

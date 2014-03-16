@@ -86,9 +86,9 @@ RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
 
 for(i=1;i<=5;i++)
 {
-//	CH452_I2c_WrByte(CH452_RESET,i);
-//	CH452_I2c_WrByte(CH452_NOP,i);
-//	CH452_I2c_WrByte(CH452_CLR_BIT,i);
+	CH452_I2c_WrByte(CH452_RESET,i);
+	CH452_I2c_WrByte(CH452_NOP,i);
+	CH452_I2c_WrByte(CH452_CLR_BIT,i);
 	CH452_I2c_WrByte(CH452_SYSON1,i);
 	//CH452_I2c_WrByte(CH452_TWINKLE,i); 
 //	CH452_I2c_WrByte(CH452_CLR_BIT,i);

@@ -19,7 +19,7 @@ u16 CT_para;
  u8 HU_PROT_para=100;
  u8 HI_PROT_para=100;
  u8 COMMCAT_para=0;
-u8 CAPA_num,capa1_value,capa2_value;
+u8 CAPA_num=1,capa1_value,capa2_value;
 u8 capa1_array[32],capa2_array[32];
 
 //#endif
@@ -822,8 +822,8 @@ break;
 			CAPA_num--;
 			while(KEY_left==0);
 		  	if(CAPA_num<1)CAPA_num=32;
-				capa1_value=capa1_array[CAPA_num];
-			capa2_value=capa2_array[CAPA_num];
+				capa1_value=capa1_array[CAPA_num-1];
+			capa2_value=capa2_array[CAPA_num-1];
 
 			
 		  }
