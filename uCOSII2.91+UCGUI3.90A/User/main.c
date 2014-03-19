@@ -147,7 +147,7 @@ u8 computer_gonglu(status_dis_node *dis_list,status_comm_node *comm_list_1,statu
 #define EN_USART2_RX 	1			//0,不接收;1,接收.
 #define RS485_TX_EN_1		GPIO_SetBits(GPIOB, GPIO_Pin_15)	// 485模式控制.0,接收;1,发送.本工程用PB15
 #define RS485_TX_EN_0		GPIO_ResetBits(GPIOB, GPIO_Pin_15)	// 485模式控制.0,接收;1,发送.本工程用PB15
- OS_EVENT * RS485_MBOX,* RS485_STUTAS_MBOX,* RS485_RT;			//	rs485邮箱信号量
+ OS_EVENT * RS485_STUTAS_MBOX_dis,* RS485_STUTAS_MBOX,* RS485_RT;			//	rs485邮箱信号量
  OS_EVENT *computer_sem,*urgent_sem;			 //
 
 static u8 rs485buf[LEN_control];
@@ -381,7 +381,7 @@ static  void  App_TaskCreate (void)
 	
 CPU_INT08U  os_err;
 
-RS485_MBOX=OSMboxCreate((void*)0);
+RS485_STUTAS_MBOX_dis=OSMboxCreate((void*)0);
 RS485_STUTAS_MBOX=OSMboxCreate((void*)0);
 computer_sem=OSSemCreate(0);
 RS485_RT=OSMboxCreate((void*)0);
@@ -1171,24 +1171,33 @@ void RS485_Init(u32 bound)
 	if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET) //接收到数据
 	{	
 		 RS485_RX_BUF[RS485_RX_CNT++]=USART_ReceiveData(USART2); 	//读取接收到的数据
-		if(RS485_RX_BUF[RS485_RX_CNT-1]=='$'){RS485_RX_BUF[0]='$'; RS485_RX_CNT=1;}
-		if(RS485_RX_BUF[RS485_RX_CNT-1]=='?')
-		{
-				RS485_RX_CNT=0;
-				
-		 OSMboxPost(RS485_MBOX,(void*)&RS485_RX_BUF);
-		} 
-
+		 
+/********************************************************************************************/
 			if(RS485_RX_BUF[RS485_RX_CNT-1]=='&'){RS485_RX_BUF[0]='&'; RS485_RX_CNT=1;}
 		if(RS485_RX_BUF[RS485_RX_CNT-1]=='*')
 		{
-				RS485_RX_CNT=0;
 
 				
-				if(RS485_RX_BUF[1]=='#'){OSMboxPost(RS485_STUTAS_MBOX,(void*)&RS485_RX_BUF);}
-				if(RS485_RX_BUF[1]=='+'){OSMboxPost(RS485_RT,(void*)&RS485_RX_BUF);}
+				if((RS485_RX_BUF[1]=='#')&&(RS485_RX_CNT==8)){OSMboxPost(RS485_STUTAS_MBOX,(void*)&RS485_RX_BUF);}
+				if((RS485_RX_BUF[1]=='+')&&(RS485_RX_CNT==3)){OSMboxPost(RS485_RT,(void*)&RS485_RX_BUF);}
+				RS485_RX_CNT=0;
+
 
 		} 
+/********************************************************************************************/
+
+			if(RS485_RX_BUF[RS485_RX_CNT-1]=='%'){RS485_RX_BUF[0]='%'; RS485_RX_CNT=1;}
+		if(RS485_RX_BUF[RS485_RX_CNT-1]==')')
+	{
+
+				if((RS485_RX_BUF[1]=='(')&&(RS485_RX_CNT==10)){OSMboxPost(RS485_STUTAS_MBOX_dis,(void*)&RS485_RX_BUF);}
+
+				RS485_RX_CNT=0;
+
+		}	
+/********************************************************************************************/
+		
+
 	
 	}  	
 	OSIntExit();  											 
@@ -1558,16 +1567,19 @@ return 1;
  computer_trans_rs485(mybox.myid,id,2,0,0,CONTROL);
   // order_trans_rs485(mybox.myid,id,2,0,0);
 
-   msg=(u8 *)OSMboxPend(RS485_STUTAS_MBOX,OS_TICKS_PER_SEC/10,&err);
+   msg=(u8 *)OSMboxPend(RS485_STUTAS_MBOX_dis,OS_TICKS_PER_SEC/10,&err);
    if(err==OS_ERR_TIMEOUT)
    	{
           return 0;
    }//(u8 id, u8 size, u8 work_status, u8 work_time) 
 	else 
 	{ 
+	if(msg[2]==id)//检查传过来的从机的状态信息是否真是该从机的。如果不是就不录入
+		{
 	rs485_trans_status_dis(count,msg,dis_list,comm_list);//主机状态信息写入状态表
-
 	return 1;
+		}
+	else return 0;
 	}
 
 }
@@ -3525,7 +3537,7 @@ if(flag_dis==0)
 if(flag_dis==1)
 {
  computer_trans_rs485(mybox.myid,i,2,0,0,CONTROL);
-   msg=(u8 *)OSMboxPend(RS485_STUTAS_MBOX,OS_TICKS_PER_SEC/5,&err);
+   msg=(u8 *)OSMboxPend(RS485_STUTAS_MBOX_dis,OS_TICKS_PER_SEC/10,&err);
      if(err==OS_ERR_TIMEOUT)
 	 	{
 	 	dis_err[i-1]++;
@@ -3537,7 +3549,7 @@ set_clear_existence(0,i,&hand_light_existence);
 
 		}
 	     }
-else
+else if(msg[2]==i)//检查传过来的从机的状态信息是否真是该从机的。如果不是就不更新
 {
 dis_err[i-1]=0;
 		for(s=1;s<=slave_dis[0];s++)
@@ -3557,7 +3569,7 @@ set_bit(i, 0,&light_status,msg[6],msg[7], msg[8],0);
        j=0;
     }
 
-delay_ms(2000);
+delay_ms(1000);
 
 j=0;
 {
@@ -3641,7 +3653,7 @@ else {
 	flag_comm=0;
        j=0;
     }
-delay_ms(2000);
+delay_ms(1000);
 
 }
 

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Out\Project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Out\Project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Sat Mar 15 11:27:44 2014
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Tue Mar 18 20:50:20 2014
 <BR><P>
 <H3>Maximum Stack Usage =      14872 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -978,8 +978,8 @@ Global Symbols
 <LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CH452_Init
 </UL>
 
-<P><STRONG><a name="[c0]"></a>CH452_Init</STRONG> (Thumb, 132 bytes, Stack size 32 bytes, ch452.o(i.CH452_Init))
-<BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = CH452_Init &rArr; CH452_I2c_WrByte &rArr; delay_us
+<P><STRONG><a name="[c0]"></a>CH452_Init</STRONG> (Thumb, 96 bytes, Stack size 24 bytes, ch452.o(i.CH452_Init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = CH452_Init &rArr; CH452_I2c_WrByte &rArr; delay_us
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_AHB1PeriphClockCmd
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
@@ -2332,7 +2332,7 @@ Global Symbols
 <LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_Int_Init
 </UL>
 
-<P><STRONG><a name="[32]"></a>USART2_IRQHandler</STRONG> (Thumb, 174 bytes, Stack size 88 bytes, main.o(i.USART2_IRQHandler))
+<P><STRONG><a name="[32]"></a>USART2_IRQHandler</STRONG> (Thumb, 196 bytes, Stack size 88 bytes, main.o(i.USART2_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136 + Unknown Stack Size
 <LI>Call Chain = USART2_IRQHandler &rArr; OSMboxPost &rArr; OS_EventTaskRdy &rArr; OS_EventTaskRemoveMulti
 </UL>
@@ -2688,7 +2688,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scanf_slave_machine
 </UL>
 
-<P><STRONG><a name="[15f]"></a>inquiry_slave_status_dis</STRONG> (Thumb, 68 bytes, Stack size 32 bytes, main.o(i.inquiry_slave_status_dis))
+<P><STRONG><a name="[15f]"></a>inquiry_slave_status_dis</STRONG> (Thumb, 78 bytes, Stack size 32 bytes, main.o(i.inquiry_slave_status_dis))
 <BR><BR>[Stack]<UL><LI>Max Depth = 108 + Unknown Stack Size
 <LI>Call Chain = inquiry_slave_status_dis &rArr; computer_trans_rs485 &rArr; RS485_Send_Data &rArr; GPIO_Init
 </UL>
@@ -2748,7 +2748,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;inquiry_slave_status_dis
 </UL>
 
-<P><STRONG><a name="[b6]"></a>scanf_slave_machine</STRONG> (Thumb, 846 bytes, Stack size 56 bytes, main.o(i.scanf_slave_machine))
+<P><STRONG><a name="[b6]"></a>scanf_slave_machine</STRONG> (Thumb, 854 bytes, Stack size 56 bytes, main.o(i.scanf_slave_machine))
 <BR><BR>[Stack]<UL><LI>Max Depth = 180 + Unknown Stack Size
 <LI>Call Chain = scanf_slave_machine &rArr; Light_pad_on &rArr; CH452_I2c_WrByte &rArr; delay_us
 </UL>
