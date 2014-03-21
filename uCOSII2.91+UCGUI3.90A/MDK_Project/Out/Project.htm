@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Out\Project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Out\Project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Tue Mar 18 20:50:20 2014
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Fri Mar 21 18:37:12 2014
 <BR><P>
 <H3>Maximum Stack Usage =      14872 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2581,7 +2581,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;App_Taskcomputer
 </UL>
 
-<P><STRONG><a name="[c5]"></a>computer_trans_rs485</STRONG> (Thumb, 170 bytes, Stack size 16 bytes, main.o(i.computer_trans_rs485))
+<P><STRONG><a name="[c5]"></a>computer_trans_rs485</STRONG> (Thumb, 174 bytes, Stack size 16 bytes, main.o(i.computer_trans_rs485))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = computer_trans_rs485 &rArr; RS485_Send_Data &rArr; GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[131]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RS485_Send_Data
@@ -2610,7 +2610,6 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_light_off
 <LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ParaSet
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24CXX_WriteOneByte
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scanf_slave_machine
 <LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;computer_gonglu
 <LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;App_TaskMaster
 <LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;App_TaskLCD
@@ -2677,7 +2676,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[15d]"></a>inquiry_slave_status_comm</STRONG> (Thumb, 88 bytes, Stack size 40 bytes, main.o(i.inquiry_slave_status_comm))
+<P><STRONG><a name="[15d]"></a>inquiry_slave_status_comm</STRONG> (Thumb, 98 bytes, Stack size 40 bytes, main.o(i.inquiry_slave_status_comm))
 <BR><BR>[Stack]<UL><LI>Max Depth = 124 + Unknown Stack Size
 <LI>Call Chain = inquiry_slave_status_comm &rArr; order_trans_rs485 &rArr; RS485_Send_Data &rArr; GPIO_Init
 </UL>
@@ -2748,12 +2747,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;inquiry_slave_status_dis
 </UL>
 
-<P><STRONG><a name="[b6]"></a>scanf_slave_machine</STRONG> (Thumb, 854 bytes, Stack size 56 bytes, main.o(i.scanf_slave_machine))
+<P><STRONG><a name="[b6]"></a>scanf_slave_machine</STRONG> (Thumb, 866 bytes, Stack size 56 bytes, main.o(i.scanf_slave_machine))
 <BR><BR>[Stack]<UL><LI>Max Depth = 180 + Unknown Stack Size
 <LI>Call Chain = scanf_slave_machine &rArr; Light_pad_on &rArr; CH452_I2c_WrByte &rArr; delay_us
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPend
+<BR>[Calls]<UL><LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSMboxPend
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Light_pad_on
 <LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_clear_existence
 <LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_bit

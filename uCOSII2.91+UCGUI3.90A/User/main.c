@@ -1389,13 +1389,13 @@ if(ctr==CPT_LL )
 */
   if(ctr==CONTROL)
   	{
-      rs485buf[0]='$';//协议头
+      rs485buf[0]='-';//协议头
 	rs485buf[1]=destination;
 	rs485buf[2]=send;
 	rs485buf[3]=relay;
 	rs485buf[4]=message;
 	rs485buf[5]=ctr;
-	rs485buf[6]='?';//协议尾
+	rs485buf[6]='=';//协议尾
 	RS485_Send_Data(rs485buf,7);//发送5个字节
 
   	}
@@ -1536,8 +1536,12 @@ u8 inquiry_slave_status_comm(u8 count,u8 id,status_dis_node *dis_list,status_com
    	{ return 0;}//(u8 id, u8 size, u8 work_status, u8 work_time) 
 	else 
 	{ 
+if(msg[2]==id)
+		{
 	rs485_trans_status_comm(count,msg,dis_list,comm_list_1,comm_list_2);
 	return 1;
+		}
+else return 0;
 	}
 
 } //查询从机状态并保存到从机状态表中，参数id是要查询的从机号
@@ -3569,7 +3573,7 @@ set_bit(i, 0,&light_status,msg[6],msg[7], msg[8],0);
        j=0;
     }
 
-delay_ms(1000);
+//delay_ms(1000);
 
 j=0;
 {
@@ -3613,7 +3617,8 @@ if(comm_err[i-1]==3)
 
 
 	 }
-else {
+else  if(msg[2]==i)
+	{
 		  	comm_err[i-1]=0; 
 	capa1_array[msg[2]-1]=msg[3];
        capa2_array[msg[2]-1]=msg[4];
@@ -3653,7 +3658,7 @@ else {
 	flag_comm=0;
        j=0;
     }
-delay_ms(1000);
+//delay_ms(1000);
 
 }
 
@@ -4840,7 +4845,7 @@ rs485buf[13]=0;
 
 if(dis_com==0)
 {
-computer_trans_rs485(mybox.myid,hand_id,1,1,6,CONTROL);//三相一起切命令
+computer_trans_rs485(mybox.myid,hand_id,1,1,23,CONTROL);//三相一起切命令
 }
 }
 
@@ -4872,7 +4877,7 @@ rs485buf[13]=1;
 }
 if(dis_com==0)
 {
-computer_trans_rs485(mybox.myid,hand_id,1,1,7,CONTROL);//三相一起投命令
+computer_trans_rs485(mybox.myid,hand_id,1,1,24,CONTROL);//三相一起投命令
 }	
 }
 
