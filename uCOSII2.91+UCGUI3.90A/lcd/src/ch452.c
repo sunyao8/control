@@ -121,9 +121,24 @@ for(i=1;i<=6;i++)
 	 delay_ms(1);
 }
 }
+/************************************************************************
+开led灯功能函数void Light_pad_on(u8 comm_dis ,u8 num,u8 status_1,u8 status_2,u8 status_3)
+参数说明:
+comm_dis =0 为分补 comm_dis=1为共补
+num表示第几行亮灯
 
+u8 RED[]={0X38,0X3B,0X30,0X33,0X28,0X2B,0X20,0X23,0X18,0X1B,0X10,0X13,0X08,0X0B,0X00,0X03};
 
+u8 GREEN[]={0X39,0X3C,0X31,0X34,0X29,0X2C,0X21,0X24,0X19,0X1C,0X11,0X14,0X09,0X0C,0X01H,0X04};
 
+u8 YELLOW[]={0X3A,0X3D,0X32,0X35,0X2A,0X2D,0X22,0X25,0X1A,0X1D,0X12,0X15,0X0A,0X0D,0X02,0X05};
+以上数组表示红绿 黄灯的地址
+
+CH452_SET_BIT表示灭灯 CH452_CLR_BIT表示开灯
+
+先关其他两种灯，再开要开的灯
+{CH452_I2c_WrByte(CH452_SET_BIT|RED[num],1);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],1);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],1);}
+***********************************************************************/
 void Light_pad_on(u8 comm_dis ,u8 num,u8 status_1,u8 status_2,u8 status_3)
 {
 u8 RED[]={0X38,0X3B,0X30,0X33,0X28,0X2B,0X20,0X23,0X18,0X1B,0X10,0X13,0X08,0X0B,0X00,0X03};
@@ -145,9 +160,14 @@ if(status_1==1){CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],1);CH452_I2c_WrByte(CH
 if(status_2==1){CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],2);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],2);CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],2);}
 if(status_3==1){CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],3);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],3);CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],3);}
 
-if(status_1==2){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],1);CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],1);CH452_I2c_WrByte(CH452_CLR_BIT|YELLOW[num],1);}
-if(status_2==2){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],2);CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],2);CH452_I2c_WrByte(CH452_CLR_BIT|YELLOW[num],2);}
-if(status_3==2){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],3);CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],3);CH452_I2c_WrByte(CH452_CLR_BIT|YELLOW[num],3);}
+//if(status_1==2){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],1);CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],1);CH452_I2c_WrByte(CH452_CLR_BIT|YELLOW[num],1);}
+//if(status_2==2){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],2);CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],2);CH452_I2c_WrByte(CH452_CLR_BIT|YELLOW[num],2);}
+//if(status_3==2){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],3);CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],3);CH452_I2c_WrByte(CH452_CLR_BIT|YELLOW[num],3);}
+
+
+if(status_1==2){CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],1);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],1);}
+if(status_2==2){CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],2);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],2);}
+if(status_3==2){CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],3);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],3);}
 
 }
 }	      
@@ -167,8 +187,14 @@ if(status_2==0){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],2);CH452_I2c_WrByte(CH45
 if(status_1==1){CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],1);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],1);CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],1);}
 if(status_2==1){CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],2);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],2);CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],2);}
 
-if(status_1==2){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],1);CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],1);CH452_I2c_WrByte(CH452_CLR_BIT|YELLOW[num],1);}
-if(status_2==2){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],2);CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],2);CH452_I2c_WrByte(CH452_CLR_BIT|YELLOW[num],2);}
+//if(status_1==2){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],1);CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],1);CH452_I2c_WrByte(CH452_CLR_BIT|YELLOW[num],1);}
+//if(status_2==2){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],2);CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],2);CH452_I2c_WrByte(CH452_CLR_BIT|YELLOW[num],2);}
+
+
+if(status_1==2){CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],1);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],1);}
+if(status_2==2){CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],2);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],2);}
+
+{CH452_I2c_WrByte(CH452_SET_BIT|RED[num],3);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],3);CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],3);}
 
 }
 
@@ -181,9 +207,13 @@ if(status_2==0){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],5);CH452_I2c_WrByte(CH45
 if(status_1==1){CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],4);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],4);CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],4);}
 if(status_2==1){CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],5);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],5);CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],5);}
 
-if(status_1==2){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],4);CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],4);CH452_I2c_WrByte(CH452_CLR_BIT|YELLOW[num],4);}
-if(status_2==2){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],5);CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],5);CH452_I2c_WrByte(CH452_CLR_BIT|YELLOW[num],5);}
+//if(status_1==2){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],4);CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],4);CH452_I2c_WrByte(CH452_CLR_BIT|YELLOW[num],4);}
+//if(status_2==2){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],5);CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],5);CH452_I2c_WrByte(CH452_CLR_BIT|YELLOW[num],5);}
 
+if(status_1==2){CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],4);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],4);}
+if(status_2==2){CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],5);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],5);}
+
+{CH452_I2c_WrByte(CH452_SET_BIT|RED[num],6);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],6);CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],6);}
 
     }
 
