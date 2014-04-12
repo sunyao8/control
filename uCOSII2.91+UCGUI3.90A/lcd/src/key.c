@@ -39,6 +39,10 @@ extern status_comm_node Comm_list_1[33];
 extern status_comm_node Comm_list_2[33];
 extern void LIGHT_backligt_on(void);
 extern void LIGHT_backligt_off(void);
+extern u8 phase_flag;
+extern u8 L_C_flag_A;//感性容性标准变量
+extern u8 L_C_flag_B;
+extern u8 L_C_flag_C;
 
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序为控制器设计，未经许可，不得复制外传
@@ -663,9 +667,16 @@ u8 num3_p11Seg[]={0X0B,0X0F,0X01,0X06,0X07,0X0D,0X05,0X0F,0X0D,0X06,0X0D,0X0B,0X
 	  }
   if(L1_L2_L3_COS==1)
    	{
-		 Clera_lcd();
+   	if(phase_flag==0)//第一屏正序显示L1
+		{ Clera_lcd();
 		 Graf_cos_volt_current_L1(gonglvshishu_A*10,dianya_zhi_A*10,dianliuzhi_A);
+  	    }
+   	if(phase_flag==1)//反序第一屏显示L3
+   	{		 
+   	       Clera_lcd();
+		 Graf_cos_volt_current_L3(gonglvshishu_C*10,dianya_zhi_C*10,dianliuzhi_C);
   	}
+  }
   if(L1_L2_L3_COS==2)
    		{ 
    		Clera_lcd();
@@ -673,10 +684,18 @@ u8 num3_p11Seg[]={0X0B,0X0F,0X01,0X06,0X07,0X0D,0X05,0X0F,0X0D,0X06,0X0D,0X0B,0X
 		}
   if(L1_L2_L3_COS==3)
   	{
-		  Clera_lcd();
-		 Graf_cos_volt_current_L3(gonglvshishu_C*10,dianya_zhi_C*10,dianliuzhi_C);
 
+	if(phase_flag==1)//反序第三屏显示L1
+		{ Clera_lcd();
+		 Graf_cos_volt_current_L1(gonglvshishu_A*10,dianya_zhi_A*10,dianliuzhi_A);
+  	    }
+	
+   	if(phase_flag==0)//正序第三屏显示L3
+   	{		 
+   	       Clera_lcd();
+		 Graf_cos_volt_current_L3(gonglvshishu_C*10,dianya_zhi_C*10,dianliuzhi_C);
   	}
+  }
    }
 
 break;
@@ -707,10 +726,13 @@ break;
 	  }
 
 		if(L1_L2_L3_KAR==1)
-			{
+			{				
 		 Clera_lcd();
+		 if(phase_flag==0)
 		 Graf_powuse_poweunuse_freq_L1(wugongkvar_A*10,allkvar*10,501);
-			}
+               else
+		 Graf_powuse_poweunuse_freq_L3(wugongkvar_C*10,allkvar*10,501);              
+		}
 		if(L1_L2_L3_KAR==2)
 			{
 		 Clera_lcd();
@@ -719,8 +741,11 @@ break;
 		if(L1_L2_L3_KAR==3)
 			{
 		 Clera_lcd();
+		 if(phase_flag==0)
 		 Graf_powuse_poweunuse_freq_L3(wugongkvar_C*10,allkvar*10,501);
-			}
+               else
+		 Graf_powuse_poweunuse_freq_L1(wugongkvar_A*10,allkvar*10,501);
+		}
 		}
   
 		 break;
@@ -752,8 +777,11 @@ break;
 		 if(L1_L2_L3_KAR==1)
 		 	{
 		 	Clera_lcd();
+			if(phase_flag==0)
 		 Graf_temp_hv_hi_L1(tempshuzhi*10,HV*10,HI*10);
-		 	}
+                 else
+		 Graf_temp_hv_hi_L3(tempshuzhi*10,HV*10,HI*10);
+		 }
 		  if(L1_L2_L3_KAR==2)
 		 	{
 		 	Clera_lcd();
@@ -762,8 +790,11 @@ break;
 		  if(L1_L2_L3_KAR==3)
 		 	{
 		 	Clera_lcd();
+			if(phase_flag==0)
 		 Graf_temp_hv_hi_L3(tempshuzhi*10,HV*10,HI*10);
-		 	}
+                   else 
+		 Graf_temp_hv_hi_L1(tempshuzhi*10,HV*10,HI*10);
+		  }
 		 }	   
 		 break;
 	 case 4:											//显示版本号

@@ -1202,7 +1202,7 @@ void RS485_Init(u32 bound)
 /********************************************************************************************/
 		
 
-	
+	if(RS485_RX_CNT>=64)RS485_RX_CNT=0;
 	}  	
 	OSIntExit();  											 
 
@@ -1309,7 +1309,7 @@ if(ctr==CPT_LL )
 	rs485buf[6]=((wugongkvar& (uint16_t)0xFF00)>>8);
 	rs485buf[7]=gonglvshishu;	
 	rs485buf[8]=ctr;	
-	rs485buf[9]=L_C_flag_A;		
+	rs485buf[9]=L_C_flag_B;		
 	rs485buf[10]='*';//协议尾
 	RS485_Send_Data(rs485buf,11);//发送5个字节
 	  // 	if(destination==source){mybox.send=send;slave_control(relay, message);}//如果信息发给的自己
@@ -1337,9 +1337,10 @@ if(ctr==CPT_LL )
 	rs485buf[7]=gonglvshishu_A;
 	rs485buf[8]=ctr;
 	rs485buf[9]=L_C_flag_A;//协议尾
-	rs485buf[10]=source;		
-	rs485buf[11]='?';//协议尾
-	RS485_Send_Data(rs485buf,12);//发送5个字节
+	rs485buf[10]=source;	
+	rs485buf[11]=phase_flag;
+	rs485buf[12]='?';//协议尾
+	RS485_Send_Data(rs485buf,13);//发送5个字节
     	}
 	/************************************/
     if(ctr==CPT_B)
@@ -1703,8 +1704,17 @@ else phase_flag=1;
 /*********************A_phase*********************************/
 //for(s=1;s<=9;s++)
 {
+	if(phase_flag==0)
+		{
 ADC3_CH10_DMA_Config_VA();
 ADC1_CH1_DMA_Config_CA();
+		}
+		if(phase_flag==1)
+			{
+ADC3_CH12_DMA_Config_VC();
+ADC1_CH7_DMA_Config_CC();
+		}
+
 
 {
  for(i=0;i<TEST_LENGTH_SAMPLES;i++)
@@ -1945,8 +1955,17 @@ computer_trans_rs485(0,33,0,0,0,CPT_B);
 /*********************C_phase*********************************/
 
 {
+	if(phase_flag==1)
+		{
+ADC3_CH10_DMA_Config_VA();
+ADC1_CH1_DMA_Config_CA();
+		}
+		if(phase_flag==0)
+			{
 ADC3_CH12_DMA_Config_VC();
 ADC1_CH7_DMA_Config_CC();
+		}
+
  maxValue=0.0;
  maxValue_C=0.0; 
 
@@ -2099,7 +2118,7 @@ if(RT_FLAG==0)
 
 {
         u8 err;
-if(L_C_flag_A==1)gl[0]=wugongkvar;
+if(L_C_flag_B==1)gl[0]=wugongkvar;
 else gl[0]=-wugongkvar;
 if(slave_comm[0]>0)
 
@@ -2267,8 +2286,16 @@ delay_us(2500000);//36->512
 //u16 min=2;
 /******************************/
 {
+	if(phase_flag==0)
+		{
 ADC3_CH10_DMA_Config_VA();
 ADC1_CH1_DMA_Config_CA();
+		}
+		if(phase_flag==1)
+			{
+ADC3_CH12_DMA_Config_VC();
+ADC1_CH7_DMA_Config_CC();
+		}
 
 {
  for(i=0;i<TEST_LENGTH_SAMPLES;i++)
@@ -2344,30 +2371,6 @@ arm_sqrt_f32(1-(arm_cos_f32(angle[0]-angle[1]))*(arm_cos_f32(angle[0]-angle[1]))
 }
 
 
-				angle[2]=((angle[1]-angle[0])*360)/PI2-90;
-				if(angle[2]>0.0)
-                               {
-				if(angle[2]<90)L_C_flag_A=1;
-								if(angle[2]>=90&&angle[2]<=180)L_C_flag_A=0;
-
-				if(angle[2]>180&&angle[2]<270)L_C_flag_A=0;
-
-								//	dianya_zhi_A=angle[2];
-								//	gonglvshishu_A=1;
-
-				}
-
-				else if(angle[2]<=0.0)
-				{
-					if((angle[2]>=-360.0&&angle[2]<-270.0))L_C_flag_A=1;
-										if((angle[2]>=-270.0&&angle[2]<-180.0))L_C_flag_A=0;
-					if((angle[2]>=-450.0&&angle[2]<-360.0))L_C_flag_A=1;
-					if((angle[2]>-90.0&&angle[2]<=0.0))L_C_flag_A=1;
-					if((angle[2]>=-180.0&&angle[2]<=-90.0))L_C_flag_A=0;
-
-				//	dianya_zhi_A=-angle[2];
-				//	gonglvshishu_A=2;
-			     }
 
 /*********************B_phase*********************************/
 
@@ -2442,11 +2445,44 @@ arm_sqrt_f32(1-(arm_cos_f32(angle[0]-angle[1]))*(arm_cos_f32(angle[0]-angle[1]))
 
 }
 
+			angle[2]=((angle[1]-angle[0])*360)/PI2-90;
+				if(angle[2]>0.0)
+                               {
+				if(angle[2]<90)L_C_flag_B=1;
+								if(angle[2]>=90&&angle[2]<=180)L_C_flag_B=0;
+
+				if(angle[2]>180&&angle[2]<270)L_C_flag_B=0;
+
+								//	dianya_zhi_A=angle[2];
+								//	gonglvshishu_A=1;
+
+				}
+
+				else if(angle[2]<=0.0)
+				{
+					if((angle[2]>=-360.0&&angle[2]<-270.0))L_C_flag_B=1;
+										if((angle[2]>=-270.0&&angle[2]<-180.0))L_C_flag_B=0;
+					if((angle[2]>=-450.0&&angle[2]<-360.0))L_C_flag_B=1;
+					if((angle[2]>-90.0&&angle[2]<=0.0))L_C_flag_B=1;
+					if((angle[2]>=-180.0&&angle[2]<=-90.0))L_C_flag_B=0;
+
+				//	dianya_zhi_A=-angle[2];
+				//	gonglvshishu_A=2;
+			     }
 /*********************C_phase*********************************/
 
 {
+	if(phase_flag==1)
+		{
+ADC3_CH10_DMA_Config_VA();
+ADC1_CH1_DMA_Config_CA();
+		}
+		if(phase_flag==0)
+			{
 ADC3_CH12_DMA_Config_VC();
 ADC1_CH7_DMA_Config_CC();
+		}
+
  maxValue=0.0;
  maxValue_C=0.0; 
 
@@ -2528,7 +2564,7 @@ wugongkvar=(a+b+c)/100;
 
 }
 /*******************************/
-if(L_C_flag_A==1)gl[1]=wugongkvar;
+if(L_C_flag_B==1)gl[1]=wugongkvar;
 else gl[1]=-wugongkvar;
 min=abs(abs(gl[0]-gl[1])*TR[0]-var);
 
@@ -2560,7 +2596,7 @@ if((HI_PROT_para==0||HI*100<HI_PROT_para)&&(HU_PROT_para==0||HV*100<HU_PROT_para
 if(RT_FLAG==2)
 {
 
-if(gonglvshishu<COS_ON_para&&L_C_flag_A==1)
+if(gonglvshishu<COS_ON_para&&L_C_flag_B==1)
  {
 if(slave_comm[0]>0)
       {
@@ -2679,17 +2715,87 @@ return 0 ;
       	}
 
 
+	  if(wugongkvar>=2)
+
+{
+for(i=slave_comm[13];i<=slave_comm[14]-1;i++)
+if(comm_list_1[i].work_status==0)
+{
+if(comm_list_1[i].group==1)order_trans_rs485(mybox.myid,comm_list_1[i].myid,1,1,1,CONTROL);
+else order_trans_rs485(mybox.myid,comm_list_1[i].myid,1,2,1,CONTROL);
+		{
+set_statuslist(i,comm_list_1[i].myid,comm_list_1[i].size,1,comm_list_1[i].work_time,1,1,dis_list,comm_list_1,comm_list_2,comm_list_1[i].group);
+change_Queue(1,2,dis_list,comm_list_1,comm_list_2,slave_dis,slave_comm);
+delay_ms(DELAY_ON_para);
+return 0 ;
+
+		}
+}
+
+{
+for(i=slave_comm[15];i<=slave_comm[16]-1;i++)
+if(comm_list_2[i].work_status==0)
+{
+
+if(comm_list_2[i].group==1)order_trans_rs485(mybox.myid,comm_list_2[i].myid,1,1,1,CONTROL);
+else order_trans_rs485(mybox.myid,comm_list_2[i].myid,1,2,1,CONTROL);
+
+		{
+set_statuslist(i,comm_list_2[i].myid,comm_list_2[i].size,1,comm_list_2[i].work_time,1,2,dis_list,comm_list_1,comm_list_2,comm_list_2[i].group);
+change_Queue(1,2,dis_list,comm_list_1,comm_list_2,slave_dis,slave_comm);
+delay_ms(DELAY_ON_para);
+return 0 ;
+
+		}
+}
+
+}
+
+      	}
 
 
       
 }
  }
 
-if(gonglvshishu>COS_OFF_para&&L_C_flag_A==1)
+if(gonglvshishu>COS_OFF_para&&L_C_flag_B==1)
    
 {
 if(slave_comm[0]>0)
       {
+
+{
+for(i=slave_comm[13];i<=slave_comm[14]-1;i++)
+if(comm_list_1[i].work_status==1)
+
+{
+if(comm_list_1[i].group==1)order_trans_rs485(mybox.myid,comm_list_1[i].myid,1,1,0,CONTROL);
+else order_trans_rs485(mybox.myid,comm_list_1[i].myid,1,2,0,CONTROL);
+		{
+set_statuslist(i,comm_list_1[i].myid,comm_list_1[i].size,0,comm_list_1[i].work_time,1,1,dis_list,comm_list_1,comm_list_2,comm_list_1[i].group);
+delay_ms(DELAY_OFF_para);
+return 0 ;
+
+		}
+}
+
+{
+for(i=slave_comm[15];i<=slave_comm[16]-1;i++)
+if(comm_list_2[i].work_status==1)
+{
+if(comm_list_2[i].group==1)order_trans_rs485(mybox.myid,comm_list_2[i].myid,1,1,0,CONTROL);
+else order_trans_rs485(mybox.myid,comm_list_2[i].myid,1,2,0,CONTROL);
+		{
+set_statuslist(i,comm_list_2[i].myid,comm_list_2[i].size,0,comm_list_2[i].work_time,1,2,dis_list,comm_list_1,comm_list_2,comm_list_2[i].group);
+delay_ms(DELAY_OFF_para);
+return 0 ;
+
+		}
+}
+}
+
+}
+	  
 {
 for(i=slave_comm[1];i<=slave_comm[7]-1;i++)
 if(comm_list_1[i].work_status==1)
@@ -2848,7 +2954,7 @@ return 0;
 
 }	  
 }
-if(gonglvshishu_B<COS_ON_para&&L_C_flag_A==1)
+if(gonglvshishu_B<COS_ON_para&&L_C_flag_B==1)
 {
 if(slave_dis[0]>0)
       if(wugongkvar_B>=6)	
@@ -2905,7 +3011,7 @@ return 0;
 
 }
 
-if(gonglvshishu_C<COS_ON_para&&L_C_flag_A==1)
+if(gonglvshishu_C<COS_ON_para&&L_C_flag_C==1)
 
 {
 if(slave_dis[0]>0)
@@ -3007,7 +3113,7 @@ return 0;
 }
 
 }
-if(gonglvshishu_B>COS_OFF_para&&L_C_flag_A==1)
+if(gonglvshishu_B>COS_OFF_para&&L_C_flag_B==1)
 {
 if(slave_dis[0]>0)
 {
@@ -3053,7 +3159,7 @@ return 0;
 
 }
 
-if(gonglvshishu_C>COS_OFF_para&&L_C_flag_A==1)
+if(gonglvshishu_C>COS_OFF_para&&L_C_flag_C==1)
 
 {
 if(slave_dis[0]>0)
@@ -3099,7 +3205,7 @@ return 0;
   }
 
 
-if(L_C_flag_A==0)
+if(L_C_flag_B==0)
 {
 if(slave_comm[0]>0)
       {
@@ -3199,12 +3305,46 @@ return 0 ;
 
 }
 
+{
+for(i=slave_comm[13];i<=slave_comm[14]-1;i++)
+if(comm_list_1[i].work_status==1)
+
+{
+if(comm_list_1[i].group==1)order_trans_rs485(mybox.myid,comm_list_1[i].myid,1,1,0,CONTROL);
+else order_trans_rs485(mybox.myid,comm_list_1[i].myid,1,2,0,CONTROL);
+		{
+set_statuslist(i,comm_list_1[i].myid,comm_list_1[i].size,0,comm_list_1[i].work_time,1,1,dis_list,comm_list_1,comm_list_2,comm_list_1[i].group);
+delay_ms(DELAY_OFF_para);
+return 0 ;
+
+		}
+}
+
+{
+for(i=slave_comm[15];i<=slave_comm[16]-1;i++)
+if(comm_list_2[i].work_status==1)
+{
+if(comm_list_2[i].group==1)order_trans_rs485(mybox.myid,comm_list_2[i].myid,1,1,0,CONTROL);
+else order_trans_rs485(mybox.myid,comm_list_2[i].myid,1,2,0,CONTROL);
+		{
+set_statuslist(i,comm_list_2[i].myid,comm_list_2[i].size,0,comm_list_2[i].work_time,1,2,dis_list,comm_list_1,comm_list_2,comm_list_2[i].group);
+delay_ms(DELAY_OFF_para);
+return 0 ;
+
+		}
+}
+}
+
+}
 
        }
-   if(KEY_3==1) 
+}
+
+{
+   if(KEY_3==1)//拨码开关，控制是不是是共补模式或分补模式 
 {
 /************************A*****************************/
-
+if(L_C_flag_A==0)
 {
 if(slave_dis[0]>0)
 {
@@ -3248,6 +3388,7 @@ return 0;
 }
 
 /************************B*****************************/
+if(L_C_flag_B==0)
 {
 if(slave_dis[0]>0)
 {
@@ -3293,7 +3434,7 @@ return 0;
 }
 
 /************************C*****************************/
-
+if(L_C_flag_C==0)
 {
 if(slave_dis[0]>0)
 {
@@ -3443,6 +3584,35 @@ return 0 ;
 
 }
 
+{
+for(i=slave_comm[13];i<=slave_comm[14]-1;i++)
+if(comm_list_1[i].work_status==1)
+
+{
+if(comm_list_1[i].group==1)order_trans_rs485(mybox.myid,comm_list_1[i].myid,1,1,0,CONTROL);
+else order_trans_rs485(mybox.myid,comm_list_1[i].myid,1,2,0,CONTROL);
+		{
+set_statuslist(i,comm_list_1[i].myid,comm_list_1[i].size,0,comm_list_1[i].work_time,1,1,dis_list,comm_list_1,comm_list_2,comm_list_1[i].group);
+return 0 ;
+
+		}
+}
+
+{
+for(i=slave_comm[15];i<=slave_comm[16]-1;i++)
+if(comm_list_2[i].work_status==1)
+{
+if(comm_list_2[i].group==1)order_trans_rs485(mybox.myid,comm_list_2[i].myid,1,1,0,CONTROL);
+else order_trans_rs485(mybox.myid,comm_list_2[i].myid,1,2,0,CONTROL);
+		{
+set_statuslist(i,comm_list_2[i].myid,comm_list_2[i].size,0,comm_list_2[i].work_time,1,2,dis_list,comm_list_1,comm_list_2,comm_list_2[i].group);
+return 0 ;
+
+		}
+}
+}
+
+}
 
        }
 {
@@ -3621,7 +3791,7 @@ if(flag_dis==1)
 	 	{
 	 	dis_err[i-1]++;
 	 	if(dis_err[i-1]==3)//三次确认，如果三次都没有收到数据就认为是从机死了
-	 	{Light_pad_on(0,i,2,2,2);
+	 	{Light_pad_off(0,i,0,0,0);
 		set_bit(i, 0, &light_status, 0,0, 0,2);
 		dis_err[i-1]=0;
 set_clear_existence(0,i,&hand_light_existence);
@@ -3735,7 +3905,7 @@ if(flag_comm==1||flag_comm==2)
 	  	comm_err[i-1]++; 
 if(comm_err[i-1]==3)
 	  {
-	  Light_pad_on(1,i,2,2,0);//指示灯使用
+	  Light_pad_off(1,i,0,0,0);//指示灯使用
 	  	 set_bit(i, 1, &light_status, 0,0, 0,2);//手动投切使用
 	  	comm_err[i-1]=0; 
 		set_clear_existence(0,i,&hand_light_existence);
@@ -3943,6 +4113,29 @@ for(i=2;i<=slave_comm[0];i++)
             comm_list[j+1].work_status=s;
 comm_list[j+1].group=c;
 }
+
+
+/*****************2.5*****************************/
+for(i=1;i<=slave_comm[0];i++)
+if(comm_list[i].size==2)
+{
+slave_comm[13]=i;
+break;
+}
+if(i>slave_comm[0]){slave_comm[13]=0;slave_comm[14]=0;}
+
+if(slave_comm[13]!=0)
+{
+for(i=slave_comm[13];i<=slave_comm[0];i++)
+if(comm_list[i].size!=2)
+{
+slave_comm[14]=i;
+break;
+}
+if(i>slave_comm[0]){slave_comm[14]=slave_comm[0]+1;}
+
+}
+
 for(i=1;i<=slave_comm[0];i++)
 if(comm_list[i].size==5)
 {
@@ -4045,6 +4238,28 @@ for(i=2;i<=slave_comm[0];i++)
 
 }
 
+/*****************2.5*****************************/
+for(i=1;i<=slave_comm[0];i++)
+if(comm_list[i].size==2)
+{
+slave_comm[15]=i;
+break;
+}
+if(i>slave_comm[0]){slave_comm[15]=0;slave_comm[16]=0;}
+
+if(slave_comm[15]!=0)
+{
+for(i=slave_comm[15];i<=slave_comm[0];i++)
+if(comm_list[i].size!=2)
+{
+slave_comm[16]=i;
+break;
+}
+if(i>slave_comm[0]){slave_comm[16]=slave_comm[0]+1;}
+
+}
+
+/*****************5*****************************/
 
 for(i=1;i<=slave_comm[0];i++)
 if(comm_list[i].size==5)
@@ -4416,6 +4631,104 @@ u8 t=0, g=0,w=0, s=0,c=0;
 
 if(list_flag==1)
 {
+
+if(Level==2)
+{
+if(slave_comm[13]!=0&&slave_comm[15]!=0)
+
+{
+          t=comm_list_1[slave_comm[13]].size;
+	   g=comm_list_1[slave_comm[13]].myid;
+	   w=comm_list_1[slave_comm[13]].work_time;
+	   s=	comm_list_1[slave_comm[13]].work_status;
+          c=comm_list_1[slave_comm[13]].group;
+for(i=slave_comm[13];i<slave_comm[14]-1;i++)
+  {
+          comm_list_1[i].size=comm_list_1[i+1].size;
+	   comm_list_1[i].myid=comm_list_1[i+1].myid;
+	   comm_list_1[i].work_time=comm_list_1[i+1].work_time;
+	   comm_list_1[i].work_status=comm_list_1[i+1].work_status;
+          comm_list_1[i].group=comm_list_1[i+1].group;
+
+  }
+        comm_list_1[slave_comm[14]-1].size=comm_list_2[slave_comm[15]].size;
+	  comm_list_1[slave_comm[14]-1].myid=comm_list_2[slave_comm[15]].myid;
+	  comm_list_1[slave_comm[14]-1].work_time=comm_list_2[slave_comm[15]].work_time;
+	  comm_list_1[slave_comm[14]-1].work_status=comm_list_2[slave_comm[15]].work_status;
+	 comm_list_1[slave_comm[14]-1].group=comm_list_2[slave_comm[15]].group;
+
+for(i=slave_comm[15];i<slave_comm[16]-1;i++)
+  {
+          comm_list_2[i].size=comm_list_2[i+1].size;
+	   comm_list_2[i].myid=comm_list_2[i+1].myid;
+	   comm_list_2[i].work_time=comm_list_2[i+1].work_time;
+	   comm_list_2[i].work_status=comm_list_2[i+1].work_status;
+          comm_list_2[i].group=comm_list_2[i+1].group;
+
+  }
+        comm_list_2[slave_comm[16]-1].size=t;
+	  comm_list_2[slave_comm[16]-1].myid=g;
+	  comm_list_2[slave_comm[16]-1].work_time=w;
+	  comm_list_2[slave_comm[16]-1].work_status=s;
+        comm_list_2[slave_comm[16]-1].group=c;
+
+}
+if(slave_comm[13]!=0&&slave_comm[15]==0)
+
+{
+   t=comm_list_1[slave_comm[13]].size;
+	   g=comm_list_1[slave_comm[13]].myid;
+	   w=comm_list_1[slave_comm[13]].work_time;
+	   s=	comm_list_1[slave_comm[13]].work_status;
+          c=comm_list_1[slave_comm[13]].group;
+
+for(i=slave_comm[13];i<slave_comm[14]-1;i++)
+  {
+          comm_list_1[i].size=comm_list_1[i+1].size;
+	   comm_list_1[i].myid=comm_list_1[i+1].myid;
+	   comm_list_1[i].work_time=comm_list_1[i+1].work_time;
+	   comm_list_1[i].work_status=comm_list_1[i+1].work_status;
+          comm_list_1[i].group=comm_list_1[i+1].group;
+
+  }
+comm_list_1[slave_comm[14]-1].size=t;
+ comm_list_1[slave_comm[14]-1].myid=g;
+comm_list_1[slave_comm[14]-1].work_time=w;
+ comm_list_1[slave_comm[14]-1].work_status=s;
+comm_list_1[slave_comm[14]-1].group=c;
+
+}
+if(slave_comm[13]==0&&slave_comm[15]!=0)
+
+{
+
+          t=comm_list_1[slave_comm[15]].size;
+	   g=comm_list_1[slave_comm[15]].myid;
+	   w=comm_list_1[slave_comm[15]].work_time;
+	   s=	comm_list_1[slave_comm[15]].work_status;
+          c=comm_list_1[slave_comm[15]].group;
+
+for(i=slave_comm[15];i<slave_comm[16]-1;i++)
+  {
+          comm_list_2[i].size=comm_list_2[i+1].size;
+	   comm_list_2[i].myid=comm_list_2[i+1].myid;
+	   comm_list_2[i].work_time=comm_list_2[i+1].work_time;
+	   comm_list_2[i].work_status=comm_list_2[i+1].work_status;
+	             comm_list_2[i].group=comm_list_2[i+1].group;
+
+
+  }
+        comm_list_2[slave_comm[16]-1].size=t;
+	  comm_list_2[slave_comm[16]-1].myid=g;
+	  comm_list_2[slave_comm[16]-1].work_time=w;
+	  comm_list_2[slave_comm[16]-1].work_status=s;
+        comm_list_2[slave_comm[16]-1].group=c;
+
+
+
+}
+}
+
 if(Level==5)
 {
 if(slave_comm[1]!=0&&slave_comm[4]!=0)

@@ -35,8 +35,8 @@
 //初始化PB4 PB5和PB6为输出口.并使能这PE时钟		    
 //HT1621 IO初始化
 extern u8 L_C_flag_A;//感性容性标准变量
-//extern u8 L_C_flag_B;
-//extern u8 L_C_flag_C;
+extern u8 L_C_flag_B;
+extern u8 L_C_flag_C;
 extern u8 COMMCAT_para;
 
 void HT1621_Init(void)
@@ -160,8 +160,8 @@ u8 numcontr_auto[]={0X09,0X05,0X03};
   PF_shifenwei=(PF%1000)/100;
   PF_baifenwei=	(PF%100)/10;
   PF_qianfenwei=PF%10;
-  if(L_C_flag_A==1)WriteAll_1621(25,num9_12Seg+3*PF_zhengshu,3);				//
-	  if(L_C_flag_A==0)Write_1621(26,0x02);	//	p25显示“动控制”
+  if(L_C_flag_B==1)WriteAll_1621(25,num9_12Seg+3*PF_zhengshu,3);				//
+	  if(L_C_flag_B==0)Write_1621(26,0x02);	//	p25显示“动控制”
    
   WriteAll_1621(22,num10dp9_12dp11Seg+3*PF_shifenwei,3);	//
 WriteAll_1621(19,num11_p21Seg+3*PF_baifenwei,3);		//	带P21△P22投入符号
@@ -387,8 +387,8 @@ u8 numcontr_auto[]={0X09,0X05,0X03};
   PF_shifenwei=(PF%1000)/100;
   PF_baifenwei=	(PF%100)/10;
   PF_qianfenwei=PF%10;
-  if(L_C_flag_A==1)WriteAll_1621(25,num9_12Seg+3*PF_zhengshu,3);				//
-	  if(L_C_flag_A==0)Write_1621(26,0x02);	//	p25显示“动控制”
+  if(L_C_flag_B==1)WriteAll_1621(25,num9_12Seg+3*PF_zhengshu,3);				//
+	  if(L_C_flag_B==0)Write_1621(26,0x02);	//	p25显示“动控制”
 
   {	WriteAll_1621(22,num10_L2_dp9seg+3*PF_shifenwei,3);	
 WriteAll_1621(19,num9_12Seg+3*PF_baifenwei,3);		//	带P21L1 P22投入符号
@@ -498,8 +498,8 @@ u8 numcontr_auto[]={0X09,0X05,0X03};
   PF_shifenwei=(PF%1000)/100;
   PF_baifenwei=	(PF%100)/10;
   PF_qianfenwei=PF%10;
-  if(L_C_flag_A==1)WriteAll_1621(25,num9_12Seg+3*PF_zhengshu,3);				//
-	  if(L_C_flag_A==0)Write_1621(26,0x02);	//	p25显示“动控制”
+  if(L_C_flag_C==1)WriteAll_1621(25,num9_12Seg+3*PF_zhengshu,3);				//
+	  if(L_C_flag_C==0)Write_1621(26,0x02);	//	p25显示“动控制”
 
   {	WriteAll_1621(22,num10dp9_12dp11Seg+3*PF_shifenwei,3);	
 WriteAll_1621(19,num11_L3seg+3*PF_baifenwei,3);		//	带P21L1 P22投入符号
