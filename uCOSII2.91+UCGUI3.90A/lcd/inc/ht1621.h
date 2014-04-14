@@ -46,9 +46,9 @@ void Write_1621(u8 addr,u8 data);
 void WriteAll_1621(u8 addr,u8 *p,u8 cnt);
 void Clera_lcd(void);
 void Graf_cos_volt_current(u16 PF,u16 volt_para,u32 current_para);
-void Graf_cos_volt_current_L1(u16 PF,u16 volt_para,u32 current_para);		 //显示功率因数电压电流
-void Graf_cos_volt_current_L2(u16 PF,u16 volt_para,u32 current_para);		 //显示功率因数电压电流
-void Graf_cos_volt_current_L3(u16 PF,u16 volt_para,u32 current_para);		 //显示功率因数电压电流
+void Graf_cos_volt_current_L1(u16 PF,u16 volt_para,u32 current_para,u8);		 //显示功率因数电压电流
+void Graf_cos_volt_current_L2(u16 PF,u16 volt_para,u32 current_para,u8);		 //显示功率因数电压电流
+void Graf_cos_volt_current_L3(u16 PF,u16 volt_para,u32 current_para,u8);		 //显示功率因数电压电流
 
 void Graf_powuse_poweunuse_freq(u16 powunuse,u16 powuse,u16 freq);
 void Graf_powuse_poweunuse_freq_L1(u16 powunuse,u16 powuse,u16 freq);
