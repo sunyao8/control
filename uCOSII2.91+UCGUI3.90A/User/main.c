@@ -1166,7 +1166,7 @@ void RS485_Init(u32 bound)
 {
       CPU_SR          cpu_sr;
 
-	u8 RS485_RX_BUF[64];
+	u8 RS485_RX_BUF[512];
 	   CPU_CRITICAL_ENTER();                                       /* Tell uC/OS-II that we are starting an ISR            */
     OSIntNesting++;
     CPU_CRITICAL_EXIT();	
@@ -1202,7 +1202,7 @@ void RS485_Init(u32 bound)
 /********************************************************************************************/
 		
 
-	if(RS485_RX_CNT>=64)RS485_RX_CNT=0;
+	if(RS485_RX_CNT>=512)RS485_RX_CNT=0;
 	}  	
 	OSIntExit();  											 
 
@@ -1223,6 +1223,7 @@ void RS485_Send_Data(u8 *buf,u8 len)
 	{		   
 		while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);	  
 		USART_SendData(USART2,buf[t]);
+		delay_us(100);
 	}	 
  
 	while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);		
@@ -1332,15 +1333,15 @@ if(ctr==CPT_LL )
 	rs485buf[2]=((dianya_zhi_A& (uint16_t)0xFF00)>>8);
 	rs485buf[3]=(dianliuzhi_A& (uint16_t)0x00FF);
 	rs485buf[4]=((dianliuzhi_A& (uint16_t)0xFF00)>>8);
-	rs485buf[5]=(wugongkvar_A& (uint16_t)0x00FF);
-	rs485buf[6]=((wugongkvar_A& (uint16_t)0xFF00)>>8);
-	rs485buf[7]=gonglvshishu_A;
-	rs485buf[8]=ctr;
-	rs485buf[9]=L_C_flag_A;//协议尾
-	rs485buf[10]=source;	
-	rs485buf[11]=phase_flag;
-	rs485buf[12]='?';//协议尾
-	RS485_Send_Data(rs485buf,13);//发送5个字节
+//	rs485buf[5]=(wugongkvar_A& (uint16_t)0x00FF);
+//	rs485buf[6]=((wugongkvar_A& (uint16_t)0xFF00)>>8);
+	rs485buf[5]=gonglvshishu_A;
+	rs485buf[6]=ctr;
+	rs485buf[7]=L_C_flag_A;//协议尾
+	rs485buf[8]=source;	
+	rs485buf[9]=phase_flag;
+	rs485buf[10]='?';//协议尾
+	RS485_Send_Data(rs485buf,11);//发送5个字节
     	}
 	/************************************/
     if(ctr==CPT_B)
@@ -1350,14 +1351,14 @@ if(ctr==CPT_LL )
 	rs485buf[2]=((dianya_zhi_B& (uint16_t)0xFF00)>>8);
 	rs485buf[3]=(dianliuzhi_B& (uint16_t)0x00FF);
 	rs485buf[4]=((dianliuzhi_B& (uint16_t)0xFF00)>>8);
-	rs485buf[5]=(wugongkvar_B& (uint16_t)0x00FF);
-	rs485buf[6]=((wugongkvar_B& (uint16_t)0xFF00)>>8);
-	rs485buf[7]=gonglvshishu_B;
-	rs485buf[8]=ctr;
-	rs485buf[9]=L_C_flag_B;//协议尾
-		rs485buf[10]=source;	
-	rs485buf[11]='?';//协议尾
-	RS485_Send_Data(rs485buf,12);//发送5个字节
+//	rs485buf[5]=(wugongkvar_B& (uint16_t)0x00FF);
+//	rs485buf[6]=((wugongkvar_B& (uint16_t)0xFF00)>>8);
+	rs485buf[5]=gonglvshishu_B;
+	rs485buf[6]=ctr;
+	rs485buf[7]=L_C_flag_B;//协议尾
+		rs485buf[8]=source;	
+	rs485buf[9]='?';//协议尾
+	RS485_Send_Data(rs485buf,10);//发送5个字节
     	}
 
 /***************************************************/
@@ -1368,14 +1369,14 @@ if(ctr==CPT_LL )
 	rs485buf[2]=((dianya_zhi_C& (uint16_t)0xFF00)>>8);
 	rs485buf[3]=(dianliuzhi_C& (uint16_t)0x00FF);
 	rs485buf[4]=((dianliuzhi_C& (uint16_t)0xFF00)>>8);
-	rs485buf[5]=(wugongkvar_C& (uint16_t)0x00FF);
-	rs485buf[6]=((wugongkvar_C& (uint16_t)0xFF00)>>8);
-	rs485buf[7]=gonglvshishu_C;
-	rs485buf[8]=ctr;
-	rs485buf[9]=L_C_flag_C;//协议尾
-	rs485buf[10]=source;		
-	rs485buf[11]='?';//协议尾
-	RS485_Send_Data(rs485buf,12);//发送5个字节
+//	rs485buf[5]=(wugongkvar_C& (uint16_t)0x00FF);
+//	rs485buf[6]=((wugongkvar_C& (uint16_t)0xFF00)>>8);
+	rs485buf[5]=gonglvshishu_C;
+	rs485buf[6]=ctr;
+	rs485buf[7]=L_C_flag_C;//协议尾
+	rs485buf[8]=source;		
+	rs485buf[9]='?';//协议尾
+	RS485_Send_Data(rs485buf,10);//发送5个字节
     	}
 /*********************************************/
 
@@ -2102,7 +2103,7 @@ dianliuzhi=(dianliuzhi_A+dianliuzhi_B+dianliuzhi_C)/3;
 gonglvshishu=(gonglvshishu_A+gonglvshishu_B+gonglvshishu_C)/3;
 wugongkvar=(a+b+c)/100;
 //allkvar=dianya_zhi*dianliuzhi;
-allkvar=dianya_zhi*dianliuzhi/1000;
+allkvar=3*dianya_zhi*dianliuzhi/1000;//乘以3，是因为电流变量是一相的电流，应该变为三相的电流和
 HV=HVA+HVB+HVC;
 HI=HIA+HIB+HIC;
   wugongkvar_95=wugongkvar_95A+wugongkvar_95B+wugongkvar_95C;
@@ -3911,6 +3912,7 @@ if(comm_err[i-1]==3)
 		set_clear_existence(0,i,&hand_light_existence);
 			 	capa1_array[i-1]=0;capa2_array[i-1]=0;//屏幕显示容量使用
 
+/*******************从已知队列中删除该节点***********************************/
 for(g_1=1;g_1<=slave_comm[0];g_1++)
 {
 if(i==comm_list_1[g_1].myid)
@@ -4015,6 +4017,7 @@ count=0;
 }
 
 count=0;
+/*******************从已知队列中删除该节点end***********************************/
 
 }
 
@@ -4031,24 +4034,32 @@ else  if(msg[2]==i)
 
 	if(flag_comm==1)
 		{
-	if(comm_list_1[g].group==1)comm_list_1[g].work_status=msg[5];
-         else {comm_list_1[g].work_status=msg[6];}
+	//if(comm_list_1[g].group==1)comm_list_1[g].work_status=msg[5];
+	 //        else {comm_list_1[g].work_status=msg[6];}
+	if(comm_list_1[g].group==1){comm_list_1[g].work_status=msg[5];comm_list_1[g].size=msg[3];}
+         else {comm_list_1[g].work_status=msg[6];comm_list_1[g].size=msg[4];}
 		for(s=1;s<=slave_comm[0];s++)
                    if(i==comm_list_2[s].myid)
 				   	{
-	if(comm_list_2[s].group==1){comm_list_2[s].work_status=msg[5];break;}
-         else {comm_list_2[s].work_status=msg[6];break;}
+	//if(comm_list_2[s].group==1){comm_list_2[s].work_status=msg[5];break;}
+        // else {comm_list_2[s].work_status=msg[6];break;}
+		if(comm_list_2[s].group==1){comm_list_2[s].work_status=msg[5];comm_list_2[s].size=msg[3];break;}
+         else {comm_list_2[s].work_status=msg[6];comm_list_2[s].size=msg[4];break;}	 
             }
             }
 	if(flag_comm==2)
 		{
-	if(comm_list_2[g].group==1)comm_list_2[g].work_status=msg[5];
-         else {comm_list_2[g].work_status=msg[6];}
+	//if(comm_list_2[g].group==1)comm_list_2[g].work_status=msg[5];
+        // else {comm_list_2[g].work_status=msg[6];}
+	if(comm_list_2[g].group==1){comm_list_2[g].work_status=msg[5];comm_list_2[g].size=msg[3];}
+         else {comm_list_2[g].work_status=msg[6];comm_list_2[g].size=msg[4];}	 
 		 		for(s=1;s<=slave_comm[0];s++)
                    if(i==comm_list_1[s].myid)
 				   	{
-	if(comm_list_1[s].group==1){comm_list_1[s].work_status=msg[5];break;}
-         else {comm_list_1[s].work_status=msg[6];break;}
+	//if(comm_list_1[s].group==1){comm_list_1[s].work_status=msg[5];break;}
+        // else {comm_list_1[s].work_status=msg[6];break;}
+        if(comm_list_1[s].group==1){comm_list_1[s].work_status=msg[5];comm_list_1[s].size=msg[3];break;}
+         else {comm_list_1[s].work_status=msg[6];comm_list_1[s].size=msg[4];break;}
             }
             }
        }

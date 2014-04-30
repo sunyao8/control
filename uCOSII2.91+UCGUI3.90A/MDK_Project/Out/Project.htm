@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Out\Project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Out\Project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Mon Apr 14 15:19:51 2014
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Tue Apr 29 09:33:16 2014
 <BR><P>
 <H3>Maximum Stack Usage =      14872 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2171,10 +2171,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[12c]"></a>RS485_Send_Data</STRONG> (Thumb, 122 bytes, Stack size 40 bytes, main.o(i.RS485_Send_Data))
+<P><STRONG><a name="[12c]"></a>RS485_Send_Data</STRONG> (Thumb, 128 bytes, Stack size 40 bytes, main.o(i.RS485_Send_Data))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = RS485_Send_Data &rArr; GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SendData
+<BR>[Calls]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
+<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SendData
 <LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetFlagStatus
 <LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
 <LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
@@ -2329,8 +2330,8 @@ Global Symbols
 <LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_Int_Init
 </UL>
 
-<P><STRONG><a name="[32]"></a>USART2_IRQHandler</STRONG> (Thumb, 202 bytes, Stack size 88 bytes, main.o(i.USART2_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 136 + Unknown Stack Size
+<P><STRONG><a name="[32]"></a>USART2_IRQHandler</STRONG> (Thumb, 200 bytes, Stack size 536 bytes, main.o(i.USART2_IRQHandler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 584 + Unknown Stack Size
 <LI>Call Chain = USART2_IRQHandler &rArr; OSMboxPost &rArr; OS_EventTaskRdy &rArr; OS_EventTaskRemoveMulti
 </UL>
 <BR>[Calls]<UL><LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ReceiveData
@@ -2536,7 +2537,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;App_TaskLCD
 </UL>
 
-<P><STRONG><a name="[b8]"></a>computer_gonglu</STRONG> (Thumb, 13344 bytes, Stack size 14696 bytes, main.o(i.computer_gonglu))
+<P><STRONG><a name="[b8]"></a>computer_gonglu</STRONG> (Thumb, 13328 bytes, Stack size 14696 bytes, main.o(i.computer_gonglu))
 <BR><BR>[Stack]<UL><LI>Max Depth = 14856 + Unknown Stack Size
 <LI>Call Chain = computer_gonglu &rArr; __hardfp_atan2 &rArr; atan &rArr; __hardfp_atan &rArr; __kernel_poly &rArr; __aeabi_dmul
 </UL>
@@ -2580,7 +2581,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;App_Taskcomputer
 </UL>
 
-<P><STRONG><a name="[c4]"></a>computer_trans_rs485</STRONG> (Thumb, 202 bytes, Stack size 24 bytes, main.o(i.computer_trans_rs485))
+<P><STRONG><a name="[c4]"></a>computer_trans_rs485</STRONG> (Thumb, 178 bytes, Stack size 24 bytes, main.o(i.computer_trans_rs485))
 <BR><BR>[Stack]<UL><LI>Max Depth = 84<LI>Call Chain = computer_trans_rs485 &rArr; RS485_Send_Data &rArr; GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[12c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RS485_Send_Data
@@ -2620,6 +2621,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 <LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;computer_gonglu
+<LI><a href="#[12c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RS485_Send_Data
 <LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI9_5_IRQHandler
 <LI><a href="#[12f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SendDataBit_1621
 <LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SendBit_1621
@@ -2757,7 +2759,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[15c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;inquiry_slave_status_dis
 </UL>
 
-<P><STRONG><a name="[b5]"></a>scanf_slave_machine</STRONG> (Thumb, 1658 bytes, Stack size 64 bytes, main.o(i.scanf_slave_machine))
+<P><STRONG><a name="[b5]"></a>scanf_slave_machine</STRONG> (Thumb, 1694 bytes, Stack size 64 bytes, main.o(i.scanf_slave_machine))
 <BR><BR>[Stack]<UL><LI>Max Depth = 196 + Unknown Stack Size
 <LI>Call Chain = scanf_slave_machine &rArr; Light_pad_on &rArr; CH452_I2c_WrByte &rArr; delay_us
 </UL>

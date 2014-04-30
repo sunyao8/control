@@ -1,7 +1,4 @@
----- GPIO_Pin_12 Matches (6 in 0 files) ----
-Main.c (user):// GPIO_ResetBits(GPIOD, GPIO_Pin_12);
-Main.c (user):	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_12;
-Main.c (user): 	//GPIO_SetBits(GPIOD, GPIO_Pin_12);	 
-Main.c (user):	 GPIO_SetBits(GPIOD, GPIO_Pin_12);
-Main.c (user):// GPIO_SetBits(GPIOD, GPIO_Pin_12);
-Main.c (user):  //GPIO_ResetBits(GPIOD, GPIO_Pin_12);	 
+---- allkvar Matches (3 in 0 files) ----
+Main.c (user):u16 dianya_zhi=0,wugongkvar=0,allkvar=0,HV=0,HI=0;
+Main.c (user)://allkvar=dianya_zhi*dianliuzhi;
+Main.c (user):allkvar=dianya_zhi*dianliuzhi/1000;
