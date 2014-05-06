@@ -9,121 +9,17 @@ Project File Date:  01/20/2014
 <h2>Output:</h2>
 Build target 'Target 1'
 compiling main.c...
-..\User\main.c(1783): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1905): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2034): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2355): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2437): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2543): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1618): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1641): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(487): warning: C3017W: exist may be used before being set
+..\User\main.c(2367): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2489): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2618): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2864): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2946): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3052): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2202): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2225): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(4014): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(490): warning: C3017W: exist may be used before being set
 linking...
-Program Size: Code=56704 RO-data=27064 RW-data=304 ZI-data=54088  
+Program Size: Code=54020 RO-data=27060 RW-data=304 ZI-data=54160  
 FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-..\User\main.c(1783): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1905): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2034): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2355): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2437): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2543): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1618): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1641): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(487): warning: C3017W: exist may be used before being set
-linking...
-Program Size: Code=57916 RO-data=27060 RW-data=304 ZI-data=54088  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-..\User\main.c(1783): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1905): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2034): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2355): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2437): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2543): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1618): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1641): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(487): warning: C3017W: exist may be used before being set
-linking...
-Program Size: Code=57916 RO-data=27060 RW-data=304 ZI-data=54088  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-..\User\main.c(1784): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1906): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2035): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2356): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2438): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2544): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1619): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1642): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(487): warning: C3017W: exist may be used before being set
-linking...
-Program Size: Code=57916 RO-data=27060 RW-data=304 ZI-data=54088  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-..\User\main.c(1784): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1906): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2035): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2356): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2438): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2544): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1619): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1642): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(487): warning: C3017W: exist may be used before being set
-linking...
-Program Size: Code=57916 RO-data=27060 RW-data=304 ZI-data=54088  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-..\User\main.c(1784): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1906): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2035): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2356): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2438): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2544): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1619): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1642): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(487): warning: C3017W: exist may be used before being set
-linking...
-Program Size: Code=57916 RO-data=27060 RW-data=304 ZI-data=54088  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-..\User\main.c(1784): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1906): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2035): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2356): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2438): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2544): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1619): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1642): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(487): warning: C3017W: exist may be used before being set
-linking...
-Program Size: Code=57908 RO-data=27060 RW-data=304 ZI-data=54088  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-..\User\main.c(1784): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1906): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2035): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2356): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2438): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2544): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(1619): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(1642): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(487): warning: C3017W: exist may be used before being set
-linking...
-Program Size: Code=57892 RO-data=27060 RW-data=304 ZI-data=54088  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 9 Warning(s).
+".\Out\Project.axf" - 0 Error(s), 10 Warning(s).
