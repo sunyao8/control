@@ -9,17 +9,17 @@ Project File Date:  01/20/2014
 <h2>Output:</h2>
 Build target 'Target 1'
 compiling main.c...
-..\User\main.c(2367): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2489): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2618): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2864): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2946): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(3052): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2202): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(2225): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(4014): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(2336): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2458): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2587): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2833): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2915): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3021): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2171): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2194): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(3983): warning:  #177-D: variable "count" was declared but never referenced
 ..\User\main.c(490): warning: C3017W: exist may be used before being set
 linking...
-Program Size: Code=54020 RO-data=27060 RW-data=304 ZI-data=54160  
+Program Size: Code=53720 RO-data=27064 RW-data=304 ZI-data=54160  
 FromELF: creating hex file...
 ".\Out\Project.axf" - 0 Error(s), 10 Warning(s).

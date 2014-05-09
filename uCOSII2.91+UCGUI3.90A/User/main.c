@@ -1957,153 +1957,14 @@ if(size==20)
 void del_comm_listnode(u8 id,u8 group,u8 *slave_comm,status_comm_node *comm_list)
 {
 u8 i=0;
-u8 j=0,flash=0;
+u8 j=0;
+  	
 {
-  	{
-{
-  	  		for(i=slave_comm[2];i<slave_comm[3];i++)//2//2的队列
+  	  		for(i=slave_comm[2];i<=slave_comm[9]-1;i++)//2
 	if(id==comm_list[i].myid&&group==comm_list[i].group)//锁定节点进行更新
 		{ 
-		for(j=i;j<slave_comm[3]-1;j++)
-		      {
-		         comm_list[j].myid=comm_list[j+1].myid;
-   	   comm_list[j].size=comm_list[j+1].size;
-   	   comm_list[j].work_status=comm_list[j+1].work_status;
-	   comm_list[j].group=comm_list[j+1].group;
-		      }
-      slave_comm[3]--;
-{
-slave_comm[4]=slave_comm[3]+1;
 
-	for(i=slave_comm[4];i<slave_comm[5]-1;i++)//5的队列移动
-  		{
-	   comm_list[i].myid=comm_list[i+1].myid;
-   	   comm_list[i].size=comm_list[i+1].size;
-   	   comm_list[i].work_status=comm_list[i+1].work_status;
-	   comm_list[i].group=comm_list[i+1].group;
-  		}	
-slave_comm[5]--;
-
-}
-
-{
-slave_comm[6]=slave_comm[5]+1;
-
-	for(i=slave_comm[6];i<slave_comm[7]-1;i++)//10的队列移动
-  		{
-	   comm_list[i].myid=comm_list[i+1].myid;
-   	   comm_list[i].size=comm_list[i+1].size;
-   	   comm_list[i].work_status=comm_list[i+1].work_status;
-	   comm_list[i].group=comm_list[i+1].group;
-  		}	
-slave_comm[7]--;
-
-}
-{
-slave_comm[8]=slave_comm[7]+1;
-
-	for(i=slave_comm[8];i<slave_comm[9]-1;i++)//20的队列移动
-  		{
-	   comm_list[i].myid=comm_list[i+1].myid;
-   	   comm_list[i].size=comm_list[i+1].size;
-   	   comm_list[i].work_status=comm_list[i+1].work_status;
-	   comm_list[i].group=comm_list[i+1].group;
-  		}	
-slave_comm[9]--;
-
-}
-flash=1;
-	}
-
-
-	}
-
-
-  }
-  
-    if(flash==0)
-  	{
-  	  		for(i=slave_comm[4];i<slave_comm[5];i++)//2//5的队列
-	if(id==comm_list[i].myid&&group==comm_list[i].group)//锁定节点进行更新
-		{ 
-		for(j=i;j<slave_comm[5]-1;j++)
-		      {
-		         comm_list[j].myid=comm_list[j+1].myid;
-   	   comm_list[j].size=comm_list[j+1].size;
-   	   comm_list[j].work_status=comm_list[j+1].work_status;
-	   comm_list[j].group=comm_list[j+1].group;
-		      }
-      slave_comm[5]--;
-
-
-{
-slave_comm[6]=slave_comm[5]+1;
-
-	for(i=slave_comm[6];i<slave_comm[7]-1;i++)//10的队列移动
-  		{
-	   comm_list[i].myid=comm_list[i+1].myid;
-   	   comm_list[i].size=comm_list[i+1].size;
-   	   comm_list[i].work_status=comm_list[i+1].work_status;
-	   comm_list[i].group=comm_list[i+1].group;
-  		}	
-slave_comm[7]--;
-
-}
-{
-slave_comm[8]=slave_comm[7]+1;
-
-	for(i=slave_comm[8];i<slave_comm[9]-1;i++)//20的队列移动
-  		{
-	   comm_list[i].myid=comm_list[i+1].myid;
-   	   comm_list[i].size=comm_list[i+1].size;
-   	   comm_list[i].work_status=comm_list[i+1].work_status;
-	   comm_list[i].group=comm_list[i+1].group;
-  		}	
-slave_comm[9]--;
-
-}
-flash=1;
-	}
-
-
-	} 
-	if(flash==0)
-  	{
-  	  		for(i=slave_comm[6];i<slave_comm[7];i++)//2//10的队列
-	if(id==comm_list[i].myid&&group==comm_list[i].group)//锁定节点进行更新
-		{ 
-		for(j=i;j<slave_comm[7]-1;j++)
-		      {
-		         comm_list[j].myid=comm_list[j+1].myid;
-   	   comm_list[j].size=comm_list[j+1].size;
-   	   comm_list[j].work_status=comm_list[j+1].work_status;
-	   comm_list[j].group=comm_list[j+1].group;
-		      }
-      slave_comm[7]--;
-
-{
-slave_comm[8]=slave_comm[7]+1;
-
-	for(i=slave_comm[8];i<slave_comm[9]-1;i++)//20的队列移动
-  		{
-	   comm_list[i].myid=comm_list[i+1].myid;
-   	   comm_list[i].size=comm_list[i+1].size;
-   	   comm_list[i].work_status=comm_list[i+1].work_status;
-	   comm_list[i].group=comm_list[i+1].group;
-  		}	
-slave_comm[9]--;
-
-}
-flash=1;
-	}
-
-
-	} 
-	if(flash==0)
-  	{
-  	  		for(i=slave_comm[8];i<slave_comm[9];i++)//20的队列
-	if(id==comm_list[i].myid&&group==comm_list[i].group)//锁定节点进行更新
-		{ 
+	
 		for(j=i;j<slave_comm[9]-1;j++)
 		      {
 		         comm_list[j].myid=comm_list[j+1].myid;
@@ -2111,15 +1972,123 @@ flash=1;
    	   comm_list[j].work_status=comm_list[j+1].work_status;
 	   comm_list[j].group=comm_list[j+1].group;
 		      }
-      slave_comm[9]--;
+	       if(i<slave_comm[3])
+		   	{
+                         {
+			slave_comm[3]--;
+	             comm_list[slave_comm[3]].myid=0;
+   	               comm_list[slave_comm[3]].size=0;
+   	                comm_list[slave_comm[3]].work_status=0;
+	              comm_list[slave_comm[3]].group=0;
+
+		          }	
+		   
+                      {
+			slave_comm[4]--;					  	
+			slave_comm[5]--;
+	             comm_list[slave_comm[5]].myid=0;
+   	               comm_list[slave_comm[5]].size=0;
+   	                comm_list[slave_comm[5]].work_status=0;
+	              comm_list[slave_comm[5]].group=0;
+
+		          }	
+				  
+                      {
+			slave_comm[6]--;					  	
+			slave_comm[7]--;
+	             comm_list[slave_comm[7]].myid=0;
+   	               comm_list[slave_comm[7]].size=0;
+   	                comm_list[slave_comm[7]].work_status=0;
+	              comm_list[slave_comm[7]].group=0;
+
+		          }			
+				  
+	             {
+			slave_comm[8]--;				 	
+			slave_comm[9]--;
+	             comm_list[slave_comm[9]].myid=0;
+   	               comm_list[slave_comm[9]].size=0;
+   	                comm_list[slave_comm[9]].work_status=0;
+	              comm_list[slave_comm[9]].group=0;
+
+		          }
+		   	}
+		else if(i<slave_comm[5]&&i>slave_comm[3])
+			{
+                         	   
+                      {
+			slave_comm[5]--;
+	             comm_list[slave_comm[5]].myid=0;
+   	               comm_list[slave_comm[5]].size=0;
+   	                comm_list[slave_comm[5]].work_status=0;
+	              comm_list[slave_comm[5]].group=0;
+
+		          }	
+				  
+                      {
+			slave_comm[6]--;					  	
+			slave_comm[7]--;
+	             comm_list[slave_comm[7]].myid=0;
+   	               comm_list[slave_comm[7]].size=0;
+   	                comm_list[slave_comm[7]].work_status=0;
+	              comm_list[slave_comm[7]].group=0;
+
+		          }			
+				  
+	             {
+			slave_comm[8]--;				 	
+			slave_comm[9]--;
+	             comm_list[slave_comm[9]].myid=0;
+   	               comm_list[slave_comm[9]].size=0;
+   	                comm_list[slave_comm[9]].work_status=0;
+	              comm_list[slave_comm[9]].group=0;
+
+		          }
+		   	}
+		else if(i<slave_comm[7]&&i>slave_comm[5])
+			{
+                         		  
+                      {
+			slave_comm[7]--;
+	             comm_list[slave_comm[7]].myid=0;
+   	               comm_list[slave_comm[7]].size=0;
+   	                comm_list[slave_comm[7]].work_status=0;
+	              comm_list[slave_comm[7]].group=0;
+
+		          }			
+				  
+	             {
+			slave_comm[8]--;				 	
+			slave_comm[9]--;
+	             comm_list[slave_comm[9]].myid=0;
+   	               comm_list[slave_comm[9]].size=0;
+   	                comm_list[slave_comm[9]].work_status=0;
+	              comm_list[slave_comm[9]].group=0;
+
+		          }
+		   	}
+		else if(i<slave_comm[9]&&i>slave_comm[7])
+			{
+							  
+	             {
+			slave_comm[9]--;
+	             comm_list[slave_comm[9]].myid=0;
+   	               comm_list[slave_comm[9]].size=0;
+   	                comm_list[slave_comm[9]].work_status=0;
+	              comm_list[slave_comm[9]].group=0;
+
+		          }
+		   	}
+
+break;
 	}
 
-	}
+
+
+		 
+  	 
+  	
 }
-
-
-
-
 
 }
 
@@ -4125,7 +4094,7 @@ j=0;
 for(i=slave_dis[0]+1;i<=32;i++)
 	{  
 
-for(g=1;g<=65;g++)
+for(g=0;g<=slave_comm[9]-1;g++)
 {
 if(i==comm_list[g].myid){flag_comm=1;break;}
 
@@ -4175,9 +4144,10 @@ else  if(msg[2]==i)
 	 set_clear_existence(1,i,&hand_light_existence);
 
 	if(flag_comm==1)
+		{
 		 flash_comm_list(i,msg[3] ,msg[5] ,1,slave_comm,comm_list);
 		 flash_comm_list(i,msg[4] ,msg[6] ,2,slave_comm,comm_list);
-		
+		}
        }
 
 }
