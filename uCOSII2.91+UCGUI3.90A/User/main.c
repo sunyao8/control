@@ -3537,11 +3537,13 @@ return 0;
   }
 
 
+
 if(L_C_flag_B==0)
 {
       {
+
 {
-for(i=slave_comm[8];i<=slave_comm[9]-1;i++)
+for(i=slave_comm[2];i<=slave_comm[3]-1;i++)
 if(comm_list[i].work_status==1)
 
 {
@@ -3555,6 +3557,24 @@ return 0 ;
 
 
 }
+	  
+{
+for(i=slave_comm[4];i<=slave_comm[5]-1;i++)
+if(comm_list[i].work_status==1)
+
+{
+order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
+		{
+delay_ms(DELAY_OFF_para);
+return 0 ;
+
+		}
+}
+
+
+
+}
+
 
 
 
@@ -3575,24 +3595,7 @@ return 0 ;
 }
 
 {
-for(i=slave_comm[4];i<=slave_comm[5]-1;i++)
-if(comm_list[i].work_status==1)
-
-{
-if(comm_list[i].group==1)order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
-		{
-delay_ms(DELAY_OFF_para);
-return 0 ;
-
-		}
-}
-
-
-
-}
-
-{
-for(i=slave_comm[2];i<=slave_comm[3]-1;i++)
+for(i=slave_comm[8];i<=slave_comm[9]-1;i++)
 if(comm_list[i].work_status==1)
 
 {
@@ -3605,8 +3608,8 @@ return 0 ;
 }
 
 
-
 }
+
 
        }
 }
