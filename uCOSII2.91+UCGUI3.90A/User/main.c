@@ -2333,10 +2333,10 @@ HVA=(HU_A/maxValue);
 	arm_max_f32(reslut, fftSize/2, &maxValue_C, &testIndex);
 
 
- dianliuzhi_A=1.1*maxValue_C;
- if((T*dianliuzhi_A/10)<=(T*15))dianliuzhi_A=0;//15为归零系数 是实际电流值如果比变比的15%还小就归零
-else dianliuzhi_A=T*dianliuzhi_A/1000;
-if(dianliuzhi_A==0)gonglvshishu_A=100;
+ dianliuzhi_A=0.98*maxValue_C;
+ dianliuzhi_A=T*dianliuzhi_A/1000;
+ if(dianliuzhi_A<T)dianliuzhi_A=0;
+if(dianliuzhi_A==0)gonglvshishu_A=99;
 else gonglvshishu_A=arm_cos_f32(angle[0]-angle[1])*100;//功率因素
 
 /*************************电流谐波率****************************************/
@@ -2455,10 +2455,10 @@ HVB=(HU_B/maxValue);
 	/* Calculates maxValue and returns corresponding BIN value */ 
 	arm_max_f32(reslut, fftSize/2, &maxValue_C, &testIndex);
 
- dianliuzhi_B=1.1*maxValue_C;
- if((T*dianliuzhi_B/10)<=(T*15))dianliuzhi_B=0;//15为归零系数 是实际电流值如果比变比的15%还小就归零
-else dianliuzhi_B=T*dianliuzhi_B/1000;
-if(dianliuzhi_B==0)gonglvshishu_B=100;
+dianliuzhi_B=0.98*maxValue_C;
+ dianliuzhi_B=T*dianliuzhi_B/1000;
+  if(dianliuzhi_B<T)dianliuzhi_B=0;
+if(dianliuzhi_B==0)gonglvshishu_B=99;
 else gonglvshishu_B=arm_cos_f32(angle[0]-angle[1])*100;//功率因素
 /*************************电流谐波率****************************************/
 
@@ -2584,10 +2584,10 @@ HVC=(HU_C/maxValue);
 	/* Calculates maxValue and returns corresponding BIN value */ 
 	arm_max_f32(reslut, fftSize/2, &maxValue_C, &testIndex);
 
- dianliuzhi_C=1.1*maxValue_C;
- if((T*dianliuzhi_C/10)<=(T*15))dianliuzhi_C=0;//15为归零系数 是实际电流值如果比变比的15%还小就归零
-else dianliuzhi_C=T*dianliuzhi_C/1000;
-if(dianliuzhi_C==0)gonglvshishu_C=100;
+dianliuzhi_C=0.98*maxValue_C;
+ dianliuzhi_C=T*dianliuzhi_C/1000;
+  if(dianliuzhi_C<T)dianliuzhi_C=0;
+if(dianliuzhi_C==0)gonglvshishu_C=99;
 else gonglvshishu_C=arm_cos_f32(angle[0]-angle[1])*100;//功率因素
 /*************************电流谐波率****************************************/
 

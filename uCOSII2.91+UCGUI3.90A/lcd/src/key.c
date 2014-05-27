@@ -785,7 +785,7 @@ break;
 		 break;
 	 case 4:											//显示版本号
 		  Clera_lcd();
-		  Graf_VER(1);
+		  Graf_VER(2);
 		 break;
 
 	 case 5:											//显示电容组号及容量
