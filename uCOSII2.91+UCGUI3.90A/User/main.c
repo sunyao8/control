@@ -118,6 +118,7 @@ u32	dianliuzhi=0;
 u16 dianya_zhi_A=0,dianya_zhi_B=0,dianya_zhi_C=0,wugongkvar_A=0,wugongkvar_B=0,wugongkvar_C=0;
 u32	dianliuzhi_A=0,dianliuzhi_B=0	,dianliuzhi_C=0;
 u8 gonglvshishu_A=0,gonglvshishu_B=0,gonglvshishu_C=0;
+u8 display_nothing_close_open_warn=0;
 
 void ADC3_CH10_DMA_Config_VA(void);
 void ADC2_CH8_DMA_Config_VEE(void);
@@ -145,8 +146,8 @@ u8 computer_gonglu(status_dis_node *dis_list,status_comm_node *comm_list,u8 *sla
 
 #define LEN_control 14
 #define EN_USART2_RX 	1			//0,不接收;1,接收.
-#define RS485_TX_EN_1		GPIO_SetBits(GPIOB, GPIO_Pin_15)	// 485模式控制.0,接收;1,发送.本工程用PB15
-#define RS485_TX_EN_0		GPIO_ResetBits(GPIOB, GPIO_Pin_15)	// 485模式控制.0,接收;1,发送.本工程用PB15
+#define RS485_TX_EN_1		GPIO_SetBits(GPIOC, GPIO_Pin_12)	// 485模式控制.0,接收;1,发送.本工程用PB15
+#define RS485_TX_EN_0		GPIO_ResetBits(GPIOC, GPIO_Pin_12)	// 485模式控制.0,接收;1,发送.本工程用PB15
  OS_EVENT * RS485_STUTAS_MBOX_dis,* RS485_STUTAS_MBOX,* RS485_RT;			//	rs485邮箱信号量
  OS_EVENT *computer_sem,*urgent_sem;			 //
 
@@ -178,7 +179,7 @@ u8 auto_on=1;
 void RS485_Init(u32 bound);
 void initmybox(void);//初始化自身信息
 
-void USART2_IRQHandler(void);
+void UART4_IRQHandler(void);
 void EXTI9_5_IRQHandler(void);
 u16 comp_16(u16 a,u16 b);
 int rs485_trans_order(u8 *tx_r485);//解析由主机发送过来的信号，并发送给下位机
@@ -259,10 +260,10 @@ u16 comm_number=0;//手动投切共补0为继电器1号 1为继电器2号
  
 u8 phase_flag=0;
 u16 T=10;
-u8 RT_FLAG=3;
+u8 RT_FLAG=2;
 u16 scan_init=20;
 u8 MASTER=1;
-u8 light_time=6;
+u8 light_time=100;
 
 /********************控制器设置参数*************************/
 extern u8 DELAY_ON_para;
@@ -303,6 +304,7 @@ GPIO_Configuration();
 initmybox();//初始化自身信息
  init_para();
  init_light_off();
+ LIGHT_backligt_on();
 
 os_err = os_err; 
 
@@ -640,7 +642,7 @@ first_init=0;
 
 
 
-if(COMMCAT_para==0)
+if(COMMCAT_para==0) //自动模式
 {
 
  computer_gonglu(dis_list,comm_list,slave_dis,slave_comm);
@@ -1098,34 +1100,34 @@ void RS485_Init(u32 bound)
   	USART_InitTypeDef USART_InitStructure;
  	NVIC_InitTypeDef NVIC_InitStructure;
  
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA|RCC_AHB1Periph_GPIOB, ENABLE);
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2,ENABLE);//使能USART2时钟
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA|RCC_AHB1Periph_GPIOB|RCC_AHB1Periph_GPIOC, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART4,ENABLE);//使能USART2时钟
 
 
 	
-	 GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15;				 //本工程配置
+	 GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;				 //本工程配置
  	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT; 		 //推挽输出
  	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
  	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
- 		GPIO_Init(GPIOB, &GPIO_InitStructure);	   //本工程使用
+ 		GPIO_Init(GPIOC, &GPIO_InitStructure);	   //本工程使用
 
- GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_USART2);
-  GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, GPIO_AF_USART2);
+ GPIO_PinAFConfig(GPIOC, GPIO_PinSource10, GPIO_AF_UART4);
+  GPIO_PinAFConfig(GPIOC, GPIO_PinSource11, GPIO_AF_UART4);
 
 
 
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-  GPIO_Init(GPIOA, &GPIO_InitStructure);
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
 
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-  GPIO_Init(GPIOA, &GPIO_InitStructure);
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
 
 /*
 		
@@ -1141,8 +1143,8 @@ void RS485_Init(u32 bound)
 
 */	
 /******************************************************/
-	RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART2,ENABLE);//复位串口2
-	RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART2,DISABLE);//停止复位
+	RCC_APB1PeriphResetCmd(RCC_APB1Periph_UART4,ENABLE);//复位串口2
+	RCC_APB1PeriphResetCmd(RCC_APB1Periph_UART4,DISABLE);//停止复位
  
 	
 	USART_InitStructure.USART_BaudRate = bound;//一般设置为9600;
@@ -1152,19 +1154,19 @@ void RS485_Init(u32 bound)
 	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;//无硬件数据流控制
 	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;//收发模式
 
-    USART_Init(USART2, &USART_InitStructure); ; //初始化串口
+    USART_Init(UART4, &USART_InitStructure); ; //初始化串口
 
 		NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	//设置NVIC中断分组2:2位抢占优先级，2位响应优先级
   //NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x0);
-	NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn; //使能串口2中断
+	NVIC_InitStructure.NVIC_IRQChannel = UART4_IRQn; //使能串口2中断
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; //先占优先级2级
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0; //从优先级2级
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; //使能外部中断通道
 	NVIC_Init(&NVIC_InitStructure); //根据NVIC_InitStruct中指定的参数初始化外设NVIC寄存器
  
-    USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);//开启中断
+    USART_ITConfig(UART4, USART_IT_RXNE, ENABLE);//开启中断
    
-    USART_Cmd(USART2, ENABLE);                    //使能串口 
+    USART_Cmd(UART4, ENABLE);                    //使能串口 
 
  //USART_ClearFlag(USART2, USART_FLAG_TC);
 
@@ -1174,7 +1176,7 @@ void RS485_Init(u32 bound)
  
 }
 
-		void USART2_IRQHandler(void)
+		void UART4_IRQHandler(void)
 {
       CPU_SR          cpu_sr;
 
@@ -1184,9 +1186,9 @@ void RS485_Init(u32 bound)
     CPU_CRITICAL_EXIT();	
  	//GPIO_SetBits(GPIOD, GPIO_Pin_12);	 
 	
-	if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET) //接收到数据
+	if(USART_GetITStatus(UART4, USART_IT_RXNE) != RESET) //接收到数据
 	{	
-		 RS485_RX_BUF[RS485_RX_CNT++]=USART_ReceiveData(USART2); 	//读取接收到的数据
+		 RS485_RX_BUF[RS485_RX_CNT++]=USART_ReceiveData(UART4); 	//读取接收到的数据
 		 
 /********************************************************************************************/
 			if(RS485_RX_BUF[RS485_RX_CNT-1]=='&'){RS485_RX_BUF[0]='&'; RS485_RX_CNT=1;}
@@ -1225,20 +1227,20 @@ void RS485_Send_Data(u8 *buf,u8 len)
 	u8 t;
 	    GPIO_InitTypeDef GPIO_InitStructure;
 
-	 GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15;				 //本工程配置
+	 GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;				 //本工程配置
  	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT; 		 //推挽输出
  	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
  	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
- 		GPIO_Init(GPIOB, &GPIO_InitStructure);	
+ 		GPIO_Init(GPIOC, &GPIO_InitStructure);	
 	RS485_TX_EN_1;			//设置为发送模式
   	for(t=0;t<len;t++)		//循环发送数据
 	{		   
-		while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);	  
-		USART_SendData(USART2,buf[t]);
+		while(USART_GetFlagStatus(UART4, USART_FLAG_TC) == RESET);	  
+		USART_SendData(UART4,buf[t]);
 		delay_us(100);
 	}	 
  
-	while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);		
+	while(USART_GetFlagStatus(UART4, USART_FLAG_TC) == RESET);		
 	RS485_RX_CNT=0;	  
 	RS485_TX_EN_0;				//设置为接收模式	
 
@@ -1345,15 +1347,15 @@ if(ctr==CPT_LL )
 	rs485buf[2]=((dianya_zhi_A& (uint16_t)0xFF00)>>8);
 	rs485buf[3]=(dianliuzhi_A& (uint16_t)0x00FF);
 	rs485buf[4]=((dianliuzhi_A& (uint16_t)0xFF00)>>8);
-//	rs485buf[5]=(wugongkvar_A& (uint16_t)0x00FF);
-//	rs485buf[6]=((wugongkvar_A& (uint16_t)0xFF00)>>8);
-	rs485buf[5]=gonglvshishu_A;
-	rs485buf[6]=ctr;
-	rs485buf[7]=L_C_flag_A;//协议尾
-	rs485buf[8]=source;	
-	rs485buf[9]=phase_flag;
-	rs485buf[10]='?';//协议尾
-	RS485_Send_Data(rs485buf,11);//发送5个字节
+	rs485buf[5]=(wugongkvar_A& (uint16_t)0x00FF);
+	rs485buf[6]=((wugongkvar_A& (uint16_t)0xFF00)>>8);
+	rs485buf[7]=gonglvshishu_A;
+	rs485buf[8]=ctr;
+	if(phase_flag==1)rs485buf[9]=L_C_flag_A+5;//+5说明是反相序，把反相序这个信息传递给从机
+	else rs485buf[9]=L_C_flag_A;
+	rs485buf[10]=source;	
+	rs485buf[11]='?';//协议尾
+	RS485_Send_Data(rs485buf,12);//发送5个字节
     	}
 	/************************************/
     if(ctr==CPT_B)
@@ -1363,14 +1365,14 @@ if(ctr==CPT_LL )
 	rs485buf[2]=((dianya_zhi_B& (uint16_t)0xFF00)>>8);
 	rs485buf[3]=(dianliuzhi_B& (uint16_t)0x00FF);
 	rs485buf[4]=((dianliuzhi_B& (uint16_t)0xFF00)>>8);
-//	rs485buf[5]=(wugongkvar_B& (uint16_t)0x00FF);
-//	rs485buf[6]=((wugongkvar_B& (uint16_t)0xFF00)>>8);
-	rs485buf[5]=gonglvshishu_B;
-	rs485buf[6]=ctr;
-	rs485buf[7]=L_C_flag_B;//协议尾
-		rs485buf[8]=source;	
-	rs485buf[9]='?';//协议尾
-	RS485_Send_Data(rs485buf,10);//发送5个字节
+	rs485buf[5]=(wugongkvar_B& (uint16_t)0x00FF);
+	rs485buf[6]=((wugongkvar_B& (uint16_t)0xFF00)>>8);
+	rs485buf[7]=gonglvshishu_B;
+	rs485buf[8]=ctr;
+	rs485buf[9]=L_C_flag_B;//协议尾
+		rs485buf[10]=source;	
+	rs485buf[11]='?';//协议尾
+	RS485_Send_Data(rs485buf,12);//发送5个字节
     	}
 
 /***************************************************/
@@ -1381,14 +1383,14 @@ if(ctr==CPT_LL )
 	rs485buf[2]=((dianya_zhi_C& (uint16_t)0xFF00)>>8);
 	rs485buf[3]=(dianliuzhi_C& (uint16_t)0x00FF);
 	rs485buf[4]=((dianliuzhi_C& (uint16_t)0xFF00)>>8);
-//	rs485buf[5]=(wugongkvar_C& (uint16_t)0x00FF);
-//	rs485buf[6]=((wugongkvar_C& (uint16_t)0xFF00)>>8);
-	rs485buf[5]=gonglvshishu_C;
-	rs485buf[6]=ctr;
-	rs485buf[7]=L_C_flag_C;//协议尾
-	rs485buf[8]=source;		
-	rs485buf[9]='?';//协议尾
-	RS485_Send_Data(rs485buf,10);//发送5个字节
+	rs485buf[5]=(wugongkvar_C& (uint16_t)0x00FF);
+	rs485buf[6]=((wugongkvar_C& (uint16_t)0xFF00)>>8);
+	rs485buf[7]=gonglvshishu_C;
+	rs485buf[8]=ctr;
+	rs485buf[9]=L_C_flag_C;//协议尾
+	rs485buf[10]=source;		
+	rs485buf[11]='?';//协议尾
+	RS485_Send_Data(rs485buf,12);//发送5个字节
     	}
 /*********************************************/
 
@@ -2177,7 +2179,7 @@ float32_t maxValue=0.0,maxValue_C=0.0;
 
 float32_t testOutput[TEST_LENGTH_SAMPLES*2/2]; 
 float32_t reslut[TEST_LENGTH_SAMPLES/2]; 
-u16 TR[]={4,5,6,8,10,12,16,20,24,30,40,50,60,80,100,120};
+u16 TR[]={1,2,3,4,5,6,8,10,12,16,20,24,30,40,50,60,80,100,120};
 /* ------------------------------------------------------------------ 
 * Global variables for FFT Bin Example 
 * ------------------------------------------------------------------- */ 
@@ -2187,7 +2189,7 @@ uint32_t doBitReverse = 1;
  
 /* Reference index at which max energy of bin ocuurs */ 
 uint32_t  testIndex = 0,a,b,c; 
- double angle[3]; 
+ double angle[4]; 
 float32_t sine=0;
 u16 phase;
 s32 gl[2];
@@ -2196,8 +2198,151 @@ u16 wugongkvar_95,wugongkvar_95A,wugongkvar_95B,wugongkvar_95C;
 float32_t HU_SUM_A=0,HI_SUM_A=0,HU_A=0,HI_A=0,HVA=0,HIA=0;
 float32_t HU_SUM_B=0,HI_SUM_B=0,HU_B=0,HI_B=0,HVB=0,HIB=0;
 float32_t HU_SUM_C=0,HI_SUM_C=0,HU_C=0,HI_C=0,HVC=0,HIC=0;
+u8 flag_phase=1;
+a=AT24CXX_ReadOneByte(0xa000);
+CT_para=TR[a]*50;
+T=CT_para/50;
+
+   if(KEY_3==0) 
+   	{
+
+{
+ADC3_CH10_DMA_Config_VA();
+ADC1_CH4_DMA_Config_CB();
+
+ maxValue=0.0;
+ maxValue_C=0.0; 
+
+ for(i=0;i<TEST_LENGTH_SAMPLES;i++)
+	 	{
+	 	
+	 	
+testInput_C[i]=(float32_t)((ADC_Converted_CValue-ADC_Converted_base)*3.3/4096);///  1550
+
+testInput_V[i]=(float32_t)((ADC_Converted_VValue-ADC_Converted_base)*3.3/4096);///  1550
+
+delay_us(36);//36->512
+
+        }
+
+ 
+allphase(testInput_V,testInput_C);
+
+ 
+	status = arm_rfft_init_f32(&S,&S_CFFT, fftSize,  
+	  								ifftFlag, doBitReverse); 
+	 
+	/* Process the data through the CFFT/CIFFT module */ 
+	arm_rfft_f32(&S, testInput_V,testOutput); 
+
+             testIndex=1;
+	 angle[0]=atan2(testOutput[2*testIndex],testOutput[2*testIndex+1]);//电压初始相位
+
+	/* Process the data through the Complex Magnitude Module for  
+	calculating the magnitude at each bin */ 
+
+	/*******通过原始数据计算电压值***********/
+		//arm_rfft_f32(&S, testInput_V_source,testOutput); 
+
+	arm_cmplx_mag_f32(testOutput, reslut,  
+	  				fftSize);  
+	/* Calculates maxValue and returns corresponding BIN value */ 
+
+	arm_max_f32(reslut, fftSize/2, &maxValue, &testIndex);
+dianya_zhi=maxValue/100;
+dianya_zhi=dianya_zhi/2.57;
+/*************************电压谐波率****************************************/
+
+{
+for(i=3;i<=21;i=i+2){HU_SUM_B=(reslut[i]*reslut[i])+HU_SUM_B;}
+arm_sqrt_f32(HU_SUM_B,&HU_B);
+HVB=(HU_B/maxValue);
+}
+/******************************************************************/
+
+/******************************************************************/
+	arm_rfft_f32(&S, testInput_C,testOutput); 
+         
+	angle[1]=atan2(testOutput[2*testIndex],testOutput[2*testIndex+1]);//电流初始相位
+
+	/*******通过原始数据计算电压值***********/
+
+	//	arm_rfft_f32(&S, testInput_C_source,testOutput); 
+
+	arm_cmplx_mag_f32(testOutput, reslut,  
+	  				fftSize);  
+	 
+	/* Calculates maxValue and returns corresponding BIN value */ 
+	arm_max_f32(reslut, fftSize/2, &maxValue_C, &testIndex);
+/****************************************************************/
+/************************************phase******************/
+				angle[3]=((angle[1]-angle[0])*360)/PI2;
+                         	{
+		
+
+			{	if(angle[3]>0){while(1){if(angle[3]>360){angle[3]=angle[3]-360;} else break;}}
+				else if(angle[3]<0){while(1){if(angle[3]<-360){angle[3]=angle[3]+360;} else break;}}
+				
+				if((angle[3]>3.0&&angle[3]<178.0)||(angle[3]>-357.0&&angle[3]<-182.0))flag_phase=1;//正序
+				
+			else if((angle[3]>182.0&&angle[3]<357.0)||(angle[3]>-178.0&&angle[3]<-3.0))flag_phase=0;//反序
+
+				}
+
+				}
+/************************************phase_end*******************/
+						angle[2]=((angle[1]-angle[0])*360)/PI2-90;					
+
+				if(angle[2]>0){while(1){if(angle[2]>360){angle[2]=angle[2]-360;} else break;}}
+			else if(angle[2]<0){while(1){if(angle[2]<-360){angle[2]=angle[2]+360;} else break;}} 
+if((flag_phase==1))
+{
+if(((angle[2]>2.0)&&(angle[2]<90))||((angle[2]>-358.0&&angle[2]<-270.0))){L_C_flag_B=1;}
+else if(((angle[2]<-2.0)&&(angle[2]>-90.0))||(angle[2]>270&&angle[2]<358)){ L_C_flag_B=0;}
+}
+if(flag_phase==0)
+{
+if(((angle[2]>180.0)&&(angle[2]<270))||((angle[2]>-180.0&&angle[2]<-90.0))){L_C_flag_B=1;}
+else if(((angle[2]<180.0)&&(angle[2]>90.0))||(angle[2]>-270&&angle[2]<-180)){L_C_flag_B=0;}
+}
+
+dianliuzhi=T*maxValue_C*1.1;
+arm_sqrt_f32(1-(arm_cos_f32(angle[0]-angle[1]))*(arm_cos_f32(angle[0]-angle[1])),&sine);
+gonglvshishu=sine*100;
+if(dianliuzhi<=1.2*T){gonglvshishu=100;dianliuzhi=0;L_C_flag_B=1;}//电流小于0.1A 时，电流就清零
+else dianliuzhi=dianliuzhi/1000;
+			 wugongkvar=((1.732*dianliuzhi*dianya_zhi*(arm_cos_f32(angle[0]-angle[1])))/1000);
+			 allkvar=((1.732*dianliuzhi*dianya_zhi*sine)/1000);
+                    //wugongkvar=wugong_computer;
+		
 
 
+ 
+/*************************电流谐波率****************************************/
+
+{
+for(i=3;i<=21;i=i+2){HI_SUM_B=(reslut[i]*reslut[i])+HI_SUM_B;}
+arm_sqrt_f32(HI_SUM_B,&HI_B);
+HIB=(HI_B/maxValue);
+}
+/******************************************************************/
+
+}
+
+
+
+
+
+
+
+   }
+
+
+
+
+   if(KEY_3==1) 
+
+{
 /*********************判断相序*******************************/
 {
 
@@ -2306,7 +2451,7 @@ allphase(testInput_V,testInput_C);
 
 	arm_max_f32(reslut, fftSize/2, &maxValue, &testIndex);
 dianya_zhi_A=maxValue/100;
-dianya_zhi_A=dianya_zhi_A/2.6125;
+dianya_zhi_A=dianya_zhi_A/2.57;
 
 /*************************电压谐波率****************************************/
 
@@ -2332,13 +2477,63 @@ HVA=(HU_A/maxValue);
 	/* Calculates maxValue and returns corresponding BIN value */ 
 	arm_max_f32(reslut, fftSize/2, &maxValue_C, &testIndex);
 
+/****************************************************************/
+				angle[2]=((angle[1]-angle[0])*360)/PI2;
 
- dianliuzhi_A=0.98*maxValue_C;
- dianliuzhi_A=T*dianliuzhi_A/1000;
- if(dianliuzhi_A<T)dianliuzhi_A=0;
-if(dianliuzhi_A==0)gonglvshishu_A=99;
-else gonglvshishu_A=arm_cos_f32(angle[0]-angle[1])*100;//功率因素
+				  if(angle[2]>0){while(1){if(angle[2]>360){angle[2]=angle[2]-360;} else break;}}
+				else if(angle[2]<0){while(1){if(angle[2]<-360){angle[2]=angle[2]+360;} else break;}}
 
+					  
+				if(angle[2]>0.0)
+                               {
+				if(angle[2]<90)L_C_flag_A=1;
+				if(angle[2]>90&&angle[2]<180)L_C_flag_A=0;				
+				if(angle[2]>180&&angle[2]<270)L_C_flag_A=1;
+				if(angle[2]>270&&angle[2]<360)L_C_flag_A=0;
+
+
+				}
+
+				else if(angle[2]<=0.0)
+				{
+					if((angle[2]>-90.0&&angle[2]<=0.0))L_C_flag_A=0;
+					if((angle[2]>-180.0&&angle[2]<-90.0))L_C_flag_A=1;
+					if((angle[2]>-270.0&&angle[2]<-180.0))L_C_flag_A=0;
+					if((angle[2]>-360.0&&angle[2]<-270.0))L_C_flag_A=1;
+
+			     }
+
+			if(angle[2]>0.0)
+                               {
+				if(angle[2]>90&&angle[2]<180)angle[2]=-(angle[2]-180);				
+				if(angle[2]>180&&angle[2]<270)angle[2]=angle[2]-180;
+				if(angle[2]>270&&angle[2]<360)angle[2]=-(angle[2]-360);
+
+
+				}
+
+				else if(angle[2]<=0.0)
+				{
+					if((angle[2]>-90.0&&angle[2]<=0.0))angle[2]=-angle[2];
+					if((angle[2]>-180.0&&angle[2]<-90.0))angle[2]=(angle[2]+180);
+					if((angle[2]>-270.0&&angle[2]<-180.0))angle[2]=-(angle[2]+180);
+					if((angle[2]>-360.0&&angle[2]<-270.0))angle[2]=(angle[2]+360);
+
+			     }
+
+
+        
+angle[2]=((angle[2])*PI2)/360;
+
+
+/***************************************************************/
+ dianliuzhi_A=1.1*maxValue_C;
+ dianliuzhi_A=T*dianliuzhi_A;
+ if(dianliuzhi_A<=900*T){dianliuzhi_A=0;gonglvshishu_A=100;L_C_flag_A=1;}
+else{ 
+	dianliuzhi_A=dianliuzhi_A/1000;
+	gonglvshishu_A=arm_cos_f32(angle[2])*100;//功率因素
+}
 /*************************电流谐波率****************************************/
 
 {
@@ -2348,41 +2543,13 @@ HIA=(HI_A/maxValue);
 }
 /******************************************************************/
 
-arm_sqrt_f32(1-(arm_cos_f32(angle[0]-angle[1]))*(arm_cos_f32(angle[0]-angle[1])),&sine);
+arm_sqrt_f32(1-(arm_cos_f32(angle[2]))*(arm_cos_f32(angle[2])),&sine);
         a=dianya_zhi_A*dianliuzhi_A*sine/10;
 	wugongkvar_A=dianya_zhi_A*dianliuzhi_A*sine/1000;
       wugongkvar_95A=dianya_zhi_A*dianliuzhi_A*0.3122/1000;
-				//	L_C_flag_A=1;
-
+allkvar=dianya_zhi_A*dianliuzhi_A*(arm_cos_f32(angle[2]))/1000;
 }
-
-
-				angle[2]=((angle[1]-angle[0])*360)/PI2-90;
-				if(angle[2]>0.0)
-                               {
-				if(angle[2]<90)L_C_flag_A=1;
-								if(angle[2]>=90&&angle[2]<=180)L_C_flag_A=0;
-
-				if(angle[2]>180&&angle[2]<270)L_C_flag_A=0;
-
-								//	dianya_zhi_A=angle[2];
-								//	gonglvshishu_A=1;
-
-				}
-
-				else if(angle[2]<=0.0)
-				{
-					if((angle[2]>=-360.0&&angle[2]<-270.0))L_C_flag_A=1;
-										if((angle[2]>=-270.0&&angle[2]<-180.0))L_C_flag_A=0;
-					if((angle[2]>=-450.0&&angle[2]<-360.0))L_C_flag_A=1;
-					if((angle[2]>-90.0&&angle[2]<=0.0))L_C_flag_A=1;
-					if((angle[2]>=-180.0&&angle[2]<=-90.0))L_C_flag_A=0;
-
-				//	dianya_zhi_A=-angle[2];
-				//	gonglvshishu_A=2;
-			     }
-//if(phase_flag==1){if(L_C_flag_A==0)L_C_flag_A=1;if(L_C_flag_A==1)L_C_flag_A=0;}
-if(dianliuzhi_A==0)L_C_flag_A=1;
+				
 computer_trans_rs485(0,33,0,0,0,CPT_A);
 
 /*********************B_phase*********************************/
@@ -2430,7 +2597,7 @@ allphase(testInput_V,testInput_C);
 
 	arm_max_f32(reslut, fftSize/2, &maxValue, &testIndex);
 dianya_zhi_B=maxValue/100;
-dianya_zhi_B=dianya_zhi_B/2.6125;
+dianya_zhi_B=dianya_zhi_B/2.57;
 /*************************电压谐波率****************************************/
 
 {
@@ -2454,12 +2621,63 @@ HVB=(HU_B/maxValue);
 	 
 	/* Calculates maxValue and returns corresponding BIN value */ 
 	arm_max_f32(reslut, fftSize/2, &maxValue_C, &testIndex);
+/****************************************************************/
+				angle[2]=((angle[1]-angle[0])*360)/PI2;
 
-dianliuzhi_B=0.98*maxValue_C;
- dianliuzhi_B=T*dianliuzhi_B/1000;
-  if(dianliuzhi_B<T)dianliuzhi_B=0;
-if(dianliuzhi_B==0)gonglvshishu_B=99;
-else gonglvshishu_B=arm_cos_f32(angle[0]-angle[1])*100;//功率因素
+				  if(angle[2]>0){while(1){if(angle[2]>360){angle[2]=angle[2]-360;} else break;}}
+				else if(angle[2]<0){while(1){if(angle[2]<-360){angle[2]=angle[2]+360;} else break;}}
+
+					  
+				if(angle[2]>0.0)
+                               {
+				if(angle[2]<90)L_C_flag_B=1;
+				if(angle[2]>90&&angle[2]<180)L_C_flag_B=0;				
+				if(angle[2]>180&&angle[2]<270)L_C_flag_B=1;
+				if(angle[2]>270&&angle[2]<360)L_C_flag_B=0;
+
+
+				}
+
+				else if(angle[2]<=0.0)
+				{
+					if((angle[2]>-90.0&&angle[2]<=0.0))L_C_flag_B=0;
+					if((angle[2]>-180.0&&angle[2]<-90.0))L_C_flag_B=1;
+					if((angle[2]>-270.0&&angle[2]<-180.0))L_C_flag_B=0;
+					if((angle[2]>-360.0&&angle[2]<-270.0))L_C_flag_B=1;
+
+			     }
+
+			if(angle[2]>0.0)
+                               {
+				if(angle[2]>90&&angle[2]<180)angle[2]=-(angle[2]-180);				
+				if(angle[2]>180&&angle[2]<270)angle[2]=angle[2]-180;
+				if(angle[2]>270&&angle[2]<360)angle[2]=-(angle[2]-360);
+
+
+				}
+
+				else if(angle[2]<=0.0)
+				{
+					if((angle[2]>-90.0&&angle[2]<=0.0))angle[2]=-angle[2];
+					if((angle[2]>-180.0&&angle[2]<-90.0))angle[2]=(angle[2]+180);
+					if((angle[2]>-270.0&&angle[2]<-180.0))angle[2]=-(angle[2]+180);
+					if((angle[2]>-360.0&&angle[2]<-270.0))angle[2]=(angle[2]+360);
+
+			     }
+
+
+        
+angle[2]=((angle[2])*PI2)/360;
+
+
+/***************************************************************/
+dianliuzhi_B=1.1*maxValue_C;
+ dianliuzhi_B=T*dianliuzhi_B;
+ if(dianliuzhi_B<=900*T){dianliuzhi_B=0;gonglvshishu_B=100;L_C_flag_B=1;}
+else {
+        dianliuzhi_B=dianliuzhi_B/1000;
+	gonglvshishu_B=arm_cos_f32(angle[2])*100;//功率因素
+}
 /*************************电流谐波率****************************************/
 
 {
@@ -2469,37 +2687,12 @@ HIB=(HI_B/maxValue);
 }
 /******************************************************************/
 
-arm_sqrt_f32(1-(arm_cos_f32(angle[0]-angle[1]))*(arm_cos_f32(angle[0]-angle[1])),&sine);
+arm_sqrt_f32(1-(arm_cos_f32(angle[2]))*(arm_cos_f32(angle[2])),&sine);
          b=dianya_zhi_B*dianliuzhi_B*sine/10;
 	wugongkvar_B=dianya_zhi_B*dianliuzhi_B*sine/1000;
       wugongkvar_95B=dianya_zhi_B*dianliuzhi_B*0.3122/1000;
+allkvar=dianya_zhi_B*dianliuzhi_B*(arm_cos_f32(angle[2]))/1000;
 
-			angle[2]=((angle[1]-angle[0])*360)/PI2-90;
-				if(angle[2]>0.0)
-                               {
-				if(angle[2]<90)L_C_flag_B=1;
-								if(angle[2]>=90&&angle[2]<=180)L_C_flag_B=0;
-
-				if(angle[2]>180&&angle[2]<270)L_C_flag_B=0;
-
-								//	dianya_zhi_A=angle[2];
-								//	gonglvshishu_A=1;
-
-				}
-
-				else if(angle[2]<=0.0)
-				{
-					if((angle[2]>=-360.0&&angle[2]<-270.0))L_C_flag_B=1;
-										if((angle[2]>=-270.0&&angle[2]<-180.0))L_C_flag_B=0;
-					if((angle[2]>=-450.0&&angle[2]<-360.0))L_C_flag_B=1;
-					if((angle[2]>-90.0&&angle[2]<=0.0))L_C_flag_B=1;
-					if((angle[2]>=-180.0&&angle[2]<=-90.0))L_C_flag_B=0;
-
-				//	dianya_zhi_A=-angle[2];
-				//	gonglvshishu_A=2;
-			     }
-//if(phase_flag==1){if(L_C_flag_A==0)L_C_flag_A=1;if(L_C_flag_A==1)L_C_flag_A=0;}				
-if(dianliuzhi_B==0)L_C_flag_B=1;
 
 
 }
@@ -2558,7 +2751,7 @@ allphase(testInput_V,testInput_C);
 
 	arm_max_f32(reslut, fftSize/2, &maxValue, &testIndex);
 dianya_zhi_C=maxValue/100;
-dianya_zhi_C=dianya_zhi_C/2.6125;
+dianya_zhi_C=dianya_zhi_C/2.57;
 /*************************电压谐波率****************************************/
 
 {
@@ -2583,12 +2776,64 @@ HVC=(HU_C/maxValue);
 	 
 	/* Calculates maxValue and returns corresponding BIN value */ 
 	arm_max_f32(reslut, fftSize/2, &maxValue_C, &testIndex);
+/****************************************************************/
+				angle[2]=((angle[1]-angle[0])*360)/PI2;
 
-dianliuzhi_C=0.98*maxValue_C;
- dianliuzhi_C=T*dianliuzhi_C/1000;
-  if(dianliuzhi_C<T)dianliuzhi_C=0;
-if(dianliuzhi_C==0)gonglvshishu_C=99;
-else gonglvshishu_C=arm_cos_f32(angle[0]-angle[1])*100;//功率因素
+				  if(angle[2]>0){while(1){if(angle[2]>360){angle[2]=angle[2]-360;} else break;}}
+				else if(angle[2]<0){while(1){if(angle[2]<-360){angle[2]=angle[2]+360;} else break;}}
+
+					  
+				if(angle[2]>0.0)
+                               {
+				if(angle[2]<90)L_C_flag_C=1;
+				if(angle[2]>90&&angle[2]<180)L_C_flag_C=0;				
+				if(angle[2]>180&&angle[2]<270)L_C_flag_C=1;
+				if(angle[2]>270&&angle[2]<360)L_C_flag_C=0;
+
+
+				}
+
+				else if(angle[2]<=0.0)
+				{
+					if((angle[2]>-90.0&&angle[2]<=0.0))L_C_flag_C=0;
+					if((angle[2]>-180.0&&angle[2]<-90.0))L_C_flag_C=1;
+					if((angle[2]>-270.0&&angle[2]<-180.0))L_C_flag_C=0;
+					if((angle[2]>-360.0&&angle[2]<-270.0))L_C_flag_C=1;
+
+			     }
+
+			if(angle[2]>0.0)
+                               {
+				if(angle[2]>90&&angle[2]<180)angle[2]=-(angle[2]-180);				
+				if(angle[2]>180&&angle[2]<270)angle[2]=angle[2]-180;
+				if(angle[2]>270&&angle[2]<360)angle[2]=-(angle[2]-360);
+
+
+				}
+
+				else if(angle[2]<=0.0)
+				{
+					if((angle[2]>-90.0&&angle[2]<=0.0))angle[2]=-angle[2];
+					if((angle[2]>-180.0&&angle[2]<-90.0))angle[2]=(angle[2]+180);
+					if((angle[2]>-270.0&&angle[2]<-180.0))angle[2]=-(angle[2]+180);
+					if((angle[2]>-360.0&&angle[2]<-270.0))angle[2]=(angle[2]+360);
+
+			     }
+
+
+        
+angle[2]=((angle[2])*PI2)/360;
+
+
+/***************************************************************/
+dianliuzhi_C=1.1*maxValue_C;
+ dianliuzhi_C=T*dianliuzhi_C;
+ if(dianliuzhi_C<=900*T){dianliuzhi_C=0;gonglvshishu_C=100;L_C_flag_C=1;}
+else
+	{
+	dianliuzhi_C=dianliuzhi_C/1000;
+	gonglvshishu_C=arm_cos_f32(angle[2])*100;//功率因素
+}
 /*************************电流谐波率****************************************/
 
 {
@@ -2598,37 +2843,13 @@ HIC=(HI_C/maxValue);
 }
 /******************************************************************/
 
-arm_sqrt_f32(1-(arm_cos_f32(angle[0]-angle[1]))*(arm_cos_f32(angle[0]-angle[1])),&sine);
+arm_sqrt_f32(1-(arm_cos_f32(angle[2]))*(arm_cos_f32(angle[2])),&sine);
            c=dianya_zhi_C*dianliuzhi_C*sine/10;
 	wugongkvar_C=dianya_zhi_C*dianliuzhi_C*sine/1000;
       wugongkvar_95C=dianya_zhi_C*dianliuzhi_C*0.3122/1000;
+allkvar=dianya_zhi_C*dianliuzhi_C*(arm_cos_f32(angle[2]))/1000;
 
-			angle[2]=((angle[1]-angle[0])*360)/PI2-90;
-				if(angle[2]>0.0)
-                               {
-				if(angle[2]<90)L_C_flag_C=1;
-								if(angle[2]>=90&&angle[2]<=180)L_C_flag_C=0;
-
-				if(angle[2]>180&&angle[2]<270)L_C_flag_C=0;
-
-								//	dianya_zhi_A=angle[2];
-								//	gonglvshishu_A=1;
-
-				}
-
-				else if(angle[2]<=0.0)
-				{
-					if((angle[2]>=-360.0&&angle[2]<-270.0))L_C_flag_C=1;
-										if((angle[2]>=-270.0&&angle[2]<-180.0))L_C_flag_C=0;
-					if((angle[2]>=-450.0&&angle[2]<-360.0))L_C_flag_C=1;
-					if((angle[2]>-90.0&&angle[2]<=0.0))L_C_flag_C=1;
-					if((angle[2]>=-180.0&&angle[2]<=-90.0))L_C_flag_C=0;
-
-				//	dianya_zhi_A=-angle[2];
-				//	gonglvshishu_A=2;
-			     }
-//if(phase_flag==1){if(L_C_flag_A==0)L_C_flag_A=1;if(L_C_flag_A==1)L_C_flag_A=0;}				
-if(dianliuzhi_C==0)L_C_flag_C=1;
+                               				
 
 }
 
@@ -2653,8 +2874,8 @@ computer_trans_rs485(0,33,0,0,0,CPT_C);
 dianya_zhi=1.732*(dianya_zhi_A+dianya_zhi_B+dianya_zhi_C)/3;
 dianliuzhi=(dianliuzhi_A+dianliuzhi_B+dianliuzhi_C)/3;
 gonglvshishu=(gonglvshishu_A+gonglvshishu_B+gonglvshishu_C)/3;
-wugongkvar=(a+b+c)/100;
-//allkvar=dianya_zhi*dianliuzhi;
+//wugongkvar=(a+b+c)/100;
+wugongkvar=wugongkvar_A+wugongkvar_B+wugongkvar_C;
 allkvar=3*dianya_zhi*dianliuzhi/1000;//乘以3，是因为电流变量是一相的电流，应该变为三相的电流和
 HV=HVA+HVB+HVC;
 HI=HIA+HIB+HIC;
@@ -2664,6 +2885,9 @@ HI=HIA+HIB+HIC;
 
 
 }
+
+}
+
 
 /*********************变比判断*******************************/
 //if(1)
@@ -2829,10 +3053,59 @@ dianya_zhi_A=dianya_zhi_A/2.6125;
 	/* Calculates maxValue and returns corresponding BIN value */ 
 	arm_max_f32(reslut, fftSize/2, &maxValue_C, &testIndex);
 
+/****************************************************************/
+				angle[2]=((angle[1]-angle[0])*360)/PI2;
 
- dianliuzhi_A=1.1*maxValue_C;
+				  if(angle[2]>0){while(1){if(angle[2]>360){angle[2]=angle[2]-360;} else break;}}
+				else if(angle[2]<0){while(1){if(angle[2]<-360){angle[2]=angle[2]+360;} else break;}}
+
+					  
+				if(angle[2]>0.0)
+                               {
+				if(angle[2]<90)L_C_flag_A=1;
+				if(angle[2]>90&&angle[2]<180)L_C_flag_A=0;				
+				if(angle[2]>180&&angle[2]<270)L_C_flag_A=1;
+				if(angle[2]>270&&angle[2]<360)L_C_flag_A=0;
+
+
+				}
+
+				else if(angle[2]<=0.0)
+				{
+					if((angle[2]>-90.0&&angle[2]<=0.0))L_C_flag_A=0;
+					if((angle[2]>-180.0&&angle[2]<-90.0))L_C_flag_A=1;
+					if((angle[2]>-270.0&&angle[2]<-180.0))L_C_flag_A=0;
+					if((angle[2]>-360.0&&angle[2]<-270.0))L_C_flag_A=1;
+
+			     }
+
+			if(angle[2]>0.0)
+                               {
+				if(angle[2]>90&&angle[2]<180)angle[2]=-(angle[2]-180);				
+				if(angle[2]>180&&angle[2]<270)angle[2]=angle[2]-180;
+				if(angle[2]>270&&angle[2]<360)angle[2]=-(angle[2]-360);
+
+
+				}
+
+				else if(angle[2]<=0.0)
+				{
+					if((angle[2]>-90.0&&angle[2]<=0.0))angle[2]=-angle[2];
+					if((angle[2]>-180.0&&angle[2]<-90.0))angle[2]=(angle[2]+180);
+					if((angle[2]>-270.0&&angle[2]<-180.0))angle[2]=-(angle[2]+180);
+					if((angle[2]>-360.0&&angle[2]<-270.0))angle[2]=(angle[2]+360);
+
+			     }
+
+
+        
+angle[2]=((angle[2])*PI2)/360;
+
+
+/***************************************************************/
+ dianliuzhi_A=0.98*maxValue_C;
 dianliuzhi_A=T*dianliuzhi_A/1000;
-gonglvshishu_A=arm_cos_f32(angle[0]-angle[1])*100;//功率因素
+gonglvshishu_A=arm_cos_f32(angle[2])*100;//功率因素
 
 //dianya_zhi_A=0;
 //	dianya_zhi_A=comm_list[slave_comm[5]].myid;
@@ -2840,7 +3113,7 @@ gonglvshishu_A=arm_cos_f32(angle[0]-angle[1])*100;//功率因素
 //gonglvshishu_A=0;
 //	gonglvshishu_A=comm_list[slave_comm[5]].size[0];
 
-arm_sqrt_f32(1-(arm_cos_f32(angle[0]-angle[1]))*(arm_cos_f32(angle[0]-angle[1])),&sine);
+arm_sqrt_f32(1-(arm_cos_f32(angle[2]))*(arm_cos_f32(angle[2])),&sine);
         a=dianya_zhi_A*dianliuzhi_A*sine/10;
 	wugongkvar_A=dianya_zhi_A*dianliuzhi_A*sine/1000;
       wugongkvar_95A=dianya_zhi_A*dianliuzhi_A*0.3122/1000;
@@ -2911,11 +3184,60 @@ dianya_zhi_B=dianya_zhi_B/2.6125;
 	 
 	/* Calculates maxValue and returns corresponding BIN value */ 
 	arm_max_f32(reslut, fftSize/2, &maxValue_C, &testIndex);
+/****************************************************************/
+				angle[2]=((angle[1]-angle[0])*360)/PI2;
 
- dianliuzhi_B=1.1*maxValue_C;
+				  if(angle[2]>0){while(1){if(angle[2]>360){angle[2]=angle[2]-360;} else break;}}
+				else if(angle[2]<0){while(1){if(angle[2]<-360){angle[2]=angle[2]+360;} else break;}}
+
+					  
+				if(angle[2]>0.0)
+                               {
+				if(angle[2]<90)L_C_flag_B=1;
+				if(angle[2]>90&&angle[2]<180)L_C_flag_B=0;				
+				if(angle[2]>180&&angle[2]<270)L_C_flag_B=1;
+				if(angle[2]>270&&angle[2]<360)L_C_flag_B=0;
+
+
+				}
+
+				else if(angle[2]<=0.0)
+				{
+					if((angle[2]>-90.0&&angle[2]<=0.0))L_C_flag_B=0;
+					if((angle[2]>-180.0&&angle[2]<-90.0))L_C_flag_B=1;
+					if((angle[2]>-270.0&&angle[2]<-180.0))L_C_flag_B=0;
+					if((angle[2]>-360.0&&angle[2]<-270.0))L_C_flag_B=1;
+
+			     }
+
+			if(angle[2]>0.0)
+                               {
+				if(angle[2]>90&&angle[2]<180)angle[2]=-(angle[2]-180);				
+				if(angle[2]>180&&angle[2]<270)angle[2]=angle[2]-180;
+				if(angle[2]>270&&angle[2]<360)angle[2]=-(angle[2]-360);
+
+
+				}
+
+				else if(angle[2]<=0.0)
+				{
+					if((angle[2]>-90.0&&angle[2]<=0.0))angle[2]=-angle[2];
+					if((angle[2]>-180.0&&angle[2]<-90.0))angle[2]=(angle[2]+180);
+					if((angle[2]>-270.0&&angle[2]<-180.0))angle[2]=-(angle[2]+180);
+					if((angle[2]>-360.0&&angle[2]<-270.0))angle[2]=(angle[2]+360);
+
+			     }
+
+
+        
+angle[2]=((angle[2])*PI2)/360;
+
+
+/***************************************************************/
+ dianliuzhi_B=0.98*maxValue_C;
 dianliuzhi_B=T*dianliuzhi_B/1000;
-gonglvshishu_B=arm_cos_f32(angle[0]-angle[1])*100;//功率因素
-arm_sqrt_f32(1-(arm_cos_f32(angle[0]-angle[1]))*(arm_cos_f32(angle[0]-angle[1])),&sine);
+gonglvshishu_B=arm_cos_f32(angle[2])*100;//功率因素
+arm_sqrt_f32(1-(arm_cos_f32(angle[2]))*(arm_cos_f32(angle[2])),&sine);
          b=dianya_zhi_B*dianliuzhi_B*sine/10;
 	wugongkvar_B=dianya_zhi_B*dianliuzhi_B*sine/1000;
       wugongkvar_95B=dianya_zhi_B*dianliuzhi_B*0.3122/1000;
@@ -2923,30 +3245,8 @@ arm_sqrt_f32(1-(arm_cos_f32(angle[0]-angle[1]))*(arm_cos_f32(angle[0]-angle[1]))
 
 }
 
-			angle[2]=((angle[1]-angle[0])*360)/PI2-90;
-				if(angle[2]>0.0)
-                               {
-				if(angle[2]<90)L_C_flag_B=1;
-								if(angle[2]>=90&&angle[2]<=180)L_C_flag_B=0;
-
-				if(angle[2]>180&&angle[2]<270)L_C_flag_B=0;
-
-								//	dianya_zhi_A=angle[2];
-								//	gonglvshishu_A=1;
-
-				}
-
-				else if(angle[2]<=0.0)
-				{
-					if((angle[2]>=-360.0&&angle[2]<-270.0))L_C_flag_B=1;
-										if((angle[2]>=-270.0&&angle[2]<-180.0))L_C_flag_B=0;
-					if((angle[2]>=-450.0&&angle[2]<-360.0))L_C_flag_B=1;
-					if((angle[2]>-90.0&&angle[2]<=0.0))L_C_flag_B=1;
-					if((angle[2]>=-180.0&&angle[2]<=-90.0))L_C_flag_B=0;
-
-				//	dianya_zhi_A=-angle[2];
-				//	gonglvshishu_A=2;
-			     }
+                              
+				
 /*********************C_phase*********************************/
 
 {
@@ -3017,11 +3317,60 @@ dianya_zhi_C=dianya_zhi_C/2.6125;
 	 
 	/* Calculates maxValue and returns corresponding BIN value */ 
 	arm_max_f32(reslut, fftSize/2, &maxValue_C, &testIndex);
+/****************************************************************/
+				angle[2]=((angle[1]-angle[0])*360)/PI2;
 
- dianliuzhi_C=1.1*maxValue_C;
+				  if(angle[2]>0){while(1){if(angle[2]>360){angle[2]=angle[2]-360;} else break;}}
+				else if(angle[2]<0){while(1){if(angle[2]<-360){angle[2]=angle[2]+360;} else break;}}
+
+					  
+				if(angle[2]>0.0)
+                               {
+				if(angle[2]<90)L_C_flag_C=1;
+				if(angle[2]>90&&angle[2]<180)L_C_flag_C=0;				
+				if(angle[2]>180&&angle[2]<270)L_C_flag_C=1;
+				if(angle[2]>270&&angle[2]<360)L_C_flag_C=0;
+
+
+				}
+
+				else if(angle[2]<=0.0)
+				{
+					if((angle[2]>-90.0&&angle[2]<=0.0))L_C_flag_C=0;
+					if((angle[2]>-180.0&&angle[2]<-90.0))L_C_flag_C=1;
+					if((angle[2]>-270.0&&angle[2]<-180.0))L_C_flag_C=0;
+					if((angle[2]>-360.0&&angle[2]<-270.0))L_C_flag_C=1;
+
+			     }
+
+			if(angle[2]>0.0)
+                               {
+				if(angle[2]>90&&angle[2]<180)angle[2]=-(angle[2]-180);				
+				if(angle[2]>180&&angle[2]<270)angle[2]=angle[2]-180;
+				if(angle[2]>270&&angle[2]<360)angle[2]=-(angle[2]-360);
+
+
+				}
+
+				else if(angle[2]<=0.0)
+				{
+					if((angle[2]>-90.0&&angle[2]<=0.0))angle[2]=-angle[2];
+					if((angle[2]>-180.0&&angle[2]<-90.0))angle[2]=(angle[2]+180);
+					if((angle[2]>-270.0&&angle[2]<-180.0))angle[2]=-(angle[2]+180);
+					if((angle[2]>-360.0&&angle[2]<-270.0))angle[2]=(angle[2]+360);
+
+			     }
+
+
+        
+angle[2]=((angle[2])*PI2)/360;
+
+
+/***************************************************************/
+ dianliuzhi_C=0.98*maxValue_C;
 dianliuzhi_C=T*dianliuzhi_C/1000;
-gonglvshishu_C=arm_cos_f32(angle[0]-angle[1])*100;//功率因素
-arm_sqrt_f32(1-(arm_cos_f32(angle[0]-angle[1]))*(arm_cos_f32(angle[0]-angle[1])),&sine);
+gonglvshishu_C=arm_cos_f32(angle[2])*100;//功率因素
+arm_sqrt_f32(1-(arm_cos_f32(angle[2]))*(arm_cos_f32(angle[2])),&sine);
            c=dianya_zhi_C*dianliuzhi_C*sine/10;
 	wugongkvar_C=dianya_zhi_C*dianliuzhi_C*sine/1000;
       wugongkvar_95C=dianya_zhi_C*dianliuzhi_C*0.3122/1000;
@@ -3064,7 +3413,7 @@ return 0;
 }
 
 tempshuzhi=30;
-T=CT_para/10;
+T=CT_para/50;
 //T=4;
 /**************************end*************************/
 
@@ -3082,6 +3431,7 @@ if(gonglvshishu<COS_ON_para&&L_C_flag_B==1)
 for(i=slave_comm[8];i<=slave_comm[9]-1;i++)
 if(comm_list[i].work_status==0)
 {
+display_nothing_close_open_warn=1;//设置显示投入
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,1,CONTROL);
 		{
  change_Queue(slave_comm,comm_list,20);			
@@ -3100,6 +3450,7 @@ return 0 ;
 for(i=slave_comm[6];i<=slave_comm[7]-1;i++)
 if(comm_list[i].work_status==0)
 {
+display_nothing_close_open_warn=1;//设置显示投入
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,1,CONTROL);
 		{
  change_Queue(slave_comm,comm_list,10);			
@@ -3118,6 +3469,8 @@ return 0 ;
 for(i=slave_comm[4];i<=slave_comm[5]-1;i++)
 if(comm_list[i].work_status==0)
 {
+display_nothing_close_open_warn=1;//设置显示投入
+
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,1,CONTROL);
 		{
  change_Queue(slave_comm,comm_list,5);			
@@ -3136,6 +3489,8 @@ return 0 ;
 for(i=slave_comm[2];i<=slave_comm[3]-1;i++)
 if(comm_list[i].work_status==0)
 {
+display_nothing_close_open_warn=1;//设置显示投入
+
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,1,CONTROL);
 		{
  change_Queue(slave_comm,comm_list,2);			
@@ -3152,6 +3507,7 @@ return 0 ;
 }
  }
 
+
 if(gonglvshishu>COS_OFF_para&&L_C_flag_B==1)
    
 {
@@ -3162,6 +3518,8 @@ for(i=slave_comm[2];i<=slave_comm[3]-1;i++)
 if(comm_list[i].work_status==1)
 
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
 delay_ms(DELAY_OFF_para);
@@ -3178,6 +3536,8 @@ for(i=slave_comm[4];i<=slave_comm[5]-1;i++)
 if(comm_list[i].work_status==1)
 
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
 delay_ms(DELAY_OFF_para);
@@ -3198,6 +3558,8 @@ for(i=slave_comm[6];i<=slave_comm[7]-1;i++)
 if(comm_list[i].work_status==1)
 
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
 delay_ms(DELAY_OFF_para);
@@ -3214,6 +3576,8 @@ for(i=slave_comm[8];i<=slave_comm[9]-1;i++)
 if(comm_list[i].work_status==1)
 
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
 delay_ms(DELAY_OFF_para);
@@ -3228,6 +3592,7 @@ return 0 ;
 
        }
  }
+display_nothing_close_open_warn=0;//设置显示无
 
    if(KEY_3==1) 
 
@@ -3240,6 +3605,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[3];i<=slave_dis[9]-1;i++)
 if(dis_list[i].work_status[0]==0)
 {
+display_nothing_close_open_warn=1;//设置显示投入
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,1,CONTROL);
 dis_list[i].work_status[0]=1;
 change_Queue_dis(0,6,dis_list,slave_dis);
@@ -3258,6 +3625,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[2];i<=slave_dis[8]-1;i++)
 if(dis_list[i].work_status[0]==0)
 {
+display_nothing_close_open_warn=1;//设置显示投入
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,1,CONTROL);
 dis_list[i].work_status[0]=1;
 change_Queue_dis(0,3,dis_list,slave_dis);
@@ -3275,6 +3644,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[1];i<=slave_dis[7]-1;i++)
 if(dis_list[i].work_status[0]==0)
 {
+display_nothing_close_open_warn=1;//设置显示投入
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,1,CONTROL);
 dis_list[i].work_status[0]=1;
 change_Queue_dis(0,1,dis_list,slave_dis);
@@ -3294,6 +3665,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[6];i<=slave_dis[12]-1;i++)
 if(dis_list[i].work_status[1]==0)
 {
+display_nothing_close_open_warn=1;//设置显示投入
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,1,CONTROL);
 dis_list[i].work_status[1]=1;
 change_Queue_dis(1,6,dis_list,slave_dis);
@@ -3311,6 +3684,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[5];i<=slave_dis[11]-1;i++)
 if(dis_list[i].work_status[1]==0)
 {
+display_nothing_close_open_warn=1;//设置显示投入
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,1,CONTROL);
 dis_list[i].work_status[1]=1;
 change_Queue_dis(1,3,dis_list,slave_dis);
@@ -3329,6 +3704,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[4];i<=slave_dis[10]-1;i++)
 if(dis_list[i].work_status[1]==0)
 {
+display_nothing_close_open_warn=1;//设置显示投入
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,1,CONTROL);
 dis_list[i].work_status[1]=1;
 change_Queue_dis(1,1,dis_list,slave_dis);
@@ -3352,6 +3729,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[17];i<=slave_dis[18]-1;i++)
 if(dis_list[i].work_status[2]==0)
 {
+display_nothing_close_open_warn=1;//设置显示投入
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,1,CONTROL);
 dis_list[i].work_status[2]=1;
 change_Queue_dis(2,6,dis_list,slave_dis);
@@ -3368,6 +3747,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[15];i<=slave_dis[16]-1;i++)
 if(dis_list[i].work_status[2]==0)
 {
+display_nothing_close_open_warn=1;//设置显示投入
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,1,CONTROL);
 dis_list[i].work_status[2]=1;
 change_Queue_dis(2,3,dis_list,slave_dis);
@@ -3385,6 +3766,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[13];i<=slave_dis[14]-1;i++)
 if(dis_list[i].work_status[2]==0)
 {
+display_nothing_close_open_warn=1;//设置显示投入
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,1,CONTROL);
 dis_list[i].work_status[2]=1;
 change_Queue_dis(2,1,dis_list,slave_dis);
@@ -3410,6 +3793,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[1];i<=slave_dis[7]-1;i++)
 if(dis_list[i].work_status[0]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
 delay_ms(DELAY_OFF_para);
@@ -3423,6 +3808,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[2];i<=slave_dis[8]-1;i++)
 if(dis_list[i].work_status[0]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
 delay_ms(DELAY_OFF_para);
@@ -3436,6 +3823,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[3];i<=slave_dis[9]-1;i++)
 if(dis_list[i].work_status[0]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
 delay_ms(DELAY_OFF_para);
@@ -3452,6 +3841,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[4];i<=slave_dis[10]-1;i++)
 if(dis_list[i].work_status[1]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
 delay_ms(DELAY_OFF_para);
@@ -3466,6 +3857,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[5];i<=slave_dis[11]-1;i++)
 if(dis_list[i].work_status[1]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
 delay_ms(DELAY_OFF_para);
@@ -3479,6 +3872,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[6];i<=slave_dis[12]-1;i++)
 if(dis_list[i].work_status[1]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
 delay_ms(DELAY_OFF_para);
@@ -3499,6 +3894,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[13];i<=slave_dis[14]-1;i++)
 if(dis_list[i].work_status[2]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
 delay_ms(DELAY_OFF_para);
@@ -3512,6 +3909,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[15];i<=slave_dis[16]-1;i++)
 if(dis_list[i].work_status[2]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
 delay_ms(DELAY_OFF_para);
@@ -3524,6 +3923,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[17];i<=slave_dis[18]-1;i++)
 if(dis_list[i].work_status[2]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
 delay_ms(DELAY_OFF_para);
@@ -3533,6 +3934,7 @@ return 0;
 }
 
 }
+display_nothing_close_open_warn=0;//设置显示无
 	
   }
 
@@ -3547,6 +3949,8 @@ for(i=slave_comm[2];i<=slave_comm[3]-1;i++)
 if(comm_list[i].work_status==1)
 
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
 delay_ms(DELAY_OFF_para);
@@ -3563,6 +3967,8 @@ for(i=slave_comm[4];i<=slave_comm[5]-1;i++)
 if(comm_list[i].work_status==1)
 
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
 delay_ms(DELAY_OFF_para);
@@ -3583,6 +3989,8 @@ for(i=slave_comm[6];i<=slave_comm[7]-1;i++)
 if(comm_list[i].work_status==1)
 
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
 delay_ms(DELAY_OFF_para);
@@ -3599,6 +4007,8 @@ for(i=slave_comm[8];i<=slave_comm[9]-1;i++)
 if(comm_list[i].work_status==1)
 
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
 delay_ms(DELAY_OFF_para);
@@ -3625,6 +4035,8 @@ if(slave_dis[0]>0)
 for(i=slave_dis[3];i<=slave_dis[9]-1;i++)
 if(dis_list[i].work_status[0]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
+
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
 delay_ms(DELAY_OFF_para);
@@ -3639,6 +4051,7 @@ if(slave_dis[0]>0)
 for(i=slave_dis[2];i<=slave_dis[8]-1;i++)
 if(dis_list[i].work_status[0]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
 delay_ms(DELAY_OFF_para);
@@ -3652,6 +4065,7 @@ if(slave_dis[0]>0)
 for(i=slave_dis[1];i<=slave_dis[7]-1;i++)
 if(dis_list[i].work_status[0]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
 delay_ms(DELAY_OFF_para);
@@ -3669,6 +4083,7 @@ if(slave_dis[0]>0)
 for(i=slave_dis[6];i<=slave_dis[12]-1;i++)
 if(dis_list[i].work_status[1]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
 delay_ms(DELAY_OFF_para);
@@ -3682,6 +4097,7 @@ if(slave_dis[0]>0)
 for(i=slave_dis[5];i<=slave_dis[11]-1;i++)
 if(dis_list[i].work_status[1]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
 delay_ms(DELAY_OFF_para);
@@ -3696,6 +4112,7 @@ if(slave_dis[0]>0)
 for(i=slave_dis[4];i<=slave_dis[10]-1;i++)
 if(dis_list[i].work_status[1]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
 delay_ms(DELAY_OFF_para);
@@ -3715,6 +4132,7 @@ if(slave_dis[0]>0)
 for(i=slave_dis[17];i<=slave_dis[18]-1;i++)
 if(dis_list[i].work_status[2]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
 delay_ms(DELAY_OFF_para);
@@ -3727,6 +4145,7 @@ if(slave_dis[0]>0)
 for(i=slave_dis[15];i<=slave_dis[16]-1;i++)
 if(dis_list[i].work_status[2]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
 delay_ms(DELAY_OFF_para);
@@ -3740,6 +4159,7 @@ if(slave_dis[0]>0)
 for(i=slave_dis[13];i<=slave_dis[14]-1;i++)
 if(dis_list[i].work_status[2]==1)
 {
+display_nothing_close_open_warn=2;//设置显示切除
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
 delay_ms(DELAY_OFF_para);
@@ -3748,6 +4168,7 @@ return 0;
 
 }
 }
+display_nothing_close_open_warn=0;//设置显示无
 	
   }
 
@@ -3757,6 +4178,7 @@ return 0;
 }
 else
 	{
+display_nothing_close_open_warn=3;//设置显示报警
 
 if(RT_FLAG==2)
 		{
@@ -4884,7 +5306,7 @@ computer_trans_rs485(mybox.myid,hand_id,1,1,32,CONTROL);//三相一起投命令
 void LIGHT_backligt_on()
 {
 GPIO_SetBits(GPIOD, GPIO_Pin_15);
-light_time=6;
+light_time=100;
 
 }
 
@@ -4899,6 +5321,9 @@ GPIO_ResetBits(GPIOD, GPIO_Pin_15);
 /***********************************************************************
 TIME_4
 **********************************************************************/
+
+
+
  void TIM4_Int_Init(u16 arr,u16 psc)
 
 {

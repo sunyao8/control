@@ -36,6 +36,7 @@
 //HT1621 IO初始化
 extern u8 L_C_flag_B;
 extern u8 COMMCAT_para;
+extern u8 display_nothing_close_open_warn;
 
 void HT1621_Init(void)
 {		
@@ -150,7 +151,15 @@ u8 num34dpSeg[]=   {0X0D,0X0F,0X08,0X06,0X0E,0X0B,0X0A,0X0F,0X0B,0X06,0X0B,0X0D,
 
 Write_1621(28,0x01);//LOG
   Write_1621(31,0x01);//	显示P14功率因数电压电流和P12“动控制”符号
+  if(display_nothing_close_open_warn==0)
  Write_1621(24,0x08);	//	带△符号
+ if(display_nothing_close_open_warn==1)
+ Write_1621(24,0x0c);	//	带△符号和投入
+ if(display_nothing_close_open_warn==2)
+ Write_1621(24,0x0a);	//	带△符号和切除
+ if(display_nothing_close_open_warn==3)
+ Write_1621(24,0x09);	//	带△符号和报警
+ 
   Write_1621(27,0x08);//cos 电压电流
   PF_zhengshu=PF/1000;
   PF_shifenwei=(PF%1000)/100;
@@ -246,6 +255,14 @@ u8 num34dpSeg[]=   {0X0D,0X0F,0X08,0X06,0X0E,0X0B,0X0A,0X0F,0X0B,0X06,0X0B,0X0D,
 Write_1621(28,0x01);//LOG
   Write_1621(31,0x01);//	显示P14功率因数电压电流和P12“动控制”符号
   Write_1621(27,0x0a);//cos 电压电流带L1符号
+if(display_nothing_close_open_warn==0)
+ Write_1621(24,0x00);	//	空  
+if(display_nothing_close_open_warn==1)
+ Write_1621(24,0x04);	//	投入
+ if(display_nothing_close_open_warn==2)
+ Write_1621(24,0x02);	//	切除
+ if(display_nothing_close_open_warn==3)
+ Write_1621(24,0x01);	//	报警
   PF_zhengshu=PF/1000;
   PF_shifenwei=(PF%1000)/100;
   PF_baifenwei=	(PF%100)/10;
@@ -340,6 +357,14 @@ u8 num34dpSeg[]=   {0X0D,0X0F,0X08,0X06,0X0E,0X0B,0X0A,0X0F,0X0B,0X06,0X0B,0X0D,
 Write_1621(28,0x01);//LOG
   Write_1621(31,0x01);//	显示P14功率因数电压电流和P12“动控制”符号
   Write_1621(27,0x0C);//cos 电压电流带L2符号
+if(display_nothing_close_open_warn==0)
+ Write_1621(24,0x00);	//	空  
+if(display_nothing_close_open_warn==1)
+ Write_1621(24,0x04);	//	投入
+ if(display_nothing_close_open_warn==2)
+ Write_1621(24,0x02);	//	切除
+ if(display_nothing_close_open_warn==3)
+ Write_1621(24,0x01);	//	报警 
   PF_zhengshu=PF/1000;
   PF_shifenwei=(PF%1000)/100;
   PF_baifenwei=	(PF%100)/10;
@@ -434,6 +459,14 @@ u8 num34dpSeg[]=   {0X0D,0X0F,0X08,0X06,0X0E,0X0B,0X0A,0X0F,0X0B,0X06,0X0B,0X0D,
 Write_1621(28,0x01);//LOG
   Write_1621(31,0x01);//	显示P14功率因数电压电流和P12“动控制”符号
  Write_1621(26,0x04);	//	带L3符号
+if(display_nothing_close_open_warn==0)
+ Write_1621(24,0x00);	//	空  
+if(display_nothing_close_open_warn==1)
+ Write_1621(24,0x04);	//	投入
+ if(display_nothing_close_open_warn==2)
+ Write_1621(24,0x02);	//	切除
+ if(display_nothing_close_open_warn==3)
+ Write_1621(24,0x01);	//	报警 
   Write_1621(27,0x08);//cos 电压电流
   PF_zhengshu=PF/1000;
   PF_shifenwei=(PF%1000)/100;
@@ -522,7 +555,14 @@ u8 num12dpSeg[]=  {0X0F,0X0D,0X06,0X08,0X0B,0X0E,0X0F,0X0A,0X06,0X0B,0X0D,0X0B,0
 u8 num34dpSeg[]=   {0X0D,0X0F,0X08,0X06,0X0E,0X0B,0X0A,0X0F,0X0B,0X06,0X0B,0X0D,0X0F,0X0D,0X08,0X07,0X0F,0X0F,0X0B,0X0F};
 Write_1621(28,0x01);//LOG
   Write_1621(31,0x01);//	显示P14功率因数电压电流和P12“动控制”符号
+ if(display_nothing_close_open_warn==0)
  Write_1621(24,0x08);	//	带△符号
+ if(display_nothing_close_open_warn==1)
+ Write_1621(24,0x0c);	//	带△符号和投入
+ if(display_nothing_close_open_warn==2)
+ Write_1621(24,0x0a);	//	带△符号和切除
+ if(display_nothing_close_open_warn==3)
+ Write_1621(24,0x09);	//	带△符号和报警
   Write_1621(25,0x08);//cos 电压电流
 
    if(COMMCAT_para==0)
@@ -544,18 +584,18 @@ Write_1621(28,0x01);//LOG
 	  WriteAll_1621(22,num1_5Seg+2*powunuse_baiwei,2);	
       WriteAll_1621(20,num1_5Seg+2*powunuse_shiwei,2);	
       WriteAll_1621(18,num1_5Seg+2*powunuse_gewei,2);	
-	  WriteAll_1621(16,num12dpSeg+2*powunuse_shifenwei,2);	
+	  WriteAll_1621(16,num1_5Seg+2*powunuse_shifenwei,2);	
 	 }
 	 else if(powunuse_shiwei>0)
 	 {
 	       WriteAll_1621(20,num1_5Seg+2*powunuse_shiwei,2);	//
       WriteAll_1621(18,num1_5Seg+2*powunuse_gewei,2);	//
-	  WriteAll_1621(16,num12dpSeg+2*powunuse_shifenwei,2);	//
+	  WriteAll_1621(16,num1_5Seg+2*powunuse_shifenwei,2);	//
 	 }
 	  else
 	   {
 	      WriteAll_1621(18,num1_5Seg+2*powunuse_gewei,2);	//
-	  WriteAll_1621(16,num12dpSeg+2*powunuse_shifenwei,2);	//
+	  WriteAll_1621(16,num1_5Seg+2*powunuse_shifenwei,2);	//
 
 	   }
 	powuse_baiwei=powuse/1000;
@@ -567,18 +607,18 @@ Write_1621(28,0x01);//LOG
 		WriteAll_1621(14,num1_5Seg+2*powuse_baiwei,2);	//
 		WriteAll_1621(8,num6_12Seg+2*powuse_shiwei,2);	//
 		WriteAll_1621(10,num6_12Seg+2*powuse_gewei,2);	//
-		WriteAll_1621(12,num34dpSeg+2*powuse_shifenwei,2);	//
+		WriteAll_1621(12,num6_12Seg+2*powuse_shifenwei,2);	//
 	  }
 	  else if(powuse_shiwei>0)
 	   {
 	  			WriteAll_1621(8,num6_12Seg+2*powuse_shiwei,2);	//
 		WriteAll_1621(10,num6_12Seg+2*powuse_gewei,2);	//
-		WriteAll_1621(12,num34dpSeg+2*powuse_shifenwei,2);	//
+		WriteAll_1621(12,num6_12Seg+2*powuse_shifenwei,2);	//
 	   }
 	    else 
 		{
 		WriteAll_1621(10,num6_12Seg+2*powuse_gewei,2);	//
-		WriteAll_1621(12,num34dpSeg+2*powuse_shifenwei,2);	
+		WriteAll_1621(12,num6_12Seg+2*powuse_shifenwei,2);	
 		}
 
 	freq_shiwei=freq/100;
@@ -605,6 +645,14 @@ u8 num34dpSeg[]=   {0X0D,0X0F,0X08,0X06,0X0E,0X0B,0X0A,0X0F,0X0B,0X06,0X0B,0X0D,
 Write_1621(28,0x01);//LOG
   Write_1621(31,0x01);//	显示P14功率因数电压电流和P12“动控制”符号
  Write_1621(27,0x02);	//	带L1符号
+ if(display_nothing_close_open_warn==0)
+ Write_1621(24,0x00);	//	空  
+ if(display_nothing_close_open_warn==1)
+ Write_1621(24,0x04);	//	投入
+ if(display_nothing_close_open_warn==2)
+ Write_1621(24,0x02);	//	切除
+ if(display_nothing_close_open_warn==3)
+ Write_1621(24,0x01);	//	报警 
   Write_1621(25,0x08);//无功有功
 
    if(COMMCAT_para==0)
@@ -626,18 +674,18 @@ Write_1621(28,0x01);//LOG
 	  WriteAll_1621(22,num1_5Seg+2*powunuse_baiwei,2);	
       WriteAll_1621(20,num1_5Seg+2*powunuse_shiwei,2);	
       WriteAll_1621(18,num1_5Seg+2*powunuse_gewei,2);	
-	  WriteAll_1621(16,num12dpSeg+2*powunuse_shifenwei,2);	
+	  WriteAll_1621(16,num1_5Seg+2*powunuse_shifenwei,2);	
 	 }
 	 else if(powunuse_shiwei>0)
 	 {
 	       WriteAll_1621(20,num1_5Seg+2*powunuse_shiwei,2);	//
       WriteAll_1621(18,num1_5Seg+2*powunuse_gewei,2);	//
-	  WriteAll_1621(16,num12dpSeg+2*powunuse_shifenwei,2);	//
+	  WriteAll_1621(16,num1_5Seg+2*powunuse_shifenwei,2);	//
 	 }
 	  else
 	   {
 	      WriteAll_1621(18,num1_5Seg+2*powunuse_gewei,2);	//
-	  WriteAll_1621(16,num12dpSeg+2*powunuse_shifenwei,2);	//
+	  WriteAll_1621(16,num1_5Seg+2*powunuse_shifenwei,2);	//
 
 	   }
 	powuse_baiwei=powuse/1000;
@@ -649,18 +697,18 @@ Write_1621(28,0x01);//LOG
 		WriteAll_1621(14,num1_5Seg+2*powuse_baiwei,2);	//
 		WriteAll_1621(8,num6_12Seg+2*powuse_shiwei,2);	//
 		WriteAll_1621(10,num6_12Seg+2*powuse_gewei,2);	//
-		WriteAll_1621(12,num34dpSeg+2*powuse_shifenwei,2);	//
+		WriteAll_1621(12,num6_12Seg+2*powuse_shifenwei,2);	//
 	  }
 	  else if(powuse_shiwei>0)
 	   {
 	  			WriteAll_1621(8,num6_12Seg+2*powuse_shiwei,2);	//
 		WriteAll_1621(10,num6_12Seg+2*powuse_gewei,2);	//
-		WriteAll_1621(12,num34dpSeg+2*powuse_shifenwei,2);	//
+		WriteAll_1621(12,num6_12Seg+2*powuse_shifenwei,2);	//
 	   }
 	    else 
 		{
 		WriteAll_1621(10,num6_12Seg+2*powuse_gewei,2);	//
-		WriteAll_1621(12,num34dpSeg+2*powuse_shifenwei,2);	
+		WriteAll_1621(12,num6_12Seg+2*powuse_shifenwei,2);	
 		}
 
 	freq_shiwei=freq/100;
@@ -688,6 +736,14 @@ u8 num34dpSeg[]=   {0X0D,0X0F,0X08,0X06,0X0E,0X0B,0X0A,0X0F,0X0B,0X06,0X0B,0X0D,
 Write_1621(28,0x01);//LOG
   Write_1621(31,0x01);//	显示P14功率因数电压电流和P12“动控制”符号
  Write_1621(27,0x04);	//	带L2符号
+ if(display_nothing_close_open_warn==0)
+ Write_1621(24,0x00);	//	空  
+ if(display_nothing_close_open_warn==1)
+ Write_1621(24,0x04);	//	投入
+ if(display_nothing_close_open_warn==2)
+ Write_1621(24,0x02);	//	切除
+ if(display_nothing_close_open_warn==3)
+ Write_1621(24,0x01);	//	报警 
   Write_1621(25,0x08);//无功有功
 
    if(COMMCAT_para==0)
@@ -709,18 +765,18 @@ Write_1621(28,0x01);//LOG
 	  WriteAll_1621(22,num1_5Seg+2*powunuse_baiwei,2);	
       WriteAll_1621(20,num1_5Seg+2*powunuse_shiwei,2);	
       WriteAll_1621(18,num1_5Seg+2*powunuse_gewei,2);	
-	  WriteAll_1621(16,num12dpSeg+2*powunuse_shifenwei,2);	
+	  WriteAll_1621(16,num1_5Seg+2*powunuse_shifenwei,2);	
 	 }
 	 else if(powunuse_shiwei>0)
 	 {
 	       WriteAll_1621(20,num1_5Seg+2*powunuse_shiwei,2);	//
       WriteAll_1621(18,num1_5Seg+2*powunuse_gewei,2);	//
-	  WriteAll_1621(16,num12dpSeg+2*powunuse_shifenwei,2);	//
+	  WriteAll_1621(16,num1_5Seg+2*powunuse_shifenwei,2);	//
 	 }
 	  else
 	   {
 	      WriteAll_1621(18,num1_5Seg+2*powunuse_gewei,2);	//
-	  WriteAll_1621(16,num12dpSeg+2*powunuse_shifenwei,2);	//
+	  WriteAll_1621(16,num1_5Seg+2*powunuse_shifenwei,2);	//
 
 	   }
 	powuse_baiwei=powuse/1000;
@@ -732,18 +788,18 @@ Write_1621(28,0x01);//LOG
 		WriteAll_1621(14,num1_5Seg+2*powuse_baiwei,2);	//
 		WriteAll_1621(8,num6_12Seg+2*powuse_shiwei,2);	//
 		WriteAll_1621(10,num6_12Seg+2*powuse_gewei,2);	//
-		WriteAll_1621(12,num34dpSeg+2*powuse_shifenwei,2);	//
+		WriteAll_1621(12,num6_12Seg+2*powuse_shifenwei,2);	//
 	  }
 	  else if(powuse_shiwei>0)
 	   {
 	  			WriteAll_1621(8,num6_12Seg+2*powuse_shiwei,2);	//
 		WriteAll_1621(10,num6_12Seg+2*powuse_gewei,2);	//
-		WriteAll_1621(12,num34dpSeg+2*powuse_shifenwei,2);	//
+		WriteAll_1621(12,num6_12Seg+2*powuse_shifenwei,2);	//
 	   }
 	    else 
 		{
 		WriteAll_1621(10,num6_12Seg+2*powuse_gewei,2);	//
-		WriteAll_1621(12,num34dpSeg+2*powuse_shifenwei,2);	
+		WriteAll_1621(12,num6_12Seg+2*powuse_shifenwei,2);	
 		}
 
 	freq_shiwei=freq/100;
@@ -771,6 +827,14 @@ u8 num34dpSeg[]=   {0X0D,0X0F,0X08,0X06,0X0E,0X0B,0X0A,0X0F,0X0B,0X06,0X0B,0X0D,
 Write_1621(28,0x01);//LOG
   Write_1621(31,0x01);//	显示P14功率因数电压电流和P12“动控制”符号
  Write_1621(26,0x04);	//	带L3符号
+ if(display_nothing_close_open_warn==0)
+ Write_1621(24,0x00);	//	空  
+ if(display_nothing_close_open_warn==1)
+ Write_1621(24,0x04);	//	投入
+ if(display_nothing_close_open_warn==2)
+ Write_1621(24,0x02);	//	切除
+ if(display_nothing_close_open_warn==3)
+ Write_1621(24,0x01);	//	报警 
   Write_1621(25,0x08);//无功有功
 
    if(COMMCAT_para==0)
@@ -792,18 +856,18 @@ Write_1621(28,0x01);//LOG
 	  WriteAll_1621(22,num1_5Seg+2*powunuse_baiwei,2);	
       WriteAll_1621(20,num1_5Seg+2*powunuse_shiwei,2);	
       WriteAll_1621(18,num1_5Seg+2*powunuse_gewei,2);	
-	  WriteAll_1621(16,num12dpSeg+2*powunuse_shifenwei,2);	
+	  WriteAll_1621(16,num1_5Seg+2*powunuse_shifenwei,2);	
 	 }
 	 else if(powunuse_shiwei>0)
 	 {
 	       WriteAll_1621(20,num1_5Seg+2*powunuse_shiwei,2);	//
       WriteAll_1621(18,num1_5Seg+2*powunuse_gewei,2);	//
-	  WriteAll_1621(16,num12dpSeg+2*powunuse_shifenwei,2);	//
+	  WriteAll_1621(16,num1_5Seg+2*powunuse_shifenwei,2);	//
 	 }
 	  else
 	   {
 	      WriteAll_1621(18,num1_5Seg+2*powunuse_gewei,2);	//
-	  WriteAll_1621(16,num12dpSeg+2*powunuse_shifenwei,2);	//
+	  WriteAll_1621(16,num1_5Seg+2*powunuse_shifenwei,2);	//
 
 	   }
 	powuse_baiwei=powuse/1000;
@@ -815,18 +879,18 @@ Write_1621(28,0x01);//LOG
 		WriteAll_1621(14,num1_5Seg+2*powuse_baiwei,2);	//
 		WriteAll_1621(8,num6_12Seg+2*powuse_shiwei,2);	//
 		WriteAll_1621(10,num6_12Seg+2*powuse_gewei,2);	//
-		WriteAll_1621(12,num34dpSeg+2*powuse_shifenwei,2);	//
+		WriteAll_1621(12,num6_12Seg+2*powuse_shifenwei,2);	//
 	  }
 	  else if(powuse_shiwei>0)
 	   {
 	  			WriteAll_1621(8,num6_12Seg+2*powuse_shiwei,2);	//
 		WriteAll_1621(10,num6_12Seg+2*powuse_gewei,2);	//
-		WriteAll_1621(12,num34dpSeg+2*powuse_shifenwei,2);	//
+		WriteAll_1621(12,num6_12Seg+2*powuse_shifenwei,2);	//
 	   }
 	    else 
 		{
 		WriteAll_1621(10,num6_12Seg+2*powuse_gewei,2);	//
-		WriteAll_1621(12,num34dpSeg+2*powuse_shifenwei,2);	
+		WriteAll_1621(12,num6_12Seg+2*powuse_shifenwei,2);	
 		}
 
 	freq_shiwei=freq/100;
@@ -850,8 +914,14 @@ u8 num12dpSeg[]=  {0X0F,0X0D,0X06,0X08,0X0B,0X0E,0X0F,0X0A,0X06,0X0B,0X0D,0X0B,0
 u8 num34dpSeg[]=   {0X0D,0X0F,0X08,0X06,0X0E,0X0B,0X0A,0X0F,0X0B,0X06,0X0B,0X0D,0X0F,0X0D,0X08,0X07,0X0F,0X0F,0X0B,0X0F};
 Write_1621(28,0x01);//LOG
   Write_1621(31,0x01);//	显示P14功率因数电压电流和P12“动控制”符号
+ if(display_nothing_close_open_warn==0)
  Write_1621(24,0x08);	//	带△符号
-  Write_1621(26,0x08);//温度谐波
+ if(display_nothing_close_open_warn==1)
+ Write_1621(24,0x0c);	//	带△符号和投入
+ if(display_nothing_close_open_warn==2)
+ Write_1621(24,0x0a);	//	带△符号和切除
+ if(display_nothing_close_open_warn==3)
+ Write_1621(24,0x09);	//	带△符号和报警  Write_1621(26,0x08);//温度谐波
 
    if(COMMCAT_para==0)
 	  	  	{
@@ -931,6 +1001,14 @@ u8 num34dpSeg[]=   {0X0D,0X0F,0X08,0X06,0X0E,0X0B,0X0A,0X0F,0X0B,0X06,0X0B,0X0D,
 Write_1621(28,0x01);//LOG
   Write_1621(31,0x01);//	显示P14功率因数电压电流和P12“动控制”符号
  Write_1621(27,0x02);	//	带L1符号
+ if(display_nothing_close_open_warn==0)
+ Write_1621(24,0x00);	//	空  
+ if(display_nothing_close_open_warn==1)
+ Write_1621(24,0x04);	//	投入
+ if(display_nothing_close_open_warn==2)
+ Write_1621(24,0x02);	//	切除
+ if(display_nothing_close_open_warn==3)
+ Write_1621(24,0x01);	//	报警 
   Write_1621(26,0x08);//温度谐波
 
    if(COMMCAT_para==0)
@@ -1011,6 +1089,14 @@ u8 num34dpSeg[]=   {0X0D,0X0F,0X08,0X06,0X0E,0X0B,0X0A,0X0F,0X0B,0X06,0X0B,0X0D,
 Write_1621(28,0x01);//LOG
   Write_1621(31,0x01);//	显示P14功率因数电压电流和P12“动控制”符号
  Write_1621(27,0x04);	//	带L2符号
+ if(display_nothing_close_open_warn==0)
+ Write_1621(24,0x00);	//	空  
+ if(display_nothing_close_open_warn==1)
+ Write_1621(24,0x04);	//	投入
+ if(display_nothing_close_open_warn==2)
+ Write_1621(24,0x02);	//	切除
+ if(display_nothing_close_open_warn==3)
+ Write_1621(24,0x01);	//	报警 
   Write_1621(26,0x08);//温度谐波
 
    if(COMMCAT_para==0)
@@ -1089,7 +1175,15 @@ u8 num12dpSeg[]=  {0X0F,0X0D,0X06,0X08,0X0B,0X0E,0X0F,0X0A,0X06,0X0B,0X0D,0X0B,0
 u8 num34dpSeg[]=   {0X0D,0X0F,0X08,0X06,0X0E,0X0B,0X0A,0X0F,0X0B,0X06,0X0B,0X0D,0X0F,0X0D,0X08,0X07,0X0F,0X0F,0X0B,0X0F};
 Write_1621(28,0x01);//LOG
   Write_1621(31,0x01);//	显示P14功率因数电压电流和P12“动控制”符号
-  Write_1621(26,0x0C);//温度谐波 L3
+  Write_1621(26,0x0C);//温度谐波 L3 
+  if(display_nothing_close_open_warn==0)
+ Write_1621(24,0x00);	//	空  
+  if(display_nothing_close_open_warn==1)
+ Write_1621(24,0x04);	//	投入
+ if(display_nothing_close_open_warn==2)
+ Write_1621(24,0x02);	//	切除
+ if(display_nothing_close_open_warn==3)
+ Write_1621(24,0x01);	//	报警 
 
    if(COMMCAT_para==0)
 	  	  	{

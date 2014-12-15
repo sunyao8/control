@@ -24,9 +24,9 @@ typedef struct
 
 
 #define KEY_right GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_13)
-#define KEY_down GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_12) 
+#define KEY_up GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_14) 
 #define KEY_left GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_11)
-#define KEY_up GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_14)
+#define KEY_down GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_12)
 #define KEY_set GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_8)
 #define KEY_hand GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_10)
 

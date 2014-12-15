@@ -43,6 +43,7 @@ extern u8 phase_flag;
 extern u8 L_C_flag_A;//感性容性标准变量
 extern u8 L_C_flag_B;
 extern u8 L_C_flag_C;
+extern u8 light_time;
 
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序为控制器设计，未经许可，不得复制外传
@@ -92,20 +93,57 @@ extern u8 L_C_flag_A;//感性容性标准变量
 	 u8 HI_PROT_para_baiwei,HI_PROT_para_shiwei,HI_PROT_para_gewei;
 	 u8 COMMCAT_para_baiwei,COMMCAT_para_shiwei,COMMCAT_para_gewei;
          s8 a=0;
-u16 TR[]={50,60,80,100,120,160,200,240,300,400,500,600,800,1000,1200};
+u16 TR[]={1,2,3,4,5,6,8,10,12,16,20,24,30,40,50,60,80,100,120};
 
 u8 num1_5Seg[]=   {0X0F,0X05,0X06,0X00,0X0B,0X06,0X0F,0X02,0X06,0X03,0X0D,0X03,0X0D,0X07,0X07,0X00,0X0F,0X07,0X0F,0X03};
 u8 num6_12Seg[]={0X05,0X0F,0X00,0X06,0X06,0X0B,0X02,0X0F,0X03,0X06,0X03,0X0D,0X07,0X0D,0X00,0X07,0X07,0X0F,0X03,0X0F};
 u8 num12dpSeg[]=  {0X0F,0X0D,0X06,0X08,0X0B,0X0E,0X0F,0X0A,0X06,0X0B,0X0D,0X0B,0X0D,0X0F,0X07,0X08,0X0F,0X0F,0X0F,0X0B};
 u8 num34dpSeg[]=   {0X0D,0X0F,0X08,0X06,0X0E,0X0B,0X0A,0X0F,0X0B,0X06,0X0B,0X0D,0X0F,0X0D,0X08,0X07,0X0F,0X0F,0X0B,0X0F};
-u8 num_SET_Seg[]={0X0F,0X0F,0X0E,0X0D,0X0F,0X0E,0X0B,0X0F,0X0E,0X07,0X0F,0X0E,0X0F,0X07,0X0E,0X0F,0X0E,0X0E,0X0F,0X0D,0X0E,0X0F,0X0B,0X0E,0X0F,0X0F,0X0C,0X0F,0X0F,0X0A,0X0F,0X0F,0X06};
+u8 num_SET_Seg[]={0X0F,0X0F,0X06,0X0D,0X0F,0X06,0X0B,0X0F,0X06,0X07,0X0F,0X06,0X0F,0X07,0X06,0X0F,0X0E,0X06,0X0F,0X0D,0X06,0X0F,0X0B,0X06,0X0F,0X0F,0X04,0X0F,0X0F,0X02,0X0F,0X0F,0X06};
 // 全显，CT互感器,延时时间,目标cos,电压保护, 投,切,门限, 谐波保护,通讯设置,温度设置,
 u8 numHU_prot[]={0x0e,0x05,0x06,0x07};
 u8 numHI_prot[]={0x00,0x05,0x06,0x07};
+ u8 com_ID=1;
 
+if(light_time==0)
+{
 
+	 if(KEY_set==0)
+	 {
+	 LIGHT_backligt_on();
+	   while(KEY_set==0);
+	 }
+	 if(KEY_hand==0)
+	 {
+	 LIGHT_backligt_on();
+	   while(KEY_hand==0);
+	 }
 
+		 if(KEY_right==0)
+	 {
+	 LIGHT_backligt_on();
+	   while(KEY_right==0);
+	 }
 
+	   if(KEY_left==0)
+	 {
+	 LIGHT_backligt_on();
+	   while(KEY_left==0);
+	 } 
+	 	 if(KEY_up==0)
+	 {
+	 LIGHT_backligt_on();
+	   while(KEY_up==0);
+	 }
+		 if(KEY_down==0)
+	 {
+	 LIGHT_backligt_on();
+	   while(KEY_down==0);
+	}	 
+if(Work_num==0)Graf_display();		 
+}
+else
+{
 	 if(KEY_set==0)
 	 {
 	 LIGHT_backligt_on();
@@ -134,7 +172,7 @@ u8 numHI_prot[]={0x00,0x05,0x06,0x07};
    			//CT_para从eeprom读出
 a=AT24CXX_ReadOneByte(0xa000);
 
-CT_para=TR[a];
+CT_para=TR[a]*50;
 		  CT_para_qianwei=CT_para/1000;
 		  CT_para_baiwei=(CT_para%1000)/100;
 		  CT_para_shiwei=(CT_para%100)/10;
@@ -149,7 +187,7 @@ CT_para=TR[a];
 		 	 LIGHT_backligt_on();
 			a++;
 			while(KEY_up==0);
-		    if(a>15)a=15;
+		    if(a>18)a=0;
 			CT_para=TR[a];
 		 }
 		 if(KEY_down==0)
@@ -157,7 +195,7 @@ CT_para=TR[a];
 		 	 LIGHT_backligt_on();
 		    a--;
 			while(KEY_down==0);
-			if(a<0)a=0;
+			if(a<0)a=18;
 			CT_para=TR[a];
 		 }
 		  
@@ -190,14 +228,14 @@ CT_para=TR[a];
 		 	 LIGHT_backligt_on();
 			DELAY_ON_para++;
 			while(KEY_up==0);
-			if(DELAY_ON_para>100)DELAY_ON_para=100;
+			if(DELAY_ON_para>100)DELAY_ON_para=1;
 		 }
 		 if(KEY_down==0)
 		 {
 		 	 LIGHT_backligt_on();
 			DELAY_ON_para--;
 			while(KEY_down==0);
-			if(DELAY_ON_para<1)DELAY_ON_para=1;
+			if(DELAY_ON_para<1)DELAY_ON_para=100;
 		 }
 		  
 		 AT24CXX_WriteOneByte(0x1000,DELAY_ON_para);  //存储DELAY_ON_para到eeprom
@@ -227,14 +265,14 @@ CT_para=TR[a];
 		 	 LIGHT_backligt_on();
 			DELAY_OFF_para++;
 			while(KEY_up==0);
-			if(DELAY_OFF_para>100)DELAY_OFF_para=100;
+			if(DELAY_OFF_para>100)DELAY_OFF_para=1;
 		 }
 		 if(KEY_down==0)
 		 {
 		 	 LIGHT_backligt_on();
 			DELAY_OFF_para--;
 			while(KEY_down==0);
-			if(DELAY_OFF_para<1)DELAY_OFF_para=1;
+			if(DELAY_OFF_para<1)DELAY_OFF_para=100;
 		 }
 
 			 AT24CXX_WriteOneByte(0x2000,DELAY_OFF_para);  //存储DELAY_ON_para到eeprom
@@ -266,14 +304,14 @@ CT_para=TR[a];
 		 	 LIGHT_backligt_on();
 			COS_ON_para++;
 			while(KEY_up==0);
-			if(COS_ON_para>100)COS_ON_para=100;
+			if(COS_ON_para>100)COS_ON_para=80;
 		 }
 		 if(KEY_down==0)
 		 {
 		 	 LIGHT_backligt_on();
 			COS_ON_para--;
 			while(KEY_down==0);
-			if(COS_ON_para<80)COS_ON_para=80;
+			if(COS_ON_para<80)COS_ON_para=100;
 		 }
 			 AT24CXX_WriteOneByte(0x3000,COS_ON_para);  //存储DELAY_ON_para到eeprom
 		 break;
@@ -304,14 +342,14 @@ CT_para=TR[a];
 		 	 LIGHT_backligt_on();
 			COS_OFF_para++;
 			while(KEY_up==0);
-			if(COS_OFF_para>100)COS_OFF_para=100;
+			if(COS_OFF_para>100)COS_OFF_para=80;
 		 }
 		 if(KEY_down==0)
 		 {
 		 	 LIGHT_backligt_on();
 			COS_OFF_para--;
 			while(KEY_down==0);
-            if(COS_OFF_para<80)COS_OFF_para=80;
+            if(COS_OFF_para<80)COS_OFF_para=100;
 		 } 
 					 AT24CXX_WriteOneByte(0x4000,COS_OFF_para);  //存储DELAY_ON_para到eeprom
  
@@ -347,18 +385,16 @@ CT_para=TR[a];
 		   if(KEY_up==0)
 		 {
 		 	 LIGHT_backligt_on();
-			if(V_PROT_para_L==0)V_PROT_para_L=20;
-			if((V_PROT_para_L>=20)&&(V_PROT_para_L<90))V_PROT_para_L=V_PROT_para_L+10;
+			V_PROT_para_L++;
 			while(KEY_up==0);
-			if(V_PROT_para_L>=90)V_PROT_para_L=0;
+			if(V_PROT_para_L>55)V_PROT_para_L=0;
 		 }
 		 if(KEY_down==0)
 		 {
 		 	 LIGHT_backligt_on();
-			if(V_PROT_para_L==0)V_PROT_para_L=90;
-			if((V_PROT_para_L>20)&&(V_PROT_para_L<=90))V_PROT_para_L=V_PROT_para_L-10;
+					V_PROT_para_L--;
 			while(KEY_down==0);
-			if(V_PROT_para_L<=20)V_PROT_para_L=0;
+			if(V_PROT_para_L<10)V_PROT_para_L=0;
 
 		 }
 		  //存储CT_para到eeprom
@@ -393,16 +429,16 @@ CT_para=TR[a];
 		  
 		   if(KEY_up==0)
 		 {	 LIGHT_backligt_on();
-			if((V_PROT_para_tri>=0)&&(V_PROT_para_tri<90))V_PROT_para_tri=V_PROT_para_tri+10;
+			V_PROT_para_tri++;
 			while(KEY_up==0);
-			if(V_PROT_para_tri>=90)V_PROT_para_tri=0;
+			if(V_PROT_para_tri>90)V_PROT_para_tri=0;
 		 }
 		 if(KEY_down==0)
 		 {
 		 	 LIGHT_backligt_on();
-			if((V_PROT_para_tri>0)&&(V_PROT_para_tri<=80))V_PROT_para_tri=V_PROT_para_tri-10;
+			V_PROT_para_tri--;
 			while(KEY_down==0);
-			if(V_PROT_para_tri==0)V_PROT_para_tri=0;
+			if(V_PROT_para_tri<0)V_PROT_para_tri=90;
 
 		 }
 		  //存储CT_para到eeprom
@@ -511,7 +547,7 @@ CT_para=TR[a];
 		 	 LIGHT_backligt_on();
 			HU_PROT_para++;
 		    while(KEY_up==0);
-			if(HU_PROT_para>100)HU_PROT_para=0;
+			if(HU_PROT_para>100)HU_PROT_para=1;
 		 }
 		 if(KEY_down==0)
 		 {
@@ -571,10 +607,11 @@ CT_para=TR[a];
 		if(Work_Flag==0)WriteAll_1621(28,num_SET_Seg+9*3,3);
 		
 			
+		 		 com_ID=AT24CXX_ReadOneByte(0xa000);  //存储DELAY_OFF_para到eeprom
 
-		 COMMCAT_para_baiwei=COMMCAT_para/100;
-		 COMMCAT_para_shiwei=(COMMCAT_para%100)/10;
-		 COMMCAT_para_gewei=COMMCAT_para%10;
+		 COMMCAT_para_baiwei=com_ID/100;
+		 COMMCAT_para_shiwei=(com_ID%100)/10;
+		 COMMCAT_para_gewei=com_ID%10;
 
 		 WriteAll_1621(8,num6_12Seg+2*COMMCAT_para_baiwei,2);	//
   		 WriteAll_1621(10,num6_12Seg+2*COMMCAT_para_shiwei,2);	//
@@ -582,18 +619,20 @@ CT_para=TR[a];
 
 		   if(KEY_up==0)
 		 {
-			//COMMCAT_para++;
+			com_ID++;
 				 LIGHT_backligt_on();
 			while(KEY_up==0);
-			if(COMMCAT_para>250);//COMMCAT_para=250;
+			if(com_ID>64)com_ID=1;
 		 }
 		 if(KEY_down==0)
 		 {
-		//	COMMCAT_para--;
+			com_ID--;
 			 LIGHT_backligt_on();
 			while(KEY_down==0);
-			if(COMMCAT_para<1);//COMMCAT_para=0;
+			if(com_ID<1)com_ID=64;
 		 }
+		  AT24CXX_WriteOneByte(0xa000,com_ID);  //存储DELAY_ON_para到eeprom
+
 		break;
 
 	  }
@@ -601,6 +640,8 @@ CT_para=TR[a];
 	  default:	{Graf_display();break;}
 	 
 	}
+
+}
 }
 void Graf_display(void)
 {
@@ -609,21 +650,23 @@ void Graf_display(void)
 u8 num1_5Seg[]=   {0X0F,0X05,0X06,0X00,0X0B,0X06,0X0F,0X02,0X06,0X03,0X0D,0X03,0X0D,0X07,0X07,0X00,0X0F,0X07,0X0F,0X03};
 u8 num6_12Seg[]={0X05,0X0F,0X00,0X06,0X06,0X0B,0X02,0X0F,0X03,0X06,0X03,0X0D,0X07,0X0D,0X00,0X07,0X07,0X0F,0X03,0X0F};
 
+if(light_time>0)
+{
 
-
-	if(KEY_up==0)
+	if(KEY_down==0)
  		{
  		if(COMMCAT_para==0)
 		{ Display_num++;LIGHT_backligt_on();}
-		 while(KEY_up==0);
+		 while(KEY_down==0);
 		 if(Display_num>6)Display_num=1;
 	    }
-	if(KEY_down==0)
+	if(KEY_up==0)
 	  { 	if(COMMCAT_para==0)
 		 {Display_num--;LIGHT_backligt_on();}
-		 while(KEY_down==0);
+		 while(KEY_up==0);
 		 if(Display_num<1)Display_num=6;
 	  }
+}	
    switch(Display_num)
    {
    	 case 1:										   //显示功率因数电流电压
@@ -690,7 +733,7 @@ break;
   if(KEY_3==0) 
 		{
 		 Clera_lcd();
-		 Graf_powuse_poweunuse_freq(wugongkvar*10,allkvar*10,501);
+		 Graf_powuse_poweunuse_freq(wugongkvar,allkvar,501);
 	 	}
   if(KEY_3==1) 
               {
@@ -715,22 +758,22 @@ break;
 			{				
 		 Clera_lcd();
 		 if(phase_flag==0)
-		 Graf_powuse_poweunuse_freq_L1(wugongkvar_A*10,allkvar*10,501);
+		 Graf_powuse_poweunuse_freq_L1(wugongkvar_A,allkvar,501);
                else
-		 Graf_powuse_poweunuse_freq_L3(wugongkvar_C*10,allkvar*10,501);              
+		 Graf_powuse_poweunuse_freq_L3(wugongkvar_C,allkvar,501);              
 		}
 		if(L1_L2_L3_KAR==2)
 			{
 		 Clera_lcd();
-		 Graf_powuse_poweunuse_freq_L2(wugongkvar_B*10,allkvar*10,501);
+		 Graf_powuse_poweunuse_freq_L2(wugongkvar_B,allkvar,501);
 			}
 		if(L1_L2_L3_KAR==3)
 			{
 		 Clera_lcd();
 		 if(phase_flag==0)
-		 Graf_powuse_poweunuse_freq_L3(wugongkvar_C*10,allkvar*10,501);
+		 Graf_powuse_poweunuse_freq_L3(wugongkvar_C,allkvar,501);
                else
-		 Graf_powuse_poweunuse_freq_L1(wugongkvar_A*10,allkvar*10,501);
+		 Graf_powuse_poweunuse_freq_L1(wugongkvar_A,allkvar,501);
 		}
 		}
   
@@ -848,10 +891,12 @@ break;
 
 		  break;
 
-	 case 6:										   //显示进柜三相电流
+	 case 6:										   //显示投入的电容电流
 
 	 Clera_lcd();
-	 Graf_current_value(dianya_zhi_A*10,dianya_zhi_B*10,dianya_zhi_C*10);
+	 Graf_current_value(0,0,0);
+	 
+//	 Graf_current_value(dianya_zhi_A*10,dianya_zhi_B*10,dianya_zhi_C*10);
 	 break;
    
    }

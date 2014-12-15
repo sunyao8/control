@@ -38,7 +38,8 @@
   *                   Function (AF) using GPIO_PinAFConfig() function
   *                 - Configure the desired pin in alternate function mode using
   *                   GPIO_InitStruct->GPIO_Mode = GPIO_Mode_AF
-  *                 - Select the type, pull-up/pull-down and output speed via 
+  *                 - Select the type, pull-up/pull-
+	down and output speed via 
   *                   GPIO_PuPd, GPIO_OType and GPIO_Speed members
   *                 - Call GPIO_Init() function
   *        
