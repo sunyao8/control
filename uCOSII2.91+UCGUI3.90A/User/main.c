@@ -111,8 +111,9 @@ u16 ADC_Converted_VValue=0;
 u16 ADC_Converted_CValue=0;
 u16 ADC_Converted_base=0;
 
-u8 tempshuzhi=2,vernum=101,gonglvshishu=0;
-u16 dianya_zhi=0,wugongkvar=0,allkvar=0,HV=0,HI=0;
+u8 vernum=101,gonglvshishu=0;
+u16 dianya_zhi=0,wugongkvar=0,allkvar=0;
+float32_t HV=0,HI=0,A_HV=0,A_HI=0,B_HV=0,B_HI=0,C_HV=0,C_HI=0;
 u32	dianliuzhi=0;
 //#if (FUNCTION_MODULE == DF_THREE)
 u16 dianya_zhi_A=0,dianya_zhi_B=0,dianya_zhi_C=0,wugongkvar_A=0,wugongkvar_B=0,wugongkvar_C=0;
@@ -133,7 +134,7 @@ void ADC2_CH15_DMA_Config_C1(void);
 
 void ADC1_CH1_DMA_Config_VC_phase(void);
 
-void init_para(void);
+//void init_para(void);
 void Init_ADC(void);
 
 static  void  GPIO_Configuration    (void);
@@ -259,25 +260,13 @@ u16 comm_number=0;//手动投切共补0为继电器1号 1为继电器2号
 #define TEST_LENGTH_SAMPLES 512*2 
  
 u8 phase_flag=0;
-u16 T=10;
-u8 RT_FLAG=2;
 u16 scan_init=20;
 u8 MASTER=1;
 u8 light_time=100;
 
 /********************控制器设置参数*************************/
-extern u8 DELAY_ON_para;
-extern u8 DELAY_OFF_para;
-extern u8 COS_ON_para;
-extern u8 COS_OFF_para;
-extern u8 V_PROT_para_L;
-extern u8 V_PROT_para_tri;
-extern u8 ON_HOLD_para;
-extern u8 OFF_HOLD_para;
-extern u8 HU_PROT_para;
-extern u8 HI_PROT_para;
 extern u8 COMMCAT_para;
-extern u16 CT_para;
+//extern u8 CT_para;
 extern u8 capa1_array[32],capa2_array[32];
 
 u8 hand_id=1;
@@ -302,7 +291,6 @@ GPIO_Configuration();
  //EXTI_Configuration();//初始化函数
 
 initmybox();//初始化自身信息
- init_para();
  init_light_off();
  LIGHT_backligt_on();
 
@@ -437,7 +425,6 @@ static  void  App_TaskMaster(void		*p_arg )
 OSSemPost(computer_sem);
 if(KEY_2==1)
 	{
-	RT_FLAG=2;
 	}
 
 if(KEY_2==0)
@@ -445,7 +432,6 @@ if(KEY_2==0)
 if(scan_init!=0) {scan_init--;order_trans_rs485(mybox.myid,0,1,1,0,CONTROL);order_trans_rs485(mybox.myid,0,1,2,0,CONTROL);}
 if(scan_init==1)
 {
-RT_FLAG=0;
 scan_init=0;
 }
 
@@ -615,7 +601,7 @@ static  void  App_Taskcomputer	 (void		*p_arg )
 
 {  
 u8 err;
- static status_dis_node     dis_list[33];
+ static status_dis_node     dis_list[20];
 
 static  u8 slave_dis[20];
 static  u8 slave_comm[20];
@@ -1465,16 +1451,21 @@ void initmybox()//初始化自身信息
 
 }
 
+/*
 void init_para(void)
 {
-         s8 a=0;
-u16 TR[]={40,50,60,80,100,120,160,200,240,300,400,500,600,800,1000,1200};
+ u8 DELAY_ON_para=10;
+ u8 DELAY_OFF_para=10;
+ u8 COS_ON_para=90;
+ u8 COS_OFF_para=95;
+ u8 V_PROT_para_L=40;
+ u8 V_PROT_para_tri=40;
+ u8 HU_PROT_para=100;
+ u8 HI_PROT_para=100;
 
 {
 
 
-a=AT24CXX_ReadOneByte(0xa000);
-CT_para=TR[a];
 
 DELAY_ON_para=AT24CXX_ReadOneByte(0x1000);  //存储DELAY_ON_para到eeprom
 
@@ -1488,14 +1479,13 @@ DELAY_ON_para=AT24CXX_ReadOneByte(0x1000);  //存储DELAY_ON_para到eeprom
 
 			HU_PROT_para=AT24CXX_ReadOneByte(0x7000); 
        HI_PROT_para=AT24CXX_ReadOneByte(0x8000); 
-		OFF_HOLD_para=AT24CXX_ReadOneByte(0x6000); 
-
-		ON_HOLD_para=AT24CXX_ReadOneByte(0x5000);  
+		
 	  
 
  }	 
 
 }
+*/
 void set_statuslist(u8 count,u8 id,u8 size,u8 work_status,u8 work_time,u8 dis_comm,u8 relay,status_dis_node *dis_list,status_comm_node *comm_list_1,status_comm_node *comm_list_2,u8 group)
 {
 if(dis_comm==0)
@@ -2195,13 +2185,42 @@ u16 phase;
 s32 gl[2];
 u16 wugongkvar_95,wugongkvar_95A,wugongkvar_95B,wugongkvar_95C;
 
-float32_t HU_SUM_A=0,HI_SUM_A=0,HU_A=0,HI_A=0,HVA=0,HIA=0;
-float32_t HU_SUM_B=0,HI_SUM_B=0,HU_B=0,HI_B=0,HVB=0,HIB=0;
-float32_t HU_SUM_C=0,HI_SUM_C=0,HU_C=0,HI_C=0,HVC=0,HIC=0;
+float32_t HU_SUM_A=0,HI_SUM_A=0,HU_A=0,HI_A=0;
+float32_t HU_SUM_B=0,HI_SUM_B=0,HU_B=0,HI_B=0;
+float32_t HU_SUM_C=0,HI_SUM_C=0,HU_C=0,HI_C=0;
 u8 flag_phase=1;
+ u8 DELAY_ON_para;
+ u8 DELAY_OFF_para;
+ u8 COS_ON_para;
+ u8 COS_OFF_para;
+ u8 V_PROT_para_L;
+ u8 V_PROT_para_tri;
+ u8 HU_PROT_para;
+ u8 HI_PROT_para;
+u8 T;
+{
+
+
+
+DELAY_ON_para=AT24CXX_ReadOneByte(0x1000);  //存储DELAY_ON_para到eeprom
+
+		 DELAY_OFF_para=AT24CXX_ReadOneByte(0x2000);  //存储DELAY_OFF_para到eeprom
+
+		 COS_ON_para=AT24CXX_ReadOneByte(0x3000);  //存储DELAY_OFF_para到eeprom
+					 COS_OFF_para=AT24CXX_ReadOneByte(0x4000);  //存储DELAY_OFF_para到eeprom
+
+		V_PROT_para_L=AT24CXX_ReadOneByte(0xb000);
+		V_PROT_para_tri=AT24CXX_ReadOneByte(0xc000);
+
+			HU_PROT_para=AT24CXX_ReadOneByte(0x7000); 
+       HI_PROT_para=AT24CXX_ReadOneByte(0x8000); 
+		
+	  
 a=AT24CXX_ReadOneByte(0xa000);
-CT_para=TR[a]*50;
-T=CT_para/50;
+T=TR[a];
+
+ }
+
 
    if(KEY_3==0) 
    	{
@@ -2256,7 +2275,9 @@ dianya_zhi=dianya_zhi/2.57;
 {
 for(i=3;i<=21;i=i+2){HU_SUM_B=(reslut[i]*reslut[i])+HU_SUM_B;}
 arm_sqrt_f32(HU_SUM_B,&HU_B);
-HVB=(HU_B/maxValue);
+arm_sqrt_f32(maxValue,&maxValue);
+
+HV=(HU_B/maxValue)/2.25;
 }
 /******************************************************************/
 
@@ -2306,10 +2327,10 @@ if(((angle[2]>180.0)&&(angle[2]<270))||((angle[2]>-180.0&&angle[2]<-90.0))){L_C_
 else if(((angle[2]<180.0)&&(angle[2]>90.0))||(angle[2]>-270&&angle[2]<-180)){L_C_flag_B=0;}
 }
 
-dianliuzhi=T*maxValue_C*1.1;
+dianliuzhi=T*maxValue_C*1.07;
 arm_sqrt_f32(1-(arm_cos_f32(angle[0]-angle[1]))*(arm_cos_f32(angle[0]-angle[1])),&sine);
 gonglvshishu=sine*100;
-if(dianliuzhi<=1.2*T){gonglvshishu=100;dianliuzhi=0;L_C_flag_B=1;}//电流小于0.1A 时，电流就清零
+if(dianliuzhi<1650*T){gonglvshishu=100;dianliuzhi=0;L_C_flag_B=1;}//电流小于0.1A 时，电流就清零
 else dianliuzhi=dianliuzhi/1000;
 			 wugongkvar=((1.732*dianliuzhi*dianya_zhi*(arm_cos_f32(angle[0]-angle[1])))/1000);
 			 allkvar=((1.732*dianliuzhi*dianya_zhi*sine)/1000);
@@ -2323,9 +2344,20 @@ else dianliuzhi=dianliuzhi/1000;
 {
 for(i=3;i<=21;i=i+2){HI_SUM_B=(reslut[i]*reslut[i])+HI_SUM_B;}
 arm_sqrt_f32(HI_SUM_B,&HI_B);
-HIB=(HI_B/maxValue);
+arm_sqrt_f32(maxValue_C,&maxValue_C);
+HI=(HI_B/maxValue_C)/2.03;
 }
 /******************************************************************/
+   order_trans_rs485(mybox.myid,0,0,0,0,CPT_LL);
+
+gonglvshishu_A=gonglvshishu;
+gonglvshishu_B=gonglvshishu;
+gonglvshishu_C=gonglvshishu;
+wugongkvar_A=wugongkvar/3;
+wugongkvar_B=wugongkvar/3;
+wugongkvar_C=wugongkvar/3;
+L_C_flag_A=L_C_flag_B;
+L_C_flag_C=L_C_flag_B;
 
 }
 
@@ -2458,7 +2490,9 @@ dianya_zhi_A=dianya_zhi_A/2.57;
 {
 for(i=3;i<=21;i=i+2){HU_SUM_A=(reslut[i]*reslut[i])+HU_SUM_A;}
 arm_sqrt_f32(HU_SUM_A,&HU_A);
-HVA=(HU_A/maxValue);
+arm_sqrt_f32(maxValue,&maxValue);
+A_HV=(HU_A/maxValue)/2.25;
+
 }
 /******************************************************************/
 
@@ -2527,9 +2561,8 @@ angle[2]=((angle[2])*PI2)/360;
 
 
 /***************************************************************/
- dianliuzhi_A=1.1*maxValue_C;
- dianliuzhi_A=T*dianliuzhi_A;
- if(dianliuzhi_A<=900*T){dianliuzhi_A=0;gonglvshishu_A=100;L_C_flag_A=1;}
+ dianliuzhi_A=1.07*maxValue_C*T;
+ if(dianliuzhi_A<=2500*T){dianliuzhi_A=0;gonglvshishu_A=100;L_C_flag_A=1;}
 else{ 
 	dianliuzhi_A=dianliuzhi_A/1000;
 	gonglvshishu_A=arm_cos_f32(angle[2])*100;//功率因素
@@ -2539,7 +2572,9 @@ else{
 {
 for(i=3;i<=21;i=i+2){HI_SUM_A=(reslut[i]*reslut[i])+HI_SUM_A;}
 arm_sqrt_f32(HI_SUM_A,&HI_A);
-HIA=(HI_A/maxValue);
+arm_sqrt_f32(maxValue_C,&maxValue_C);
+A_HI=(HI_A/maxValue_C)/2.03;
+
 }
 /******************************************************************/
 
@@ -2603,7 +2638,8 @@ dianya_zhi_B=dianya_zhi_B/2.57;
 {
 for(i=3;i<=21;i=i+2){HU_SUM_B=(reslut[i]*reslut[i])+HU_SUM_B;}
 arm_sqrt_f32(HU_SUM_B,&HU_B);
-HVB=(HU_B/maxValue);
+arm_sqrt_f32(maxValue,&maxValue);
+B_HV=(HU_B/maxValue)/2.25;
 }
 /******************************************************************/
 
@@ -2671,9 +2707,8 @@ angle[2]=((angle[2])*PI2)/360;
 
 
 /***************************************************************/
-dianliuzhi_B=1.1*maxValue_C;
- dianliuzhi_B=T*dianliuzhi_B;
- if(dianliuzhi_B<=900*T){dianliuzhi_B=0;gonglvshishu_B=100;L_C_flag_B=1;}
+dianliuzhi_B=1.07*maxValue_C*T;
+ if(dianliuzhi_B<=1650*T){dianliuzhi_B=0;gonglvshishu_B=100;L_C_flag_B=1;}
 else {
         dianliuzhi_B=dianliuzhi_B/1000;
 	gonglvshishu_B=arm_cos_f32(angle[2])*100;//功率因素
@@ -2683,7 +2718,9 @@ else {
 {
 for(i=3;i<=21;i=i+2){HI_SUM_B=(reslut[i]*reslut[i])+HI_SUM_B;}
 arm_sqrt_f32(HI_SUM_B,&HI_B);
-HIB=(HI_B/maxValue);
+arm_sqrt_f32(maxValue_C,&maxValue_C);
+B_HI=(HI_B/maxValue_C)/2.03;
+
 }
 /******************************************************************/
 
@@ -2757,7 +2794,7 @@ dianya_zhi_C=dianya_zhi_C/2.57;
 {
 for(i=3;i<=21;i=i+2){HU_SUM_C=(reslut[i]*reslut[i])+HU_SUM_C;}
 arm_sqrt_f32(HU_SUM_C,&HU_C);
-HVC=(HU_C/maxValue);
+C_HV=(HU_C/maxValue)/2.25;
 }
 /******************************************************************/
 
@@ -2826,9 +2863,8 @@ angle[2]=((angle[2])*PI2)/360;
 
 
 /***************************************************************/
-dianliuzhi_C=1.1*maxValue_C;
- dianliuzhi_C=T*dianliuzhi_C;
- if(dianliuzhi_C<=900*T){dianliuzhi_C=0;gonglvshishu_C=100;L_C_flag_C=1;}
+dianliuzhi_C=1.07*maxValue_C*T;
+ if(dianliuzhi_C<=2500*T){dianliuzhi_C=0;gonglvshishu_C=100;L_C_flag_C=1;}
 else
 	{
 	dianliuzhi_C=dianliuzhi_C/1000;
@@ -2839,7 +2875,9 @@ else
 {
 for(i=3;i<=21;i=i+2){HI_SUM_C=(reslut[i]*reslut[i])+HI_SUM_C;}
 arm_sqrt_f32(HI_SUM_C,&HI_C);
-HIC=(HI_C/maxValue);
+arm_sqrt_f32(maxValue_C,&maxValue_C);
+C_HI=(HI_C/maxValue_C)/2.03;
+
 }
 /******************************************************************/
 
@@ -2877,8 +2915,8 @@ gonglvshishu=(gonglvshishu_A+gonglvshishu_B+gonglvshishu_C)/3;
 //wugongkvar=(a+b+c)/100;
 wugongkvar=wugongkvar_A+wugongkvar_B+wugongkvar_C;
 allkvar=3*dianya_zhi*dianliuzhi/1000;//乘以3，是因为电流变量是一相的电流，应该变为三相的电流和
-HV=HVA+HVB+HVC;
-HI=HIA+HIB+HIC;
+//HV=HVA+HVB+HVC;
+//HI=HIA+HIB+HIC;
   wugongkvar_95=wugongkvar_95A+wugongkvar_95B+wugongkvar_95C;
 
    order_trans_rs485(mybox.myid,0,0,0,0,CPT_LL);
@@ -2890,537 +2928,17 @@ HI=HIA+HIB+HIC;
 
 
 /*********************变比判断*******************************/
-//if(1)
-if(RT_FLAG==0)
 
-{
-        u8 err;
-if(L_C_flag_B==1)gl[0]=wugongkvar;
-else gl[0]=-wugongkvar;
-if(slave_comm[0]>0)
 
-{
-      	{
-for(i=slave_comm[8];i<=slave_comm[9]-1;i++)
-if(comm_list[i].work_status==0)
 
-{
 
-order_trans_rs485(mybox.myid,comm_list[i].myid,4,comm_list[i].group,1,CONTROL);
- OSMboxPend(RS485_RT,OS_TICKS_PER_SEC/10,&err);
-     if(err==OS_ERR_TIMEOUT)RT_FLAG=0;
-else 
-		{
-//set_statuslist(i,comm_list[i].myid,comm_list[i].size[0],1,comm_list[i].work_time[0],1,1,dis_list,comm_list);
-//change_Queue(1,20,dis_list,comm_list,slave_dis,slave_comm);
-RT_FLAG=1;
-var=var+(200*dianya_zhi*dianya_zhi)/450/450;
-//var=166+var;
-		}
-//return 0 ;
-}
-
-
-      	}
-
-
-{
-for(i=slave_comm[6];i<=slave_comm[7]-1;i++)
-if(comm_list[i].work_status==0)
-	{
-
-order_trans_rs485(mybox.myid,comm_list[i].myid,4,comm_list[i].group,1,CONTROL);
-OSMboxPend(RS485_RT,OS_TICKS_PER_SEC/10,&err);
-  if(err==OS_ERR_TIMEOUT)RT_FLAG=0;
-else 
-		{
-//set_statuslist(i,comm_list[i].myid,comm_list[i].size[0],1,comm_list[i].work_time[0],1,1,dis_list,comm_list);
-//change_Queue(1,10,dis_list,comm_list,slave_dis,slave_comm);
-RT_FLAG=1;
-var=var+(100*dianya_zhi*dianya_zhi)/450/450;
-//var=var+100;
-		}
-//return 0 ;
-}
-
-
-
-
-
-	  }
-
-
-{
-for(i=slave_comm[4];i<=slave_comm[5]-1;i++)
-if(comm_list[i].work_status==0)
-	{
-
-order_trans_rs485(mybox.myid,comm_list[i].myid,4,comm_list[i].group,1,CONTROL);
-  OSMboxPend(RS485_RT,OS_TICKS_PER_SEC/10,&err);
-     if(err==OS_ERR_TIMEOUT)RT_FLAG=0;
-	else 
-		{
-//set_statuslist(i,comm_list[i].myid,comm_list[i].size[0],1,comm_list[i].work_time[0],1,1,dis_list,comm_list);
-//change_Queue(1,5,dis_list,comm_list,slave_dis,slave_comm);
-RT_FLAG=1;
-var=var+(50*dianya_zhi*dianya_zhi)/450/450;
-//var=var+50;
-		}
-//return 0 ;
-}
-
-
-
-      	}
-
-
-
-
-      
-}
-
-}
-if(RT_FLAG==1)
-{
-u16 min;
-delay_us(2500000);//36->512
-
-//u16 min=2;
-/******************************/
-{
-	if(phase_flag==0)
-		{
-ADC3_CH10_DMA_Config_VA();
-ADC1_CH1_DMA_Config_CA();
-		}
-		if(phase_flag==1)
-			{
-ADC3_CH12_DMA_Config_VC();
-ADC1_CH7_DMA_Config_CC();
-		}
-
-{
- for(i=0;i<TEST_LENGTH_SAMPLES;i++)
-	 	{
-	 	
-	 	
-testInput_C[i]=(float32_t)((ADC_Converted_CValue-ADC_Converted_base)*3.3/4096);///  1550
-
-testInput_V[i]=(float32_t)((ADC_Converted_VValue-ADC_Converted_base)*3.3/4096);///  1550
-
-delay_us(36);//36->512
-
-        }
-
- 
-allphase(testInput_V,testInput_C);
-
- 
-	status = arm_rfft_init_f32(&S,&S_CFFT, fftSize,  
-	  								ifftFlag, doBitReverse); 
-	 
-	/* Process the data through the CFFT/CIFFT module */ 
-	arm_rfft_f32(&S, testInput_V,testOutput); 
-
-             testIndex=1;
-		angle[0]=atan2(testOutput[2*testIndex],testOutput[2*testIndex+1]);//电压初始相位
-	/* Process the data through the Complex Magnitude Module for  
-	calculating the magnitude at each bin */ 
-
-	/*******通过原始数据计算电压值***********/
-//		arm_rfft_f32(&S, testInput_V_source,testOutput); 
-
-	arm_cmplx_mag_f32(testOutput, reslut,  
-	  				fftSize);  
-	/* Calculates maxValue and returns corresponding BIN value */ 
-
-	arm_max_f32(reslut, fftSize/2, &maxValue, &testIndex);
-dianya_zhi_A=maxValue/100;
-dianya_zhi_A=dianya_zhi_A/2.6125;
-	
-/******************************************************************/
-	arm_rfft_f32(&S, testInput_C,testOutput); 
-         
-	angle[1]=atan2(testOutput[2*testIndex],testOutput[2*testIndex+1]);//电流初始相位
-
-	/*******通过原始数据计算电压值***********/
-
-	//	arm_rfft_f32(&S, testInput_C_source,testOutput); 
-
-	arm_cmplx_mag_f32(testOutput, reslut,  
-	  				fftSize);  
-	 
-	/* Calculates maxValue and returns corresponding BIN value */ 
-	arm_max_f32(reslut, fftSize/2, &maxValue_C, &testIndex);
-
-/****************************************************************/
-				angle[2]=((angle[1]-angle[0])*360)/PI2;
-
-				  if(angle[2]>0){while(1){if(angle[2]>360){angle[2]=angle[2]-360;} else break;}}
-				else if(angle[2]<0){while(1){if(angle[2]<-360){angle[2]=angle[2]+360;} else break;}}
-
-					  
-				if(angle[2]>0.0)
-                               {
-				if(angle[2]<90)L_C_flag_A=1;
-				if(angle[2]>90&&angle[2]<180)L_C_flag_A=0;				
-				if(angle[2]>180&&angle[2]<270)L_C_flag_A=1;
-				if(angle[2]>270&&angle[2]<360)L_C_flag_A=0;
-
-
-				}
-
-				else if(angle[2]<=0.0)
-				{
-					if((angle[2]>-90.0&&angle[2]<=0.0))L_C_flag_A=0;
-					if((angle[2]>-180.0&&angle[2]<-90.0))L_C_flag_A=1;
-					if((angle[2]>-270.0&&angle[2]<-180.0))L_C_flag_A=0;
-					if((angle[2]>-360.0&&angle[2]<-270.0))L_C_flag_A=1;
-
-			     }
-
-			if(angle[2]>0.0)
-                               {
-				if(angle[2]>90&&angle[2]<180)angle[2]=-(angle[2]-180);				
-				if(angle[2]>180&&angle[2]<270)angle[2]=angle[2]-180;
-				if(angle[2]>270&&angle[2]<360)angle[2]=-(angle[2]-360);
-
-
-				}
-
-				else if(angle[2]<=0.0)
-				{
-					if((angle[2]>-90.0&&angle[2]<=0.0))angle[2]=-angle[2];
-					if((angle[2]>-180.0&&angle[2]<-90.0))angle[2]=(angle[2]+180);
-					if((angle[2]>-270.0&&angle[2]<-180.0))angle[2]=-(angle[2]+180);
-					if((angle[2]>-360.0&&angle[2]<-270.0))angle[2]=(angle[2]+360);
-
-			     }
-
-
-        
-angle[2]=((angle[2])*PI2)/360;
-
-
-/***************************************************************/
- dianliuzhi_A=0.98*maxValue_C;
-dianliuzhi_A=T*dianliuzhi_A/1000;
-gonglvshishu_A=arm_cos_f32(angle[2])*100;//功率因素
-
-//dianya_zhi_A=0;
-//	dianya_zhi_A=comm_list[slave_comm[5]].myid;
-
-//gonglvshishu_A=0;
-//	gonglvshishu_A=comm_list[slave_comm[5]].size[0];
-
-arm_sqrt_f32(1-(arm_cos_f32(angle[2]))*(arm_cos_f32(angle[2])),&sine);
-        a=dianya_zhi_A*dianliuzhi_A*sine/10;
-	wugongkvar_A=dianya_zhi_A*dianliuzhi_A*sine/1000;
-      wugongkvar_95A=dianya_zhi_A*dianliuzhi_A*0.3122/1000;
-				//	L_C_flag_A=1;
-
-}
-
-
-
-/*********************B_phase*********************************/
-
-{
-ADC3_CH11_DMA_Config_VB();
-ADC1_CH4_DMA_Config_CB();
- maxValue=0.0;
- maxValue_C=0.0; 
-
- for(i=0;i<TEST_LENGTH_SAMPLES;i++)
-	 	{
-	 	
-	 	
-testInput_C[i]=(float32_t)((ADC_Converted_CValue-ADC_Converted_base)*3.3/4096);///  1550
-
-testInput_V[i]=(float32_t)((ADC_Converted_VValue-ADC_Converted_base)*3.3/4096);///  1550
-
-delay_us(36);//36->512
-
-        }
-
- 
-allphase(testInput_V,testInput_C);
-
- 
-	status = arm_rfft_init_f32(&S,&S_CFFT, fftSize,  
-	  								ifftFlag, doBitReverse); 
-	 
-	/* Process the data through the CFFT/CIFFT module */ 
-	arm_rfft_f32(&S, testInput_V,testOutput); 
-
-             testIndex=1;
-	 angle[0]=atan2(testOutput[2*testIndex],testOutput[2*testIndex+1]);//电压初始相位
-
-	/* Process the data through the Complex Magnitude Module for  
-	calculating the magnitude at each bin */ 
-
-	/*******通过原始数据计算电压值***********/
-		//arm_rfft_f32(&S, testInput_V_source,testOutput); 
-
-	arm_cmplx_mag_f32(testOutput, reslut,  
-	  				fftSize);  
-	/* Calculates maxValue and returns corresponding BIN value */ 
-
-	arm_max_f32(reslut, fftSize/2, &maxValue, &testIndex);
-dianya_zhi_B=maxValue/100;
-dianya_zhi_B=dianya_zhi_B/2.6125;
-
-/******************************************************************/
-	arm_rfft_f32(&S, testInput_C,testOutput); 
-         
-	angle[1]=atan2(testOutput[2*testIndex],testOutput[2*testIndex+1]);//电流初始相位
-
-	/*******通过原始数据计算电压值***********/
-
-	//	arm_rfft_f32(&S, testInput_C_source,testOutput); 
-
-	arm_cmplx_mag_f32(testOutput, reslut,  
-	  				fftSize);  
-	 
-	/* Calculates maxValue and returns corresponding BIN value */ 
-	arm_max_f32(reslut, fftSize/2, &maxValue_C, &testIndex);
-/****************************************************************/
-				angle[2]=((angle[1]-angle[0])*360)/PI2;
-
-				  if(angle[2]>0){while(1){if(angle[2]>360){angle[2]=angle[2]-360;} else break;}}
-				else if(angle[2]<0){while(1){if(angle[2]<-360){angle[2]=angle[2]+360;} else break;}}
-
-					  
-				if(angle[2]>0.0)
-                               {
-				if(angle[2]<90)L_C_flag_B=1;
-				if(angle[2]>90&&angle[2]<180)L_C_flag_B=0;				
-				if(angle[2]>180&&angle[2]<270)L_C_flag_B=1;
-				if(angle[2]>270&&angle[2]<360)L_C_flag_B=0;
-
-
-				}
-
-				else if(angle[2]<=0.0)
-				{
-					if((angle[2]>-90.0&&angle[2]<=0.0))L_C_flag_B=0;
-					if((angle[2]>-180.0&&angle[2]<-90.0))L_C_flag_B=1;
-					if((angle[2]>-270.0&&angle[2]<-180.0))L_C_flag_B=0;
-					if((angle[2]>-360.0&&angle[2]<-270.0))L_C_flag_B=1;
-
-			     }
-
-			if(angle[2]>0.0)
-                               {
-				if(angle[2]>90&&angle[2]<180)angle[2]=-(angle[2]-180);				
-				if(angle[2]>180&&angle[2]<270)angle[2]=angle[2]-180;
-				if(angle[2]>270&&angle[2]<360)angle[2]=-(angle[2]-360);
-
-
-				}
-
-				else if(angle[2]<=0.0)
-				{
-					if((angle[2]>-90.0&&angle[2]<=0.0))angle[2]=-angle[2];
-					if((angle[2]>-180.0&&angle[2]<-90.0))angle[2]=(angle[2]+180);
-					if((angle[2]>-270.0&&angle[2]<-180.0))angle[2]=-(angle[2]+180);
-					if((angle[2]>-360.0&&angle[2]<-270.0))angle[2]=(angle[2]+360);
-
-			     }
-
-
-        
-angle[2]=((angle[2])*PI2)/360;
-
-
-/***************************************************************/
- dianliuzhi_B=0.98*maxValue_C;
-dianliuzhi_B=T*dianliuzhi_B/1000;
-gonglvshishu_B=arm_cos_f32(angle[2])*100;//功率因素
-arm_sqrt_f32(1-(arm_cos_f32(angle[2]))*(arm_cos_f32(angle[2])),&sine);
-         b=dianya_zhi_B*dianliuzhi_B*sine/10;
-	wugongkvar_B=dianya_zhi_B*dianliuzhi_B*sine/1000;
-      wugongkvar_95B=dianya_zhi_B*dianliuzhi_B*0.3122/1000;
-
-
-}
-
-                              
-				
-/*********************C_phase*********************************/
-
-{
-	if(phase_flag==1)
-		{
-ADC3_CH10_DMA_Config_VA();
-ADC1_CH1_DMA_Config_CA();
-		}
-		if(phase_flag==0)
-			{
-ADC3_CH12_DMA_Config_VC();
-ADC1_CH7_DMA_Config_CC();
-		}
-
- maxValue=0.0;
- maxValue_C=0.0; 
-
- for(i=0;i<TEST_LENGTH_SAMPLES;i++)
-	 	{
-	 	
-	 	
-testInput_C[i]=(float32_t)((ADC_Converted_CValue-ADC_Converted_base)*3.3/4096);///  1550
-
-testInput_V[i]=(float32_t)((ADC_Converted_VValue-ADC_Converted_base)*3.3/4096);///  1550
-
-delay_us(36);//36->512
-
-        }
-
- 
-allphase(testInput_V,testInput_C);
-
- 
-	status = arm_rfft_init_f32(&S,&S_CFFT, fftSize,  
-	  								ifftFlag, doBitReverse); 
-	 
-	/* Process the data through the CFFT/CIFFT module */ 
-	arm_rfft_f32(&S, testInput_V,testOutput); 
-
-             testIndex=1;
-	 angle[0]=atan2(testOutput[2*testIndex],testOutput[2*testIndex+1]);//电压初始相位
-	/* Process the data through the Complex Magnitude Module for  
-	calculating the magnitude at each bin */ 
-
-	/*******通过原始数据计算电压值***********/
-//		arm_rfft_f32(&S, testInput_V_source,testOutput); 
-
-	arm_cmplx_mag_f32(testOutput, reslut,  
-	  				fftSize);  
-	/* Calculates maxValue and returns corresponding BIN value */ 
-
-	arm_max_f32(reslut, fftSize/2, &maxValue, &testIndex);
-dianya_zhi_C=maxValue/100;
-dianya_zhi_C=dianya_zhi_C/2.6125;
-
-
-/******************************************************************/
-	arm_rfft_f32(&S, testInput_C,testOutput); 
-         
-	angle[1]=atan2(testOutput[2*testIndex],testOutput[2*testIndex+1]);//电流初始相位
-
-	/*******通过原始数据计算电压值***********/
-
-	//	arm_rfft_f32(&S, testInput_C_source,testOutput); 
-
-	arm_cmplx_mag_f32(testOutput, reslut,  
-	  				fftSize);  
-	 
-	/* Calculates maxValue and returns corresponding BIN value */ 
-	arm_max_f32(reslut, fftSize/2, &maxValue_C, &testIndex);
-/****************************************************************/
-				angle[2]=((angle[1]-angle[0])*360)/PI2;
-
-				  if(angle[2]>0){while(1){if(angle[2]>360){angle[2]=angle[2]-360;} else break;}}
-				else if(angle[2]<0){while(1){if(angle[2]<-360){angle[2]=angle[2]+360;} else break;}}
-
-					  
-				if(angle[2]>0.0)
-                               {
-				if(angle[2]<90)L_C_flag_C=1;
-				if(angle[2]>90&&angle[2]<180)L_C_flag_C=0;				
-				if(angle[2]>180&&angle[2]<270)L_C_flag_C=1;
-				if(angle[2]>270&&angle[2]<360)L_C_flag_C=0;
-
-
-				}
-
-				else if(angle[2]<=0.0)
-				{
-					if((angle[2]>-90.0&&angle[2]<=0.0))L_C_flag_C=0;
-					if((angle[2]>-180.0&&angle[2]<-90.0))L_C_flag_C=1;
-					if((angle[2]>-270.0&&angle[2]<-180.0))L_C_flag_C=0;
-					if((angle[2]>-360.0&&angle[2]<-270.0))L_C_flag_C=1;
-
-			     }
-
-			if(angle[2]>0.0)
-                               {
-				if(angle[2]>90&&angle[2]<180)angle[2]=-(angle[2]-180);				
-				if(angle[2]>180&&angle[2]<270)angle[2]=angle[2]-180;
-				if(angle[2]>270&&angle[2]<360)angle[2]=-(angle[2]-360);
-
-
-				}
-
-				else if(angle[2]<=0.0)
-				{
-					if((angle[2]>-90.0&&angle[2]<=0.0))angle[2]=-angle[2];
-					if((angle[2]>-180.0&&angle[2]<-90.0))angle[2]=(angle[2]+180);
-					if((angle[2]>-270.0&&angle[2]<-180.0))angle[2]=-(angle[2]+180);
-					if((angle[2]>-360.0&&angle[2]<-270.0))angle[2]=(angle[2]+360);
-
-			     }
-
-
-        
-angle[2]=((angle[2])*PI2)/360;
-
-
-/***************************************************************/
- dianliuzhi_C=0.98*maxValue_C;
-dianliuzhi_C=T*dianliuzhi_C/1000;
-gonglvshishu_C=arm_cos_f32(angle[2])*100;//功率因素
-arm_sqrt_f32(1-(arm_cos_f32(angle[2]))*(arm_cos_f32(angle[2])),&sine);
-           c=dianya_zhi_C*dianliuzhi_C*sine/10;
-	wugongkvar_C=dianya_zhi_C*dianliuzhi_C*sine/1000;
-      wugongkvar_95C=dianya_zhi_C*dianliuzhi_C*0.3122/1000;
-
-
-
-}
-
-
-
-/*********************ALL***********************************/
-dianya_zhi=1.732*(dianya_zhi_A+dianya_zhi_B+dianya_zhi_C)/3;
-dianliuzhi=(dianliuzhi_A+dianliuzhi_B+dianliuzhi_C)/3;
-gonglvshishu=(gonglvshishu_A+gonglvshishu_B+gonglvshishu_C)/3;
-wugongkvar=(a+b+c)/100;
-  wugongkvar_95=wugongkvar_95A+wugongkvar_95B+wugongkvar_95C;
-
-
-}
-/*******************************/
-if(L_C_flag_B==1)gl[1]=wugongkvar;
-else gl[1]=-wugongkvar;
-min=abs(abs(gl[0]-gl[1])*TR[0]-var);
-
-for(i=1;i<16;i++)
-{
-if(abs(abs(gl[0]-gl[1])*TR[i]-var)<=min){min=abs(abs(gl[0]-gl[1])*TR[i]-var);T=TR[i];}
-
-}
-RT_FLAG=2;
-//tempshuzhi=T;
-order_trans_rs485(mybox.myid,0,1,1,0,CONTROL);
-delay_us(1000000);
-order_trans_rs485(mybox.myid,0,1,2,0,CONTROL);
-delay_us(1000000);
-CT_para=T*10;
- AT24CXX_WriteOneByte(0xa000,i);   //存储CT_para到eeprom
-
-return 0;
-}
-
-tempshuzhi=30;
-T=CT_para/50;
 //T=4;
 /**************************end*************************/
 
-if((HI_PROT_para==0||HI*100<HI_PROT_para)&&(HU_PROT_para==0||HV*100<HU_PROT_para)&&(V_PROT_para_L==0||(V_PROT_para_L+200)>dianya_zhi_A)&&(V_PROT_para_tri==0||(V_PROT_para_tri+400)>dianya_zhi))
+if((HI_PROT_para==0||HI<HI_PROT_para)&&(HU_PROT_para==0||HV<HU_PROT_para)&&(V_PROT_para_L==0||(V_PROT_para_L+200)>dianya_zhi_A)&&(V_PROT_para_tri==0||(V_PROT_para_tri+400)>dianya_zhi))
 
 {
-if(RT_FLAG==2)
+if(1)
 {
 
 if(gonglvshishu<COS_ON_para&&L_C_flag_B==1)
@@ -3594,8 +3112,8 @@ return 0 ;
  }
 display_nothing_close_open_warn=0;//设置显示无
 
-   if(KEY_3==1) 
-
+  // if(KEY_3==1) 
+if(1)
   {
 if(gonglvshishu_A<COS_ON_para&&L_C_flag_A==1)
 {
@@ -3782,7 +3300,8 @@ return 0;
 	
   }
 
-   if(KEY_3==1) 
+//   if(KEY_3==1) 
+if(1)
 
 {
 if(gonglvshishu_A>COS_OFF_para&&L_C_flag_A==1)
@@ -4025,7 +3544,9 @@ return 0 ;
 }
 
 {
-   if(KEY_3==1)//拨码开关，控制是不是是共补模式或分补模式 
+//   if(KEY_3==1)//拨码开关，控制是不是是共补模式或分补模式 
+if(1)
+
 {
 /************************A*****************************/
 if(L_C_flag_A==0)
@@ -4180,7 +3701,7 @@ else
 	{
 display_nothing_close_open_warn=3;//设置显示报警
 
-if(RT_FLAG==2)
+if(1)
 		{
       {
       {
@@ -4403,11 +3924,11 @@ u8 g_1,g_2,g_3,f_1,f_2,f_3;
 //u8 c;
 u8 *msg;
   u8 err;
-  static u8 dis_err[7];
+  static u8 dis_err[8];
     static u8 comm_err[32];
 u8 count=0;
 
-for(i=1;i<=7;i++)
+for(i=1;i<=8;i++)
 {  
 
 for(g=1;g<=slave_dis[0];g++)
@@ -4431,7 +3952,9 @@ if(flag_dis==1)
 	 	{
 	 	dis_err[i-1]++;
 	 	if(dis_err[i-1]==3)//三次确认，如果三次都没有收到数据就认为是从机死了
-	 	{Light_pad_off(0,i,0,0,0);
+	 	{
+	 	capa1_array[i-1]=0;capa2_array[i-1]=0;//屏幕显示容量使用
+	 	Light_pad_off(0,i,0,0,0);
 		set_bit(i, 0, &light_status, 0,0, 0,2);
 		dis_err[i-1]=0;
 set_clear_existence(0,i,&hand_light_existence);
@@ -4494,6 +4017,10 @@ slave_dis[0]--;
 	     }
 else if(msg[2]==i)//检查传过来的从机的状态信息是否真是该从机的。如果不是就不更新
 {
+if(msg[3]==1)capa1_array[msg[2]-1]=5;
+if(msg[3]==3)capa1_array[msg[2]-1]=10;
+if(msg[3]==6)capa1_array[msg[2]-1]=20;
+       capa2_array[msg[2]-1]=0;
 dis_err[i-1]=0;
 		for(s=1;s<=slave_dis[0];s++)
 			{

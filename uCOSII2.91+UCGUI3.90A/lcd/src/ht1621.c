@@ -922,6 +922,7 @@ Write_1621(28,0x01);//LOG
  Write_1621(24,0x0a);	//	´ø¡÷·ûºÅºÍÇÐ³ý
  if(display_nothing_close_open_warn==3)
  Write_1621(24,0x09);	//	´ø¡÷·ûºÅºÍ±¨¾¯  Write_1621(26,0x08);//ÎÂ¶ÈÐ³²¨
+  Write_1621(26,0x08);//ÎÂ¶ÈÐ³²¨
 
    if(COMMCAT_para==0)
 	  	  	{

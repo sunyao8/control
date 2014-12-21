@@ -53,23 +53,29 @@ Verify OK.
 Application running ...
 Build target 'Target 1'
 compiling main.c...
-..\User\main.c(2309): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2530): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2674): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2829): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(3106): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(3237): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(3370): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2173): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(2196): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(4408): warning:  #177-D: variable "count" was declared but never referenced
-..\User\main.c(492): warning: C3017W: exist may be used before being set
-compiling key.c...
-..\lcd\src\key.c(441): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2280): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2330): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2348): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2494): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2564): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2576): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2642): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2710): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2722): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2797): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2866): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2879): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2163): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2181): warning:  #550-D: variable "b" was set but never used
+..\User\main.c(2181): warning:  #550-D: variable "c" was set but never used
+..\User\main.c(2185): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2186): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(3929): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(478): warning: C3017W: exist may be used before being set
 linking...
-Program Size: Code=62332 RO-data=27076 RW-data=304 ZI-data=54160  
+Program Size: Code=56380 RO-data=27044 RW-data=316 ZI-data=54028  
 FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 12 Warning(s).
+".\Out\Project.axf" - 0 Error(s), 19 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
