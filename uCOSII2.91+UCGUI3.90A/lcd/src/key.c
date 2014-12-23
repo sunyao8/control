@@ -32,6 +32,15 @@ extern u8 L_C_flag_B;
 extern u8 L_C_flag_C;
 extern u8 light_time;
 
+u8 DELAY_ON_para=10;
+ u8 DELAY_OFF_para=10;
+ u8 COS_ON_para=90;
+ u8 COS_OFF_para=95;
+ u8 V_PROT_para_L=40;
+ u8 V_PROT_para_tri=40;
+ u8 HU_PROT_para=100;
+ u8 HI_PROT_para=100;
+
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序为控制器设计，未经许可，不得复制外传
 //实验板栋达电子V3.0-1
@@ -93,15 +102,7 @@ u8 num_SET_Seg[]={0X0F,0X0F,0X06,0X0D,0X0F,0X06,0X0B,0X0F,0X06,0X07,0X0F,0X06,0X
 u8 numHU_prot[]={0x0e,0x05,0x06,0x07};
 u8 numHI_prot[]={0x00,0x05,0x06,0x07};
  u8 com_ID=1;
- u8 DELAY_ON_para=10;
- u8 DELAY_OFF_para=10;
- u8 COS_ON_para=90;
- u8 COS_OFF_para=95;
- u8 V_PROT_para_L=40;
- u8 V_PROT_para_tri=40;
- u8 HU_PROT_para=100;
- u8 HI_PROT_para=100;
-
+ 
 if(light_time==0)
 {
 
@@ -377,7 +378,7 @@ a=AT24CXX_ReadOneByte(0xa000);
 		 	 LIGHT_backligt_on();
 			V_PROT_para_L++;
 			while(KEY_up==0);
-			if(V_PROT_para_L>60)V_PROT_para_L=0;
+			if(V_PROT_para_L>60)V_PROT_para_L=1;
 		 }
 		 if(KEY_down==0)
 		 {
@@ -416,7 +417,7 @@ a=AT24CXX_ReadOneByte(0xa000);
 		 {	 LIGHT_backligt_on();
 			V_PROT_para_tri++;
 			while(KEY_up==0);
-			if(V_PROT_para_tri>50)V_PROT_para_tri=0;
+			if(V_PROT_para_tri>50)V_PROT_para_tri=1;
 		 }
 		 if(KEY_down==0)
 		 {

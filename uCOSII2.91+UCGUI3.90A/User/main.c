@@ -265,6 +265,16 @@ u8 MASTER=1;
 u8 light_time=100;
 
 /********************控制器设置参数*************************/
+extern u8 DELAY_ON_para;
+extern u8 DELAY_OFF_para;
+extern u8 COS_ON_para;
+extern u8 COS_OFF_para;
+extern u8 V_PROT_para_L;
+extern u8 V_PROT_para_tri;
+extern u8 HU_PROT_para;
+extern u8 HI_PROT_para;
+
+
 extern u8 COMMCAT_para;
 //extern u8 CT_para;
 extern u8 capa1_array[32],capa2_array[32];
@@ -2180,7 +2190,7 @@ uint32_t doBitReverse = 1;
 /* Reference index at which max energy of bin ocuurs */ 
 uint32_t  testIndex = 0,a,b,c; 
  double angle[4]; 
-float32_t sine=0;
+float32_t sine=0,cose=0;
 u16 phase;
 s32 gl[2];
 u16 wugongkvar_95,wugongkvar_95A,wugongkvar_95B,wugongkvar_95C;
@@ -2189,32 +2199,9 @@ float32_t HU_SUM_A=0,HI_SUM_A=0,HU_A=0,HI_A=0;
 float32_t HU_SUM_B=0,HI_SUM_B=0,HU_B=0,HI_B=0;
 float32_t HU_SUM_C=0,HI_SUM_C=0,HU_C=0,HI_C=0;
 u8 flag_phase=1;
- u8 DELAY_ON_para;
- u8 DELAY_OFF_para;
- u8 COS_ON_para;
- u8 COS_OFF_para;
- u8 V_PROT_para_L;
- u8 V_PROT_para_tri;
- u8 HU_PROT_para;
- u8 HI_PROT_para;
+ 
 u8 T;
 {
-
-
-
-DELAY_ON_para=AT24CXX_ReadOneByte(0x1000);  //存储DELAY_ON_para到eeprom
-
-		 DELAY_OFF_para=AT24CXX_ReadOneByte(0x2000);  //存储DELAY_OFF_para到eeprom
-
-		 COS_ON_para=AT24CXX_ReadOneByte(0x3000);  //存储DELAY_OFF_para到eeprom
-					 COS_OFF_para=AT24CXX_ReadOneByte(0x4000);  //存储DELAY_OFF_para到eeprom
-
-		V_PROT_para_L=AT24CXX_ReadOneByte(0xb000);
-		V_PROT_para_tri=AT24CXX_ReadOneByte(0xc000);
-
-			HU_PROT_para=AT24CXX_ReadOneByte(0x7000); 
-       HI_PROT_para=AT24CXX_ReadOneByte(0x8000); 
-		
 	  
 a=AT24CXX_ReadOneByte(0xa000);
 T=TR[a];
@@ -2275,9 +2262,7 @@ dianya_zhi=dianya_zhi/2.57;
 {
 for(i=3;i<=21;i=i+2){HU_SUM_B=(reslut[i]*reslut[i])+HU_SUM_B;}
 arm_sqrt_f32(HU_SUM_B,&HU_B);
-arm_sqrt_f32(maxValue,&maxValue);
-
-HV=(HU_B/maxValue)/2.25;
+HV=(HU_B/maxValue)*100;
 }
 /******************************************************************/
 
@@ -2330,9 +2315,11 @@ else if(((angle[2]<180.0)&&(angle[2]>90.0))||(angle[2]>-270&&angle[2]<-180)){L_C
 dianliuzhi=T*maxValue_C*1.07;
 arm_sqrt_f32(1-(arm_cos_f32(angle[0]-angle[1]))*(arm_cos_f32(angle[0]-angle[1])),&sine);
 gonglvshishu=sine*100;
-if(dianliuzhi<1650*T){gonglvshishu=100;dianliuzhi=0;L_C_flag_B=1;}//电流小于0.1A 时，电流就清零
+if(dianliuzhi<2500*T){gonglvshishu=100;dianliuzhi=0;L_C_flag_B=1;}//电流小于0.1A 时，电流就清零
 else dianliuzhi=dianliuzhi/1000;
-			 wugongkvar=((1.732*dianliuzhi*dianya_zhi*(arm_cos_f32(angle[0]-angle[1])))/1000);
+arm_sqrt_f32(1-sine*sine,&cose);
+
+			 wugongkvar=((1.732*dianliuzhi*dianya_zhi*cose)/1000);
 			 allkvar=((1.732*dianliuzhi*dianya_zhi*sine)/1000);
                     //wugongkvar=wugong_computer;
 		
@@ -2340,12 +2327,12 @@ else dianliuzhi=dianliuzhi/1000;
 
  
 /*************************电流谐波率****************************************/
-
+if((dianliuzhi==0)&&(gonglvshishu==100))HI=0;
+else
 {
 for(i=3;i<=21;i=i+2){HI_SUM_B=(reslut[i]*reslut[i])+HI_SUM_B;}
 arm_sqrt_f32(HI_SUM_B,&HI_B);
-arm_sqrt_f32(maxValue_C,&maxValue_C);
-HI=(HI_B/maxValue_C)/2.03;
+HI=(HI_B/maxValue_C)*1.03*100;
 }
 /******************************************************************/
    order_trans_rs485(mybox.myid,0,0,0,0,CPT_LL);
@@ -2490,8 +2477,7 @@ dianya_zhi_A=dianya_zhi_A/2.57;
 {
 for(i=3;i<=21;i=i+2){HU_SUM_A=(reslut[i]*reslut[i])+HU_SUM_A;}
 arm_sqrt_f32(HU_SUM_A,&HU_A);
-arm_sqrt_f32(maxValue,&maxValue);
-A_HV=(HU_A/maxValue)/2.25;
+A_HV=(HU_A/maxValue)*100;
 
 }
 /******************************************************************/
@@ -2568,12 +2554,12 @@ else{
 	gonglvshishu_A=arm_cos_f32(angle[2])*100;//功率因素
 }
 /*************************电流谐波率****************************************/
-
+if((dianliuzhi_A==0)&&(gonglvshishu_A==100))A_HI=0;
+else
 {
 for(i=3;i<=21;i=i+2){HI_SUM_A=(reslut[i]*reslut[i])+HI_SUM_A;}
 arm_sqrt_f32(HI_SUM_A,&HI_A);
-arm_sqrt_f32(maxValue_C,&maxValue_C);
-A_HI=(HI_A/maxValue_C)/2.03;
+A_HI=(HI_A/maxValue_C)*1.03*100;
 
 }
 /******************************************************************/
@@ -2638,8 +2624,7 @@ dianya_zhi_B=dianya_zhi_B/2.57;
 {
 for(i=3;i<=21;i=i+2){HU_SUM_B=(reslut[i]*reslut[i])+HU_SUM_B;}
 arm_sqrt_f32(HU_SUM_B,&HU_B);
-arm_sqrt_f32(maxValue,&maxValue);
-B_HV=(HU_B/maxValue)/2.25;
+B_HV=(HU_B/maxValue)*100;
 }
 /******************************************************************/
 
@@ -2708,18 +2693,17 @@ angle[2]=((angle[2])*PI2)/360;
 
 /***************************************************************/
 dianliuzhi_B=1.07*maxValue_C*T;
- if(dianliuzhi_B<=1650*T){dianliuzhi_B=0;gonglvshishu_B=100;L_C_flag_B=1;}
+ if(dianliuzhi_B<=2500*T){dianliuzhi_B=0;gonglvshishu_B=100;L_C_flag_B=1;}
 else {
         dianliuzhi_B=dianliuzhi_B/1000;
 	gonglvshishu_B=arm_cos_f32(angle[2])*100;//功率因素
 }
 /*************************电流谐波率****************************************/
-
+if((dianliuzhi_B==0)&&(gonglvshishu_B==100))B_HI=0;
 {
 for(i=3;i<=21;i=i+2){HI_SUM_B=(reslut[i]*reslut[i])+HI_SUM_B;}
 arm_sqrt_f32(HI_SUM_B,&HI_B);
-arm_sqrt_f32(maxValue_C,&maxValue_C);
-B_HI=(HI_B/maxValue_C)/2.03;
+B_HI=(HI_B/maxValue_C)*1.03*100;
 
 }
 /******************************************************************/
@@ -2794,7 +2778,7 @@ dianya_zhi_C=dianya_zhi_C/2.57;
 {
 for(i=3;i<=21;i=i+2){HU_SUM_C=(reslut[i]*reslut[i])+HU_SUM_C;}
 arm_sqrt_f32(HU_SUM_C,&HU_C);
-C_HV=(HU_C/maxValue)/2.25;
+C_HV=(HU_C/maxValue)*100;
 }
 /******************************************************************/
 
@@ -2871,12 +2855,12 @@ else
 	gonglvshishu_C=arm_cos_f32(angle[2])*100;//功率因素
 }
 /*************************电流谐波率****************************************/
+if((dianliuzhi_C==0)&&(gonglvshishu_C==100))C_HI=0;
 
 {
 for(i=3;i<=21;i=i+2){HI_SUM_C=(reslut[i]*reslut[i])+HI_SUM_C;}
 arm_sqrt_f32(HI_SUM_C,&HI_C);
-arm_sqrt_f32(maxValue_C,&maxValue_C);
-C_HI=(HI_C/maxValue_C)/2.03;
+C_HI=(HI_C/maxValue_C)*1.03*100;
 
 }
 /******************************************************************/
@@ -2935,7 +2919,7 @@ allkvar=3*dianya_zhi*dianliuzhi/1000;//乘以3，是因为电流变量是一相的电流，应该变
 //T=4;
 /**************************end*************************/
 
-if((HI_PROT_para==0||HI<HI_PROT_para)&&(HU_PROT_para==0||HV<HU_PROT_para)&&(V_PROT_para_L==0||(V_PROT_para_L+200)>dianya_zhi_A)&&(V_PROT_para_tri==0||(V_PROT_para_tri+400)>dianya_zhi))
+if((A_HV<HU_PROT_para&&B_HV<HU_PROT_para&&C_HV<HI_PROT_para)&&(A_HI<HI_PROT_para&&B_HI<HI_PROT_para&&C_HI<HI_PROT_para)&&(HI<HI_PROT_para)&&(HV<HU_PROT_para)&&((V_PROT_para_L+200)>dianya_zhi_A)&&((V_PROT_para_L+200)>dianya_zhi_B)&&((V_PROT_para_L+200)>dianya_zhi_C)&&((V_PROT_para_tri+400)>dianya_zhi))
 
 {
 if(1)
