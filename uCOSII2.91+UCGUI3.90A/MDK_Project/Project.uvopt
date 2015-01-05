@@ -1866,10 +1866,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>16</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>2</TopLine>
-      <CurrentLine>23</CurrentLine>
+      <TopLine>1</TopLine>
+      <CurrentLine>2</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\lcd\src\key.c</PathWithFileName>
       <FilenameWithoutPath>key.c</FilenameWithoutPath>

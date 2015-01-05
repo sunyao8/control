@@ -1,24 +1,14 @@
----- HI Matches (49 in 0 files) ----
-Main.c (user):u16 dianya_zhi=0,wugongkvar=0,allkvar=0,HV=0,HI=2;
-Main.c (user):extern u8 HI_PROT_para;
-Main.c (user):       HI_PROT_para=AT24CXX_ReadOneByte(0x8000); 
-Main.c (user):float32_t HU_SUM_A=0,HI_SUM_A=0,HU_A=0,HI_A=0,HVA=0,HIA=0;
-Main.c (user):float32_t HU_SUM_B=0,HI_SUM_B=0,HU_B=0,HI_B=0,HVB=0,HIB=0;
-Main.c (user):float32_t HU_SUM_C=0,HI_SUM_C=0,HU_C=0,HI_C=0,HVC=0,HIC=0;
-Main.c (user):for(i=3;i<=21;i=i+2){HI_SUM_B=(reslut[i]*reslut[i])+HI_SUM_B;}
-Main.c (user):arm_sqrt_f32(HI_SUM_B,&HI_B);
-Main.c (user):HIB=(HI_B/maxValue);
-Main.c (user):for(i=3;i<=21;i=i+2){HI_SUM_A=(reslut[i]*reslut[i])+HI_SUM_A;}
-Main.c (user):arm_sqrt_f32(HI_SUM_A,&HI_A);
-Main.c (user):HIA=(HI_A/maxValue_C);
-Main.c (user)://HIA=HI_A;
-Main.c (user):for(i=3;i<=21;i=i+2){HI_SUM_B=(reslut[i]*reslut[i])+HI_SUM_B;}
-Main.c (user):arm_sqrt_f32(HI_SUM_B,&HI_B);
-Main.c (user):HIB=(HI_B/maxValue_C);
-Main.c (user)://HIB=HI_B;
-Main.c (user):for(i=3;i<=21;i=i+2){HI_SUM_C=(reslut[i]*reslut[i])+HI_SUM_C;}
-Main.c (user):arm_sqrt_f32(HI_SUM_C,&HI_C);
-Main.c (user):HIC=(HI_C/maxValue_C);
-Main.c (user)://HIC=HI_C;
-Main.c (user):HI=HIA+HIB+HIC;
-Main.c (user):if((HI_PROT_para==0||HI*100<HI_PROT_para)&&(HU_PROT_para==0||HV*100<HU_PROT_para)&&(V_PROT_para_L==0||(V_PROT_para_L+200)>dianya_zhi_A)&&(V_PROT_para_tri==0||(V_PROT_para_tri+400)>dianya_zhi))
+---- capa1_array Matches (10 in 2 files) ----
+Key.c (lcd\src):u8 capa1_array[32],capa2_array[32];
+Key.c (lcd\src):				capa1_value=capa1_array[CAPA_num-1];
+Key.c (lcd\src):				capa1_value=capa1_array[CAPA_num-1];
+Main.c (user):extern u8 capa1_array[32],capa2_array[32];
+Main.c (user):	 	capa1_array[i-1]=0;capa2_array[i-1]=0;//屏幕显示容量使用
+Main.c (user):if(msg[3]==1)capa1_array[msg[2]-1]=5;
+Main.c (user):if(msg[3]==3)capa1_array[msg[2]-1]=10;
+Main.c (user):if(msg[3]==6)capa1_array[msg[2]-1]=20;
+Main.c (user):			 	capa1_array[i-1]=0;capa2_array[i-1]=0;//屏幕显示容量使用
+Main.c (user):	capa1_array[msg[2]-1]=msg[3];
+---- capa1_array Search Errors Encountered (1) ----
+The following 1 files could not be processed:
+C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkLog.txt : File could not be opened.

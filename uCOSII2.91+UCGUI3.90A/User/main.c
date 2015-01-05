@@ -260,19 +260,12 @@ u16 comm_number=0;//手动投切共补0为继电器1号 1为继电器2号
 #define TEST_LENGTH_SAMPLES 512*2 
  
 u8 phase_flag=0;
-u16 scan_init=20;
+u16 scan_init=2;
 u8 MASTER=1;
 u8 light_time=100;
 
 /********************控制器设置参数*************************/
-extern u8 DELAY_ON_para;
-extern u8 DELAY_OFF_para;
-extern u8 COS_ON_para;
-extern u8 COS_OFF_para;
-extern u8 V_PROT_para_L;
-extern u8 V_PROT_para_tri;
-extern u8 HU_PROT_para;
-extern u8 HI_PROT_para;
+
 
 
 extern u8 COMMCAT_para;
@@ -421,7 +414,8 @@ OSTaskCreate(urgent_task,(void *)0,(OS_STK*)&urgent_TASK_STK[urgent_STK_SIZE-1],
 *********************************************************************************************************
 */	  
 static  void  App_TaskMaster(void		*p_arg )
-{  
+{
+u8 i;
 // static status_dis_node     dis_list[10];
  //static status_comm_node comm_list[10];
 	for(;;)
@@ -437,9 +431,26 @@ if(KEY_2==1)
 	{
 	}
 
-if(KEY_2==0)
+//if(KEY_2==0)
 {
-if(scan_init!=0) {scan_init--;order_trans_rs485(mybox.myid,0,1,1,0,CONTROL);order_trans_rs485(mybox.myid,0,1,2,0,CONTROL);}
+if(scan_init!=0) 
+{
+scan_init--;
+order_trans_rs485(mybox.myid,0,1,1,0,CONTROL);
+delay_us(2000);
+order_trans_rs485(mybox.myid,0,1,2,0,CONTROL);
+delay_us(2000);
+for(i=1;i<9;i++)
+{
+computer_trans_rs485(mybox.myid,i,1,1,0,CONTROL);
+delay_us(2000);
+computer_trans_rs485(mybox.myid,i,1,2,0,CONTROL);
+delay_us(2000);
+computer_trans_rs485(mybox.myid,i,1,3,0,CONTROL);
+delay_us(2000);
+
+}
+}
 if(scan_init==1)
 {
 scan_init=0;
@@ -2199,10 +2210,36 @@ float32_t HU_SUM_A=0,HI_SUM_A=0,HU_A=0,HI_A=0;
 float32_t HU_SUM_B=0,HI_SUM_B=0,HU_B=0,HI_B=0;
 float32_t HU_SUM_C=0,HI_SUM_C=0,HU_C=0,HI_C=0;
 u8 flag_phase=1;
+u8 DELAY_ON_para=10;
+ u8 DELAY_OFF_para=10;
+ u8 COS_ON_para=90;
+ u8 COS_OFF_para=95;
+ u8 V_PROT_para_L=40;
+ u8 V_PROT_para_tri=40;
+ u8 HU_PROT_para=100;
+ u8 HI_PROT_para=100;
+ u8 ON_HOLD_para;
  
 u8 T;
+static u8 warning_flag=0;
+
+
 {
-	  
+{
+		 DELAY_ON_para=AT24CXX_ReadOneByte(0x1000);  //存储DELAY_ON_para到eeprom
+		 DELAY_OFF_para=AT24CXX_ReadOneByte(0x2000);  //存储DELAY_OFF_para到eeprom
+		 COS_ON_para=AT24CXX_ReadOneByte(0x3000);  //存储DELAY_OFF_para到eeprom
+				 COS_OFF_para=AT24CXX_ReadOneByte(0x4000);  //存储DELAY_OFF_para到eeprom
+
+		V_PROT_para_L=AT24CXX_ReadOneByte(0xb000);
+	   			HI_PROT_para=AT24CXX_ReadOneByte(0x8000); 
+
+		V_PROT_para_tri=AT24CXX_ReadOneByte(0xc000);
+
+		ON_HOLD_para=AT24CXX_ReadOneByte(0x5000); 
+			HU_PROT_para=AT24CXX_ReadOneByte(0x7000); 
+
+}	  
 a=AT24CXX_ReadOneByte(0xa000);
 T=TR[a];
 
@@ -2919,7 +2956,10 @@ allkvar=3*dianya_zhi*dianliuzhi/1000;//乘以3，是因为电流变量是一相的电流，应该变
 //T=4;
 /**************************end*************************/
 
-if((A_HV<HU_PROT_para&&B_HV<HU_PROT_para&&C_HV<HI_PROT_para)&&(A_HI<HI_PROT_para&&B_HI<HI_PROT_para&&C_HI<HI_PROT_para)&&(HI<HI_PROT_para)&&(HV<HU_PROT_para)&&((V_PROT_para_L+200)>dianya_zhi_A)&&((V_PROT_para_L+200)>dianya_zhi_B)&&((V_PROT_para_L+200)>dianya_zhi_C)&&((V_PROT_para_tri+400)>dianya_zhi))
+
+if(scan_init==0)
+{
+if(warning_flag==0&&(A_HV<HU_PROT_para&&B_HV<HU_PROT_para&&C_HV<HI_PROT_para)&&(A_HI<HI_PROT_para&&B_HI<HI_PROT_para&&C_HI<HI_PROT_para)&&(HI<HI_PROT_para)&&(HV<HU_PROT_para)&&((V_PROT_para_L+200)>dianya_zhi_A)&&((V_PROT_para_L+200)>dianya_zhi_B)&&((V_PROT_para_L+200)>dianya_zhi_C)&&((V_PROT_para_tri+400)>dianya_zhi))
 
 {
 if(1)
@@ -2937,7 +2977,7 @@ display_nothing_close_open_warn=1;//设置显示投入
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,1,CONTROL);
 		{
  change_Queue(slave_comm,comm_list,20);			
-delay_ms(DELAY_ON_para);
+delay_ms(DELAY_ON_para*100);
 return 0 ;
 
 		}
@@ -2956,7 +2996,7 @@ display_nothing_close_open_warn=1;//设置显示投入
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,1,CONTROL);
 		{
  change_Queue(slave_comm,comm_list,10);			
-delay_ms(DELAY_ON_para);
+delay_ms(DELAY_ON_para*100);
 return 0 ;
 
 		}
@@ -2976,7 +3016,7 @@ display_nothing_close_open_warn=1;//设置显示投入
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,1,CONTROL);
 		{
  change_Queue(slave_comm,comm_list,5);			
-delay_ms(DELAY_ON_para);
+delay_ms(DELAY_ON_para*100);
 return 0 ;
 
 		}
@@ -2996,7 +3036,7 @@ display_nothing_close_open_warn=1;//设置显示投入
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,1,CONTROL);
 		{
  change_Queue(slave_comm,comm_list,2);			
-delay_ms(DELAY_ON_para);
+delay_ms(DELAY_ON_para*100);
 return 0 ;
 
 		}
@@ -3024,7 +3064,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0 ;
 
 		}
@@ -3042,7 +3082,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0 ;
 
 		}
@@ -3064,7 +3104,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0 ;
 
 		}
@@ -3082,7 +3122,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0 ;
 
 		}
@@ -3112,7 +3152,7 @@ display_nothing_close_open_warn=1;//设置显示投入
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,1,CONTROL);
 dis_list[i].work_status[0]=1;
 change_Queue_dis(0,6,dis_list,slave_dis);
-delay_ms(DELAY_ON_para);
+delay_ms(DELAY_ON_para*100);
 
 //delay_ms(1000);
 return 0;
@@ -3132,7 +3172,7 @@ display_nothing_close_open_warn=1;//设置显示投入
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,1,CONTROL);
 dis_list[i].work_status[0]=1;
 change_Queue_dis(0,3,dis_list,slave_dis);
-delay_ms(DELAY_ON_para);
+delay_ms(DELAY_ON_para*100);
 
 //delay_ms(1000);
 return 0;
@@ -3151,7 +3191,7 @@ display_nothing_close_open_warn=1;//设置显示投入
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,1,CONTROL);
 dis_list[i].work_status[0]=1;
 change_Queue_dis(0,1,dis_list,slave_dis);
-delay_ms(DELAY_ON_para);
+delay_ms(DELAY_ON_para*100);
 
 //delay_ms(1000);
 return 0;
@@ -3172,7 +3212,7 @@ display_nothing_close_open_warn=1;//设置显示投入
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,1,CONTROL);
 dis_list[i].work_status[1]=1;
 change_Queue_dis(1,6,dis_list,slave_dis);
-delay_ms(DELAY_ON_para);
+delay_ms(DELAY_ON_para*100);
 
 //delay_ms(1000);
 return 0;
@@ -3191,7 +3231,7 @@ display_nothing_close_open_warn=1;//设置显示投入
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,1,CONTROL);
 dis_list[i].work_status[1]=1;
 change_Queue_dis(1,3,dis_list,slave_dis);
-delay_ms(DELAY_ON_para);
+delay_ms(DELAY_ON_para*100);
 
 //delay_ms(1000);
 return 0;
@@ -3211,7 +3251,7 @@ display_nothing_close_open_warn=1;//设置显示投入
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,1,CONTROL);
 dis_list[i].work_status[1]=1;
 change_Queue_dis(1,1,dis_list,slave_dis);
-delay_ms(DELAY_ON_para);
+delay_ms(DELAY_ON_para*100);
 
 //delay_ms(1000);
 return 0;
@@ -3236,7 +3276,7 @@ display_nothing_close_open_warn=1;//设置显示投入
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,1,CONTROL);
 dis_list[i].work_status[2]=1;
 change_Queue_dis(2,6,dis_list,slave_dis);
-delay_ms(DELAY_ON_para);
+delay_ms(DELAY_ON_para*100);
 
 //delay_ms(1000);
 return 0;
@@ -3254,7 +3294,7 @@ display_nothing_close_open_warn=1;//设置显示投入
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,1,CONTROL);
 dis_list[i].work_status[2]=1;
 change_Queue_dis(2,3,dis_list,slave_dis);
-delay_ms(DELAY_ON_para);
+delay_ms(DELAY_ON_para*100);
 
 //delay_ms(1000);
 return 0;
@@ -3273,7 +3313,7 @@ display_nothing_close_open_warn=1;//设置显示投入
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,1,CONTROL);
 dis_list[i].work_status[2]=1;
 change_Queue_dis(2,1,dis_list,slave_dis);
-delay_ms(DELAY_ON_para);
+delay_ms(DELAY_ON_para*100);
 
 //delay_ms(1000);
 return 0;
@@ -3300,7 +3340,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3315,7 +3355,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3330,7 +3370,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3348,7 +3388,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3364,7 +3404,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3379,7 +3419,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3401,7 +3441,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3416,7 +3456,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3430,7 +3470,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3456,7 +3496,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0 ;
 
 		}
@@ -3474,7 +3514,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0 ;
 
 		}
@@ -3496,7 +3536,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0 ;
 
 		}
@@ -3514,7 +3554,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0 ;
 
 		}
@@ -3544,7 +3584,7 @@ display_nothing_close_open_warn=2;//设置显示切除
 
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3559,7 +3599,7 @@ if(dis_list[i].work_status[0]==1)
 display_nothing_close_open_warn=2;//设置显示切除
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3573,7 +3613,7 @@ if(dis_list[i].work_status[0]==1)
 display_nothing_close_open_warn=2;//设置显示切除
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3591,7 +3631,7 @@ if(dis_list[i].work_status[1]==1)
 display_nothing_close_open_warn=2;//设置显示切除
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3605,7 +3645,7 @@ if(dis_list[i].work_status[1]==1)
 display_nothing_close_open_warn=2;//设置显示切除
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3620,7 +3660,7 @@ if(dis_list[i].work_status[1]==1)
 display_nothing_close_open_warn=2;//设置显示切除
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3640,7 +3680,7 @@ if(dis_list[i].work_status[2]==1)
 display_nothing_close_open_warn=2;//设置显示切除
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3653,7 +3693,7 @@ if(dis_list[i].work_status[2]==1)
 display_nothing_close_open_warn=2;//设置显示切除
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3667,7 +3707,7 @@ if(dis_list[i].work_status[2]==1)
 display_nothing_close_open_warn=2;//设置显示切除
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
-delay_ms(DELAY_OFF_para);
+delay_ms(DELAY_OFF_para*100);
 return 0;
 }
 
@@ -3683,27 +3723,77 @@ display_nothing_close_open_warn=0;//设置显示无
 }
 else
 	{
+
+if(KEY_3==1)
+	{
+if(warning_flag==0&&(((V_PROT_para_L+200)<=dianya_zhi_A)||((V_PROT_para_L+200)<=dianya_zhi_B)||((V_PROT_para_L+200)<=dianya_zhi_C)))	
+{
+warning_flag=1;
+
+}
+if(warning_flag==1&&(((V_PROT_para_L+200-7)>dianya_zhi_A)||((V_PROT_para_L+200-7)>dianya_zhi_B)||((V_PROT_para_L+200-7)>dianya_zhi_C)))	
+{
+warning_flag=0;
+
+}
+
+}
+if(KEY_3==0)
+{
+if(warning_flag==0&&(((V_PROT_para_tri+400)<=dianya_zhi)))
+{
+warning_flag=1;
+}
+
+if(warning_flag==1&&((V_PROT_para_tri+400-7)>dianya_zhi))
+{
+warning_flag=0;
+}
+}
 display_nothing_close_open_warn=3;//设置显示报警
 
 if(1)
 		{
       {
       {
+
 {
-for(i=slave_comm[8];i<=slave_comm[9]-1;i++)
+for(i=slave_comm[2];i<=slave_comm[3]-1;i++)
 if(comm_list[i].work_status==1)
 
 {
+
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
-delay_ms(DELAY_OFF_para);
-return 0 ;
+delay_ms(200);
+
+//return 0 ;
 
 		}
 }
 
 
 }
+	  
+{
+for(i=slave_comm[4];i<=slave_comm[5]-1;i++)
+if(comm_list[i].work_status==1)
+
+{
+
+order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
+		{
+delay_ms(200);
+
+//return 0 ;
+
+		}
+}
+
+
+
+}
+
 
 
 
@@ -3712,10 +3802,12 @@ for(i=slave_comm[6];i<=slave_comm[7]-1;i++)
 if(comm_list[i].work_status==1)
 
 {
+
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
-delay_ms(DELAY_OFF_para);
-return 0 ;
+delay_ms(200);
+
+//return 0 ;
 
 		}
 }
@@ -3724,41 +3816,26 @@ return 0 ;
 }
 
 {
-for(i=slave_comm[4];i<=slave_comm[5]-1;i++)
+for(i=slave_comm[8];i<=slave_comm[9]-1;i++)
 if(comm_list[i].work_status==1)
 
 {
-if(comm_list[i].group==1)order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
-		{
-delay_ms(DELAY_OFF_para);
-return 0 ;
 
-		}
-}
-
-
-
-}
-
-{
-for(i=slave_comm[2];i<=slave_comm[3]-1;i++)
-if(comm_list[i].work_status==1)
-
-{
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
 		{
-delay_ms(DELAY_OFF_para);
-return 0 ;
+delay_ms(200);
+
+//return 0 ;
 
 		}
 }
 
 
-
 }
+
 
        }
-}
+ }
 {
 /************************A*****************************/
 
@@ -3770,8 +3847,8 @@ if(dis_list[i].work_status[0]==1)
 {
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
-//delay_ms(100);
-return 0;
+delay_ms(200);
+//return 0;
 }
 
 }
@@ -3784,8 +3861,8 @@ if(dis_list[i].work_status[0]==1)
 {
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
-//delay_ms(100);
-return 0;
+delay_ms(200);
+//return 0;
 }
 
 }
@@ -3797,8 +3874,8 @@ if(dis_list[i].work_status[0]==1)
 {
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
-//delay_ms(100);
-return 0;
+delay_ms(200);
+//return 0;
 }
 
 }	  
@@ -3813,8 +3890,8 @@ if(dis_list[i].work_status[1]==1)
 {
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
-//delay_ms(100);
-return 0;
+delay_ms(200);
+//return 0;
 }
 
 }
@@ -3826,8 +3903,8 @@ if(dis_list[i].work_status[1]==1)
 {
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
-//delay_ms(100);
-return 0;
+delay_ms(200);
+//return 0;
 }
 
 }
@@ -3840,8 +3917,8 @@ if(dis_list[i].work_status[1]==1)
 {
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
-//delay_ms(100);
-return 0;
+delay_ms(200);
+//return 0;
 }
 
 }
@@ -3859,8 +3936,8 @@ if(dis_list[i].work_status[2]==1)
 {
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
-//delay_ms(100);
-return 0;
+delay_ms(200);
+//return 0;
 }
 
 }
@@ -3871,8 +3948,8 @@ if(dis_list[i].work_status[2]==1)
 {
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
-//delay_ms(100);
-return 0;
+delay_ms(200);
+//return 0;
 }
 
 }
@@ -3884,8 +3961,8 @@ if(dis_list[i].work_status[2]==1)
 {
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
-//delay_ms(100);
-return 0;
+delay_ms(200);
+//return 0;
 }
 
 }
@@ -3894,6 +3971,8 @@ return 0;
   }
 
 			}
+}
+
 }
 
 return 0;
@@ -4931,9 +5010,9 @@ if(dis_com==0){light_status->dis_comm=(~(0x00000001<<b))&light_status->dis_comm;
 if(dis_com==1){light_status->dis_comm=(0x00000001<<b)|light_status->dis_comm;}
 
 {
-if(status_1==0)light_status->work_status[0]=(~(0x00000001<<b))&light_status->work_status[0];
-if(status_2==0)light_status->work_status[1]=(~(0x00000001<<b))&light_status->work_status[1];
-if(status_3==0)light_status->work_status[2]=(~(0x00000001<<b))&light_status->work_status[2];
+if(status_1==0||status_1==3)light_status->work_status[0]=(~(0x00000001<<b))&light_status->work_status[0];
+if(status_2==0||status_2==3)light_status->work_status[1]=(~(0x00000001<<b))&light_status->work_status[1];
+if(status_3==0||status_3==3)light_status->work_status[2]=(~(0x00000001<<b))&light_status->work_status[2];
 }
 
 {

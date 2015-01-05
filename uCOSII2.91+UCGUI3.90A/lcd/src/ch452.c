@@ -164,9 +164,9 @@ if(comm_dis==0)//·Ö²¹
 if(num>=1&&num<=16)
 {
 num=num-1;
-if(status_1==0){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],1);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],1);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],1);}
-if(status_2==0){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],2);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],2);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],2);}
-if(status_3==0){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],3);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],3);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],3);}
+if(status_1==0||status_1==3){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],1);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],1);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],1);}
+if(status_2==0||status_2==3){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],2);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],2);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],2);}
+if(status_3==0||status_3==3){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],3);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],3);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],3);}
 
 if(status_1==1){CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],1);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],1);CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],1);}
 if(status_2==1){CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],2);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],2);CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],2);}
@@ -193,8 +193,8 @@ if(comm_dis==1)//¹²²¹
 if(num>=1&&num<=16)
 {
 num=num-1;
-if(status_1==0){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],1);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],1);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],1);}
-if(status_2==0){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],2);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],2);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],2);}
+if(status_1==0||status_1==3){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],1);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],1);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],1);}
+if(status_2==0||status_2==3){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],2);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],2);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],2);}
 
 if(status_1==1){CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],1);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],1);CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],1);}
 if(status_2==1){CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],2);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],2);CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],2);}
@@ -213,8 +213,8 @@ if(status_2==2){CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],2);CH452_I2c_WrByte(CH45
 if(num>16&&num<=32)
 	{
 	num=num-16-1;
-if(status_1==0){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],4);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],4);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],4);}
-if(status_2==0){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],5);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],5);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],5);}
+if(status_1==0||status_1==3){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],4);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],4);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],4);}
+if(status_2==0||status_1==3){CH452_I2c_WrByte(CH452_SET_BIT|RED[num],5);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],5);CH452_I2c_WrByte(CH452_CLR_BIT|GREEN[num],5);}
 
 if(status_1==1){CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],4);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],4);CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],4);}
 if(status_2==1){CH452_I2c_WrByte(CH452_SET_BIT|GREEN[num],5);CH452_I2c_WrByte(CH452_SET_BIT|YELLOW[num],5);CH452_I2c_WrByte(CH452_CLR_BIT|RED[num],5);}
