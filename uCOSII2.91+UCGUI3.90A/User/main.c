@@ -20,7 +20,8 @@
 #define OFF_time 15000		   //18500
 #define  k 0.8	//0.8
 #define PI2  6.28318530717959
-
+#define cruccent_ratio  1.07//电流校正系数
+#define zero_limit 1000         //1000为电流门限0.1           1500为电流门限0.15
 #define  APP_TASK_START_STK_SIZE                         64u
 static  OS_STK         App_TaskStartStk[APP_TASK_START_STK_SIZE];
 #define  APP_TASK_START_PRIO                               10
@@ -117,6 +118,7 @@ float32_t HV=0,HI=0,A_HV=0,A_HI=0,B_HV=0,B_HI=0,C_HV=0,C_HI=0;
 u32	dianliuzhi=0;
 //#if (FUNCTION_MODULE == DF_THREE)
 u16 dianya_zhi_A=0,dianya_zhi_B=0,dianya_zhi_C=0,wugongkvar_A=0,wugongkvar_B=0,wugongkvar_C=0;
+u16 allkvar_A=0,allkvar_B=0,allkvar_C=0;
 u32	dianliuzhi_A=0,dianliuzhi_B=0	,dianliuzhi_C=0;
 u8 gonglvshishu_A=0,gonglvshishu_B=0,gonglvshishu_C=0;
 u8 display_nothing_close_open_warn=0;
@@ -144,7 +146,8 @@ u8 computer_gonglu(status_dis_node *dis_list,status_comm_node *comm_list,u8 *sla
 
 /*****************************485_start*********************************************************/
 
-
+#define delay_time_base 1000                   //延时数量级
+#define time_out 3000
 #define LEN_control 14
 #define EN_USART2_RX 	1			//0,不接收;1,接收.
 #define RS485_TX_EN_1		GPIO_SetBits(GPIOC, GPIO_Pin_12)	// 485模式控制.0,接收;1,发送.本工程用PB15
@@ -264,6 +267,8 @@ u16 scan_init=2;
 u8 MASTER=1;
 u8 light_time=100;
 
+u8 delay_on=0,delay_off=0;
+u8 delay_on_cont=1,delay_off_cont=1;
 /********************控制器设置参数*************************/
 
 
@@ -274,6 +279,9 @@ extern u8 capa1_array[32],capa2_array[32];
 
 u8 hand_id=1;
 u8 dis_com=0;
+//u8 free_timeout_20=100;//轮休时间控制变量
+//u8 free_timeout_10=100;//轮休时间控制变量
+//u8 free_timeout_5=100;//轮休时间控制变量
 
 /**********************************************/
 
@@ -291,6 +299,7 @@ CPU_INT08U  os_err;
 	delay_us(500000);
 NVIC_Configuration();
 GPIO_Configuration();
+
  //EXTI_Configuration();//初始化函数
 
 initmybox();//初始化自身信息
@@ -762,28 +771,31 @@ RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
 	GPIO_Init(GPIOD, &GPIO_InitStructure);
 
 /*********************屏幕和按键*****************************************/
-	HT1621_Init();
+
+HT1621_Init();
 AT24CXX_Init();
 	KEY_Init();          //初始化与按键连接的硬件接口  
 	CH452_Init();
 
 /***********************采样和DMA**************************************/	
 #if (FUNCTION_MODULE == DF_THREE)
-ADC2_CH8_DMA_Config_VEE();
-Init_ADC();
+//ADC2_CH8_DMA_Config_VEE();
+//Init_ADC();
 #endif
+
 /********************485****************************************/	
 RS485_Init(9600);
 /************************************************************/
-//IWDG_Init(4,625); 
+IWDG_Init(6,625); 
 
 
 /*************************TIME*******************************/
 TIM4_Int_Init(4999,7199);//10Khz的计数频率，计数10K次为1000ms 
-
-	TIM2_Int_Init(3999,7199);//10Khz的计数频率，计数10K次为1000ms 
+	TIM2_Int_Init(4999+500,7199);//10Khz的计数频率，计数10K次为1000ms 
 
 EXTI_Configuration();
+Init_ADC();
+ADC2_CH8_DMA_Config_VEE();
 
 
 }
@@ -851,27 +863,6 @@ void ADC2_CH8_DMA_Config_VEE(void)
   GPIO_InitTypeDef      GPIO_InitStructure;
 
   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2 | RCC_AHB1Periph_GPIOB, ENABLE);
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1|RCC_APB2Periph_ADC2|RCC_APB2Periph_ADC3, ENABLE);
-
-//  DMA_DeInit(DMA2_Stream0);
-  /* DMA2 Stream0 channe0 configuration *************************************/
-  DMA_InitStructure.DMA_Channel = DMA_Channel_1;  
-  DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)ADC2_DR_Address;
-  DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)&ADC_Converted_base;
-  DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
-  DMA_InitStructure.DMA_BufferSize = 1;
-  DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-  DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Disable;
-  DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
-  DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
-  DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
-  DMA_InitStructure.DMA_Priority = DMA_Priority_High;
-  DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;         
-  DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_HalfFull;
-  DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
-  DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
-  DMA_Init(DMA2_Stream2, &DMA_InitStructure);
-  DMA_Cmd(DMA2_Stream2, ENABLE);
 
   /* Configure ADC1 Channel10 pin as analog input ******************************/
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
@@ -1048,6 +1039,7 @@ DMA_InitStructure.DMA_Channel = DMA_Channel_0;
   DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
   DMA_Init(DMA2_Stream2, &DMA_InitStructure);
   DMA_Cmd(DMA2_Stream2, ENABLE);
+
   /* Configure ADC1 Channel10 pin as analog input ******************************/
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3|GPIO_Pin_4|GPIO_Pin_5;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
@@ -2210,8 +2202,8 @@ float32_t HU_SUM_A=0,HI_SUM_A=0,HU_A=0,HI_A=0;
 float32_t HU_SUM_B=0,HI_SUM_B=0,HU_B=0,HI_B=0;
 float32_t HU_SUM_C=0,HI_SUM_C=0,HU_C=0,HI_C=0;
 u8 flag_phase=1;
-u8 DELAY_ON_para=10;
- u8 DELAY_OFF_para=10;
+//u8 DELAY_ON_para=10;
+ //u8 DELAY_OFF_para=10;
  u8 COS_ON_para=90;
  u8 COS_OFF_para=95;
  u8 V_PROT_para_L=40;
@@ -2226,8 +2218,8 @@ static u8 warning_flag=0;
 
 {
 {
-		 DELAY_ON_para=AT24CXX_ReadOneByte(0x1000);  //存储DELAY_ON_para到eeprom
-		 DELAY_OFF_para=AT24CXX_ReadOneByte(0x2000);  //存储DELAY_OFF_para到eeprom
+		// DELAY_ON_para=AT24CXX_ReadOneByte(0x1000);  //存储DELAY_ON_para到eeprom
+		// DELAY_OFF_para=AT24CXX_ReadOneByte(0x2000);  //存储DELAY_OFF_para到eeprom
 		 COS_ON_para=AT24CXX_ReadOneByte(0x3000);  //存储DELAY_OFF_para到eeprom
 				 COS_OFF_para=AT24CXX_ReadOneByte(0x4000);  //存储DELAY_OFF_para到eeprom
 
@@ -2242,7 +2234,18 @@ static u8 warning_flag=0;
 }	  
 a=AT24CXX_ReadOneByte(0xa000);
 T=TR[a];
+/*
+ADC_Converted_CValue=0;
+ADC_Converted_VValue=0;
+ADC_Converted_base=0;
 
+ for(i=0;i<TEST_LENGTH_SAMPLES;i++)
+	 	{	 	
+testInput_C[i]=0;
+testInput_V[i]=0;
+
+        }
+ */
  }
 
 
@@ -2294,6 +2297,7 @@ allphase(testInput_V,testInput_C);
 	arm_max_f32(reslut, fftSize/2, &maxValue, &testIndex);
 dianya_zhi=maxValue/100;
 dianya_zhi=dianya_zhi/2.57;
+if(dianya_zhi<=100)dianya_zhi=0;
 /*************************电压谐波率****************************************/
 
 {
@@ -2349,11 +2353,12 @@ if(((angle[2]>180.0)&&(angle[2]<270))||((angle[2]>-180.0&&angle[2]<-90.0))){L_C_
 else if(((angle[2]<180.0)&&(angle[2]>90.0))||(angle[2]>-270&&angle[2]<-180)){L_C_flag_B=0;}
 }
 
-dianliuzhi=T*maxValue_C*1.07;
+dianliuzhi=T*maxValue_C*cruccent_ratio;
 arm_sqrt_f32(1-(arm_cos_f32(angle[0]-angle[1]))*(arm_cos_f32(angle[0]-angle[1])),&sine);
 gonglvshishu=sine*100;
-if(dianliuzhi<2500*T){gonglvshishu=100;dianliuzhi=0;L_C_flag_B=1;}//电流小于0.1A 时，电流就清零
-else dianliuzhi=dianliuzhi/1000;
+if(gonglvshishu<10&&gonglvshishu>=0){L_C_flag_B=0;}
+if(dianliuzhi<zero_limit*T){gonglvshishu=100;dianliuzhi=0;L_C_flag_B=1;}//电流小于0.1A 时，电流就清零
+else dianliuzhi=0.97*(dianliuzhi/1000);
 arm_sqrt_f32(1-sine*sine,&cose);
 
 			 wugongkvar=((1.732*dianliuzhi*dianya_zhi*cose)/1000);
@@ -2508,6 +2513,7 @@ allphase(testInput_V,testInput_C);
 	arm_max_f32(reslut, fftSize/2, &maxValue, &testIndex);
 dianya_zhi_A=maxValue/100;
 dianya_zhi_A=dianya_zhi_A/2.57;
+if(dianya_zhi_A<=100)dianya_zhi_A=0;
 
 /*************************电压谐波率****************************************/
 
@@ -2584,10 +2590,10 @@ angle[2]=((angle[2])*PI2)/360;
 
 
 /***************************************************************/
- dianliuzhi_A=1.07*maxValue_C*T;
- if(dianliuzhi_A<=2500*T){dianliuzhi_A=0;gonglvshishu_A=100;L_C_flag_A=1;}
+ dianliuzhi_A=cruccent_ratio*maxValue_C*T;
+ if(dianliuzhi_A<=zero_limit*T){dianliuzhi_A=0;gonglvshishu_A=100;L_C_flag_A=1;}
 else{ 
-	dianliuzhi_A=dianliuzhi_A/1000;
+	dianliuzhi_A=0.99*dianliuzhi_A/1000;
 	gonglvshishu_A=arm_cos_f32(angle[2])*100;//功率因素
 }
 /*************************电流谐波率****************************************/
@@ -2602,10 +2608,10 @@ A_HI=(HI_A/maxValue_C)*1.03*100;
 /******************************************************************/
 
 arm_sqrt_f32(1-(arm_cos_f32(angle[2]))*(arm_cos_f32(angle[2])),&sine);
-        a=dianya_zhi_A*dianliuzhi_A*sine/10;
+        a=dianya_zhi_A*dianliuzhi_A*sine;
 	wugongkvar_A=dianya_zhi_A*dianliuzhi_A*sine/1000;
       wugongkvar_95A=dianya_zhi_A*dianliuzhi_A*0.3122/1000;
-allkvar=dianya_zhi_A*dianliuzhi_A*(arm_cos_f32(angle[2]))/1000;
+allkvar_A=dianya_zhi_A*dianliuzhi_A*(arm_cos_f32(angle[2]))/1000;
 }
 				
 computer_trans_rs485(0,33,0,0,0,CPT_A);
@@ -2656,6 +2662,8 @@ allphase(testInput_V,testInput_C);
 	arm_max_f32(reslut, fftSize/2, &maxValue, &testIndex);
 dianya_zhi_B=maxValue/100;
 dianya_zhi_B=dianya_zhi_B/2.57;
+if(dianya_zhi_B<=100)dianya_zhi_B=0;
+
 /*************************电压谐波率****************************************/
 
 {
@@ -2729,14 +2737,15 @@ angle[2]=((angle[2])*PI2)/360;
 
 
 /***************************************************************/
-dianliuzhi_B=1.07*maxValue_C*T;
- if(dianliuzhi_B<=2500*T){dianliuzhi_B=0;gonglvshishu_B=100;L_C_flag_B=1;}
+dianliuzhi_B=cruccent_ratio*maxValue_C*T;
+ if(dianliuzhi_B<=zero_limit*T){dianliuzhi_B=0;gonglvshishu_B=100;L_C_flag_B=1;}
 else {
-        dianliuzhi_B=dianliuzhi_B/1000;
+        dianliuzhi_B=0.99*dianliuzhi_B/1000;
 	gonglvshishu_B=arm_cos_f32(angle[2])*100;//功率因素
 }
 /*************************电流谐波率****************************************/
 if((dianliuzhi_B==0)&&(gonglvshishu_B==100))B_HI=0;
+else
 {
 for(i=3;i<=21;i=i+2){HI_SUM_B=(reslut[i]*reslut[i])+HI_SUM_B;}
 arm_sqrt_f32(HI_SUM_B,&HI_B);
@@ -2746,10 +2755,10 @@ B_HI=(HI_B/maxValue_C)*1.03*100;
 /******************************************************************/
 
 arm_sqrt_f32(1-(arm_cos_f32(angle[2]))*(arm_cos_f32(angle[2])),&sine);
-         b=dianya_zhi_B*dianliuzhi_B*sine/10;
+         b=dianya_zhi_B*dianliuzhi_B*sine;
 	wugongkvar_B=dianya_zhi_B*dianliuzhi_B*sine/1000;
       wugongkvar_95B=dianya_zhi_B*dianliuzhi_B*0.3122/1000;
-allkvar=dianya_zhi_B*dianliuzhi_B*(arm_cos_f32(angle[2]))/1000;
+allkvar_B=dianya_zhi_B*dianliuzhi_B*(arm_cos_f32(angle[2]))/1000;
 
 
 
@@ -2810,6 +2819,8 @@ allphase(testInput_V,testInput_C);
 	arm_max_f32(reslut, fftSize/2, &maxValue, &testIndex);
 dianya_zhi_C=maxValue/100;
 dianya_zhi_C=dianya_zhi_C/2.57;
+if(dianya_zhi_C<=100)dianya_zhi_C=0;
+
 /*************************电压谐波率****************************************/
 
 {
@@ -2884,16 +2895,16 @@ angle[2]=((angle[2])*PI2)/360;
 
 
 /***************************************************************/
-dianliuzhi_C=1.07*maxValue_C*T;
- if(dianliuzhi_C<=2500*T){dianliuzhi_C=0;gonglvshishu_C=100;L_C_flag_C=1;}
+dianliuzhi_C=cruccent_ratio*maxValue_C*T;
+ if(dianliuzhi_C<=zero_limit*T){dianliuzhi_C=0;gonglvshishu_C=100;L_C_flag_C=1;}
 else
 	{
-	dianliuzhi_C=dianliuzhi_C/1000;
+	dianliuzhi_C=0.99*dianliuzhi_C/1000;
 	gonglvshishu_C=arm_cos_f32(angle[2])*100;//功率因素
 }
 /*************************电流谐波率****************************************/
 if((dianliuzhi_C==0)&&(gonglvshishu_C==100))C_HI=0;
-
+else
 {
 for(i=3;i<=21;i=i+2){HI_SUM_C=(reslut[i]*reslut[i])+HI_SUM_C;}
 arm_sqrt_f32(HI_SUM_C,&HI_C);
@@ -2903,10 +2914,10 @@ C_HI=(HI_C/maxValue_C)*1.03*100;
 /******************************************************************/
 
 arm_sqrt_f32(1-(arm_cos_f32(angle[2]))*(arm_cos_f32(angle[2])),&sine);
-           c=dianya_zhi_C*dianliuzhi_C*sine/10;
+           c=dianya_zhi_C*dianliuzhi_C*sine;
 	wugongkvar_C=dianya_zhi_C*dianliuzhi_C*sine/1000;
       wugongkvar_95C=dianya_zhi_C*dianliuzhi_C*0.3122/1000;
-allkvar=dianya_zhi_C*dianliuzhi_C*(arm_cos_f32(angle[2]))/1000;
+allkvar_C=dianya_zhi_C*dianliuzhi_C*(arm_cos_f32(angle[2]))/1000;
 
                                				
 
@@ -2933,9 +2944,9 @@ computer_trans_rs485(0,33,0,0,0,CPT_C);
 dianya_zhi=1.732*(dianya_zhi_A+dianya_zhi_B+dianya_zhi_C)/3;
 dianliuzhi=(dianliuzhi_A+dianliuzhi_B+dianliuzhi_C)/3;
 gonglvshishu=(gonglvshishu_A+gonglvshishu_B+gonglvshishu_C)/3;
-//wugongkvar=(a+b+c)/100;
-wugongkvar=wugongkvar_A+wugongkvar_B+wugongkvar_C;
-allkvar=3*dianya_zhi*dianliuzhi/1000;//乘以3，是因为电流变量是一相的电流，应该变为三相的电流和
+wugongkvar=(a+b+c)/1000;
+//wugongkvar=wugongkvar_A+wugongkvar_B+wugongkvar_C;
+allkvar=allkvar_A+allkvar_B+allkvar_C;//乘以3，是因为电流变量是一相的电流，应该变为三相的电流和
 //HV=HVA+HVB+HVC;
 //HI=HIA+HIB+HIC;
   wugongkvar_95=wugongkvar_95A+wugongkvar_95B+wugongkvar_95C;
@@ -2974,13 +2985,17 @@ for(i=slave_comm[8];i<=slave_comm[9]-1;i++)
 if(comm_list[i].work_status==0)
 {
 display_nothing_close_open_warn=1;//设置显示投入
+if(delay_on==0)delay_on=1;
+if(delay_on_cont==0)
+{
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,1,CONTROL);
 		{
  change_Queue(slave_comm,comm_list,20);			
-delay_ms(DELAY_ON_para*100);
-return 0 ;
+delay_on=0;
 
 		}
+}
+return 0 ;
 }
 
 
@@ -2993,13 +3008,17 @@ for(i=slave_comm[6];i<=slave_comm[7]-1;i++)
 if(comm_list[i].work_status==0)
 {
 display_nothing_close_open_warn=1;//设置显示投入
+if(delay_on==0)delay_on=1;
+if(delay_on_cont==0)
+{
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,1,CONTROL);
 		{
  change_Queue(slave_comm,comm_list,10);			
-delay_ms(DELAY_ON_para*100);
-return 0 ;
+delay_on=0;
 
 		}
+}
+return 0 ;
 }
 
 	  }
@@ -3012,14 +3031,17 @@ for(i=slave_comm[4];i<=slave_comm[5]-1;i++)
 if(comm_list[i].work_status==0)
 {
 display_nothing_close_open_warn=1;//设置显示投入
-
+if(delay_on==0)delay_on=1;
+if(delay_on_cont==0)
+{
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,1,CONTROL);
 		{
  change_Queue(slave_comm,comm_list,5);			
-delay_ms(DELAY_ON_para*100);
-return 0 ;
+delay_on=0;
 
 		}
+}
+return 0 ;
 }
 
 	  }
@@ -3032,14 +3054,18 @@ for(i=slave_comm[2];i<=slave_comm[3]-1;i++)
 if(comm_list[i].work_status==0)
 {
 display_nothing_close_open_warn=1;//设置显示投入
+if(delay_on==0)delay_on=1;
+if(delay_on_cont==0)
+{
 
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,1,CONTROL);
 		{
  change_Queue(slave_comm,comm_list,2);			
-delay_ms(DELAY_ON_para*100);
-return 0 ;
+delay_on=0;
 
 		}
+}
+return 0 ;
 }
 
 	  }
@@ -3061,10 +3087,14 @@ if(comm_list[i].work_status==1)
 
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
+delay_off=0;
+}
 		{
-delay_ms(DELAY_OFF_para*100);
+
 return 0 ;
 
 		}
@@ -3079,10 +3109,13 @@ if(comm_list[i].work_status==1)
 
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
+delay_off=0;
+}
 		{
-delay_ms(DELAY_OFF_para*100);
 return 0 ;
 
 		}
@@ -3101,10 +3134,13 @@ if(comm_list[i].work_status==1)
 
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
-		{
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+}
+{
 return 0 ;
 
 		}
@@ -3119,10 +3155,12 @@ if(comm_list[i].work_status==1)
 
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
-		{
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+}		{
 return 0 ;
 
 		}
@@ -3148,12 +3186,15 @@ for(i=slave_dis[3];i<=slave_dis[9]-1;i++)
 if(dis_list[i].work_status[0]==0)
 {
 display_nothing_close_open_warn=1;//设置显示投入
+if(delay_on==0)delay_on=1;
+if(delay_on_cont==0)
+{
 
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,1,CONTROL);
 dis_list[i].work_status[0]=1;
 change_Queue_dis(0,6,dis_list,slave_dis);
-delay_ms(DELAY_ON_para*100);
-
+delay_on=0;
+}
 //delay_ms(1000);
 return 0;
 }
@@ -3168,12 +3209,15 @@ for(i=slave_dis[2];i<=slave_dis[8]-1;i++)
 if(dis_list[i].work_status[0]==0)
 {
 display_nothing_close_open_warn=1;//设置显示投入
+if(delay_on==0)delay_on=1;
+if(delay_on_cont==0)
+{
 
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,1,CONTROL);
 dis_list[i].work_status[0]=1;
 change_Queue_dis(0,3,dis_list,slave_dis);
-delay_ms(DELAY_ON_para*100);
-
+delay_on=0;
+}
 //delay_ms(1000);
 return 0;
 }
@@ -3187,12 +3231,15 @@ for(i=slave_dis[1];i<=slave_dis[7]-1;i++)
 if(dis_list[i].work_status[0]==0)
 {
 display_nothing_close_open_warn=1;//设置显示投入
+if(delay_on==0)delay_on=1;
+if(delay_on_cont==0)
+{
 
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,1,CONTROL);
 dis_list[i].work_status[0]=1;
 change_Queue_dis(0,1,dis_list,slave_dis);
-delay_ms(DELAY_ON_para*100);
-
+delay_on=0;
+}
 //delay_ms(1000);
 return 0;
 }
@@ -3208,12 +3255,15 @@ for(i=slave_dis[6];i<=slave_dis[12]-1;i++)
 if(dis_list[i].work_status[1]==0)
 {
 display_nothing_close_open_warn=1;//设置显示投入
+if(delay_on==0)delay_on=1;
+if(delay_on_cont==0)
+{
 
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,1,CONTROL);
 dis_list[i].work_status[1]=1;
 change_Queue_dis(1,6,dis_list,slave_dis);
-delay_ms(DELAY_ON_para*100);
-
+delay_on=0;
+}
 //delay_ms(1000);
 return 0;
 }
@@ -3227,12 +3277,15 @@ for(i=slave_dis[5];i<=slave_dis[11]-1;i++)
 if(dis_list[i].work_status[1]==0)
 {
 display_nothing_close_open_warn=1;//设置显示投入
+if(delay_on==0)delay_on=1;
+if(delay_on_cont==0)
+{
 
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,1,CONTROL);
 dis_list[i].work_status[1]=1;
 change_Queue_dis(1,3,dis_list,slave_dis);
-delay_ms(DELAY_ON_para*100);
-
+delay_on=0;
+}
 //delay_ms(1000);
 return 0;
 }
@@ -3247,12 +3300,15 @@ for(i=slave_dis[4];i<=slave_dis[10]-1;i++)
 if(dis_list[i].work_status[1]==0)
 {
 display_nothing_close_open_warn=1;//设置显示投入
+if(delay_on==0)delay_on=1;
+if(delay_on_cont==0)
+{
 
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,1,CONTROL);
 dis_list[i].work_status[1]=1;
 change_Queue_dis(1,1,dis_list,slave_dis);
-delay_ms(DELAY_ON_para*100);
-
+delay_on=0;
+}
 //delay_ms(1000);
 return 0;
 }
@@ -3272,12 +3328,14 @@ for(i=slave_dis[17];i<=slave_dis[18]-1;i++)
 if(dis_list[i].work_status[2]==0)
 {
 display_nothing_close_open_warn=1;//设置显示投入
-
+if(delay_on==0)delay_on=1;
+if(delay_on_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,1,CONTROL);
 dis_list[i].work_status[2]=1;
 change_Queue_dis(2,6,dis_list,slave_dis);
-delay_ms(DELAY_ON_para*100);
-
+delay_on=0;
+}
 //delay_ms(1000);
 return 0;
 }
@@ -3290,12 +3348,14 @@ for(i=slave_dis[15];i<=slave_dis[16]-1;i++)
 if(dis_list[i].work_status[2]==0)
 {
 display_nothing_close_open_warn=1;//设置显示投入
-
+if(delay_on==0)delay_on=1;
+if(delay_on_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,1,CONTROL);
 dis_list[i].work_status[2]=1;
 change_Queue_dis(2,3,dis_list,slave_dis);
-delay_ms(DELAY_ON_para*100);
-
+delay_on=0;
+}
 //delay_ms(1000);
 return 0;
 }
@@ -3309,12 +3369,14 @@ for(i=slave_dis[13];i<=slave_dis[14]-1;i++)
 if(dis_list[i].work_status[2]==0)
 {
 display_nothing_close_open_warn=1;//设置显示投入
-
+if(delay_on==0)delay_on=1;
+if(delay_on_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,1,CONTROL);
 dis_list[i].work_status[2]=1;
 change_Queue_dis(2,1,dis_list,slave_dis);
-delay_ms(DELAY_ON_para*100);
-
+delay_on=0;
+}
 //delay_ms(1000);
 return 0;
 }
@@ -3337,10 +3399,13 @@ for(i=slave_dis[1];i<=slave_dis[7]-1;i++)
 if(dis_list[i].work_status[0]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}
 return 0;
 }
 
@@ -3352,10 +3417,13 @@ for(i=slave_dis[2];i<=slave_dis[8]-1;i++)
 if(dis_list[i].work_status[0]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}
 return 0;
 }
 
@@ -3367,10 +3435,13 @@ for(i=slave_dis[3];i<=slave_dis[9]-1;i++)
 if(dis_list[i].work_status[0]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}
 return 0;
 }
 
@@ -3385,10 +3456,13 @@ for(i=slave_dis[4];i<=slave_dis[10]-1;i++)
 if(dis_list[i].work_status[1]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}
 return 0;
 }
 
@@ -3401,10 +3475,13 @@ for(i=slave_dis[5];i<=slave_dis[11]-1;i++)
 if(dis_list[i].work_status[1]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}
 return 0;
 }
 
@@ -3416,10 +3493,13 @@ for(i=slave_dis[6];i<=slave_dis[12]-1;i++)
 if(dis_list[i].work_status[1]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}
 return 0;
 }
 
@@ -3438,10 +3518,13 @@ for(i=slave_dis[13];i<=slave_dis[14]-1;i++)
 if(dis_list[i].work_status[2]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}
 return 0;
 }
 
@@ -3453,10 +3536,13 @@ for(i=slave_dis[15];i<=slave_dis[16]-1;i++)
 if(dis_list[i].work_status[2]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}
 return 0;
 }
 
@@ -3467,11 +3553,13 @@ for(i=slave_dis[17];i<=slave_dis[18]-1;i++)
 if(dis_list[i].work_status[2]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
-delay_ms(DELAY_OFF_para*100);
-return 0;
+delay_off=0;
+	}return 0;
 }
 
 }
@@ -3493,10 +3581,12 @@ if(comm_list[i].work_status==1)
 
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
-		{
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}		{
 return 0 ;
 
 		}
@@ -3511,10 +3601,13 @@ if(comm_list[i].work_status==1)
 
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
+delay_off=0;
+	}
 		{
-delay_ms(DELAY_OFF_para*100);
 return 0 ;
 
 		}
@@ -3533,10 +3626,12 @@ if(comm_list[i].work_status==1)
 
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
-		{
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}		{
 return 0 ;
 
 		}
@@ -3551,10 +3646,12 @@ if(comm_list[i].work_status==1)
 
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
-		{
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}		{
 return 0 ;
 
 		}
@@ -3581,10 +3678,13 @@ for(i=slave_dis[3];i<=slave_dis[9]-1;i++)
 if(dis_list[i].work_status[0]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
-
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}
 return 0;
 }
 
@@ -3597,9 +3697,13 @@ for(i=slave_dis[2];i<=slave_dis[8]-1;i++)
 if(dis_list[i].work_status[0]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}
 return 0;
 }
 
@@ -3611,9 +3715,13 @@ for(i=slave_dis[1];i<=slave_dis[7]-1;i++)
 if(dis_list[i].work_status[0]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[0],1,1,0,CONTROL);
 dis_list[i].work_status[0]=0;
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}
 return 0;
 }
 
@@ -3629,9 +3737,13 @@ for(i=slave_dis[6];i<=slave_dis[12]-1;i++)
 if(dis_list[i].work_status[1]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}
 return 0;
 }
 
@@ -3643,9 +3755,13 @@ for(i=slave_dis[5];i<=slave_dis[11]-1;i++)
 if(dis_list[i].work_status[1]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}
 return 0;
 }
 
@@ -3658,9 +3774,13 @@ for(i=slave_dis[4];i<=slave_dis[10]-1;i++)
 if(dis_list[i].work_status[1]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[1],1,2,0,CONTROL);
 dis_list[i].work_status[1]=0;
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}
 return 0;
 }
 
@@ -3678,9 +3798,13 @@ for(i=slave_dis[17];i<=slave_dis[18]-1;i++)
 if(dis_list[i].work_status[2]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}
 return 0;
 }
 
@@ -3691,9 +3815,13 @@ for(i=slave_dis[15];i<=slave_dis[16]-1;i++)
 if(dis_list[i].work_status[2]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}
 return 0;
 }
 
@@ -3705,9 +3833,13 @@ for(i=slave_dis[13];i<=slave_dis[14]-1;i++)
 if(dis_list[i].work_status[2]==1)
 {
 display_nothing_close_open_warn=2;//设置显示切除
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
 computer_trans_rs485(mybox.myid,dis_list[i].myid[2],1,3,0,CONTROL);
 dis_list[i].work_status[2]=0;
-delay_ms(DELAY_OFF_para*100);
+delay_off=0;
+	}
 return 0;
 }
 
@@ -3975,6 +4107,100 @@ delay_ms(200);
 
 }
 
+/***********************
+轮休模块
+************************
+{
+
+//20的队列
+if(free_timeout_20==1)
+
+{
+for(i=slave_comm[8];i<=slave_comm[9]-1;i++)
+if(comm_list[i].work_status==0)
+{
+
+{
+for(i=slave_comm[8];i<=slave_comm[9]-1;i++)
+if(comm_list[i].work_status==1)
+
+{
+display_nothing_close_open_warn=2;//设置显示切除
+
+order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
+		{
+delay_ms(DELAY_OFF_para*100);
+return 0 ;
+
+		}
+}
+
+
+}
+
+}
+
+
+      	}
+
+
+//10的队列
+if(free_timeout_10==1)
+
+{
+for(i=slave_comm[6];i<=slave_comm[7]-1;i++)
+if(comm_list[i].work_status==0)
+{
+{
+for(i=slave_comm[6];i<=slave_comm[7]-1;i++)
+if(comm_list[i].work_status==1)
+
+{
+display_nothing_close_open_warn=2;//设置显示切除
+
+order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
+		{
+delay_ms(DELAY_OFF_para*100);
+return 0 ;
+
+		}
+}
+
+
+}
+
+}
+
+	  }
+
+//5的队列
+if(free_timeout_5==1)
+
+{
+for(i=slave_comm[4];i<=slave_comm[5]-1;i++)
+if(comm_list[i].work_status==0)
+{
+for(i=slave_comm[4];i<=slave_comm[5]-1;i++)
+if(comm_list[i].work_status==1)
+
+{
+display_nothing_close_open_warn=2;//设置显示切除
+
+order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,0,CONTROL);
+		{
+delay_ms(DELAY_OFF_para*100);
+return 0 ;
+
+		}
+}
+
+
+
+}
+}
+
+}
+*/
 return 0;
 
 }
@@ -4950,7 +5176,7 @@ TIME_4
 		{	  
 		TIM_ClearITPendingBit(TIM4, TIM_IT_Update  );  //清除TIMx更新中断标志
                     IWDG_Feed();
-	
+	//if(free_timeout>1)free_timeout--;
 		}
 	   	OSIntExit();  
 
@@ -4995,6 +5221,17 @@ TIME_4
 			Work_Flag=!Work_Flag;	
 			if(light_time>0)light_time--;
  if(light_time==0)LIGHT_backligt_off();
+if(delay_on==1)
+	{
+	      if(delay_on_cont!=0)delay_on_cont--;
+	}
+if(delay_on==0){delay_on_cont=AT24CXX_ReadOneByte(0x1000);delay_on_cont=delay_on_cont*2;}
+
+if(delay_off==1)
+	{
+	      if(delay_off_cont!=0)delay_off_cont--;
+	}
+if(delay_off==0){delay_off_cont=AT24CXX_ReadOneByte(0x2000);delay_off_cont=delay_off_cont*2;}
 
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update  );  //清除TIMx更新中断标志
 		

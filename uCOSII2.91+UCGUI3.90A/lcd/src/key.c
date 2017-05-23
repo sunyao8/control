@@ -21,7 +21,7 @@ extern u32 idle_time,scan_time,dianliuzhi;
 extern u16 wugongkvar,allkvar;
 extern float32_t HV,HI,A_HV,B_HV,C_HV,A_HI,B_HI,C_HI;
 extern s8 L_C_flag;
-extern u16 dianya_zhi_A,dianya_zhi_B,dianya_zhi_C,wugongkvar_A,wugongkvar_B,wugongkvar_C;
+extern u16 dianya_zhi_A,dianya_zhi_B,dianya_zhi_C,wugongkvar_A,wugongkvar_B,wugongkvar_C,allkvar_A,allkvar_B,allkvar_C;
 extern u32	dianliuzhi_A,dianliuzhi_B,dianliuzhi_C;
 extern u8 gonglvshishu_A,gonglvshishu_B,gonglvshishu_C;
 extern void LIGHT_backligt_on(void);
@@ -227,14 +227,14 @@ a=AT24CXX_ReadOneByte(0xa000);
 		 	 LIGHT_backligt_on();
 			DELAY_ON_para++;
 			while(KEY_up==0);
-			if(DELAY_ON_para>100)DELAY_ON_para=1;
+			if(DELAY_ON_para>60)DELAY_ON_para=5;
 		 }
 		 if(KEY_down==0)
 		 {
 		 	 LIGHT_backligt_on();
 			DELAY_ON_para--;
 			while(KEY_down==0);
-			if(DELAY_ON_para<1)DELAY_ON_para=100;
+			if(DELAY_ON_para<5)DELAY_ON_para=60;
 		 }
 		  
 		 AT24CXX_WriteOneByte(0x1000,DELAY_ON_para);  //´æ´¢DELAY_ON_paraµ½eeprom
@@ -264,14 +264,14 @@ a=AT24CXX_ReadOneByte(0xa000);
 		 	 LIGHT_backligt_on();
 			DELAY_OFF_para++;
 			while(KEY_up==0);
-			if(DELAY_OFF_para>100)DELAY_OFF_para=1;
+			if(DELAY_OFF_para>60)DELAY_OFF_para=5;
 		 }
 		 if(KEY_down==0)
 		 {
 		 	 LIGHT_backligt_on();
 			DELAY_OFF_para--;
 			while(KEY_down==0);
-			if(DELAY_OFF_para<1)DELAY_OFF_para=100;
+			if(DELAY_OFF_para<5)DELAY_OFF_para=60;
 		 }
 
 			 AT24CXX_WriteOneByte(0x2000,DELAY_OFF_para);  //´æ´¢DELAY_ON_paraµ½eeprom
@@ -747,22 +747,22 @@ break;
 			{				
 		 Clera_lcd();
 		 if(phase_flag==0)
-		 Graf_powuse_poweunuse_freq_L1(wugongkvar_A,allkvar,501);
+		 Graf_powuse_poweunuse_freq_L1(wugongkvar_A,allkvar_A,501);
                else
-		 Graf_powuse_poweunuse_freq_L3(wugongkvar_C,allkvar,501);              
+		 Graf_powuse_poweunuse_freq_L3(wugongkvar_C,allkvar_C,501);              
 		}
 		if(L1_L2_L3_KAR==2)
 			{
 		 Clera_lcd();
-		 Graf_powuse_poweunuse_freq_L2(wugongkvar_B,allkvar,501);
+		 Graf_powuse_poweunuse_freq_L2(wugongkvar_B,allkvar_B,501);
 			}
 		if(L1_L2_L3_KAR==3)
 			{
 		 Clera_lcd();
 		 if(phase_flag==0)
-		 Graf_powuse_poweunuse_freq_L3(wugongkvar_C,allkvar,501);
+		 Graf_powuse_poweunuse_freq_L3(wugongkvar_C,allkvar_C,501);
                else
-		 Graf_powuse_poweunuse_freq_L1(wugongkvar_A,allkvar,501);
+		 Graf_powuse_poweunuse_freq_L1(wugongkvar_A,allkvar_A,501);
 		}
 		}
   

@@ -1,14 +1,14 @@
----- capa1_array Matches (10 in 2 files) ----
-Key.c (lcd\src):u8 capa1_array[32],capa2_array[32];
-Key.c (lcd\src):				capa1_value=capa1_array[CAPA_num-1];
-Key.c (lcd\src):				capa1_value=capa1_array[CAPA_num-1];
-Main.c (user):extern u8 capa1_array[32],capa2_array[32];
-Main.c (user):	 	capa1_array[i-1]=0;capa2_array[i-1]=0;//屏幕显示容量使用
-Main.c (user):if(msg[3]==1)capa1_array[msg[2]-1]=5;
-Main.c (user):if(msg[3]==3)capa1_array[msg[2]-1]=10;
-Main.c (user):if(msg[3]==6)capa1_array[msg[2]-1]=20;
-Main.c (user):			 	capa1_array[i-1]=0;capa2_array[i-1]=0;//屏幕显示容量使用
-Main.c (user):	capa1_array[msg[2]-1]=msg[3];
----- capa1_array Search Errors Encountered (1) ----
-The following 1 files could not be processed:
-C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkLog.txt : File could not be opened.
+---- ADC_Converted_base Matches (13 in 0 files) ----
+Main.c (user):u16 ADC_Converted_base=0;
+Main.c (user):  DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)&ADC_Converted_base;
+Main.c (user):ADC_Converted_base=0;
+Main.c (user):testInput_C[i]=(float32_t)((ADC_Converted_CValue-ADC_Converted_base)*3.3/4096);///  1550
+Main.c (user):testInput_V[i]=(float32_t)((ADC_Converted_VValue-ADC_Converted_base)*3.3/4096);///  1550
+Main.c (user):testInput_C[i]=(float32_t)((ADC_Converted_CValue-ADC_Converted_base)*3.3/4096);///  1550
+Main.c (user):testInput_V[i]=(float32_t)((ADC_Converted_VValue-ADC_Converted_base)*3.3/4096);///  1550
+Main.c (user):testInput_C[i]=(float32_t)((ADC_Converted_CValue-ADC_Converted_base)*3.3/4096);///  1550
+Main.c (user):testInput_V[i]=(float32_t)((ADC_Converted_VValue-ADC_Converted_base)*3.3/4096);///  1550
+Main.c (user):testInput_C[i]=(float32_t)((ADC_Converted_CValue-ADC_Converted_base)*3.3/4096);///  1550
+Main.c (user):testInput_V[i]=(float32_t)((ADC_Converted_VValue-ADC_Converted_base)*3.3/4096);///  1550
+Main.c (user):testInput_C[i]=(float32_t)((ADC_Converted_CValue-ADC_Converted_base)*3.3/4096);///  1550
+Main.c (user):testInput_V[i]=(float32_t)((ADC_Converted_VValue-ADC_Converted_base)*3.3/4096);///  1550
