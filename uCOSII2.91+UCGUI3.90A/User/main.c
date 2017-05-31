@@ -22,6 +22,8 @@
 #define PI2  6.28318530717959
 #define cruccent_ratio  1.07//电流校正系数
 #define zero_limit 1000         //1000为电流门限0.1           1500为电流门限0.15
+#define turn_reset_time 250
+#define turn_reset_time_ok 255
 #define  APP_TASK_START_STK_SIZE                         64u
 static  OS_STK         App_TaskStartStk[APP_TASK_START_STK_SIZE];
 #define  APP_TASK_START_PRIO                               10
@@ -122,7 +124,8 @@ u16 allkvar_A=0,allkvar_B=0,allkvar_C=0;
 u32	dianliuzhi_A=0,dianliuzhi_B=0	,dianliuzhi_C=0;
 u8 gonglvshishu_A=0,gonglvshishu_B=0,gonglvshishu_C=0;
 u8 display_nothing_close_open_warn=0;
-
+static status_comm_node comm_list[65];
+static  u8 slave_comm[20];
 void ADC3_CH10_DMA_Config_VA(void);
 void ADC2_CH8_DMA_Config_VEE(void);
 void ADC1_CH1_DMA_Config_CA(void);
@@ -135,6 +138,7 @@ void ADC2_CH14_DMA_Config_B1(void);
 void ADC2_CH15_DMA_Config_C1(void);
 
 void ADC1_CH1_DMA_Config_VC_phase(void);
+void turn_reset(status_comm_node *comm_list,u8 *slave_comm);
 
 //void init_para(void);
 void Init_ADC(void);
@@ -631,11 +635,11 @@ static  void  App_Taskcomputer	 (void		*p_arg )
 
 {  
 u8 err;
+u8 COS_OFF_para,COS_ON_para;
  static status_dis_node     dis_list[20];
 
 static  u8 slave_dis[20];
-static  u8 slave_comm[20];
-static status_comm_node comm_list[78];
+
 /*
  static status_dis_node     dis_list[20];
 
@@ -660,8 +664,18 @@ first_init=0;
 
 if(COMMCAT_para==0) //自动模式
 {
+	 COS_ON_para=AT24CXX_ReadOneByte(0x3000);  //存储DELAY_OFF_para到eeprom
+				 COS_OFF_para=AT24CXX_ReadOneByte(0x4000);  //存储DELAY_OFF_para到eeprom
 
  computer_gonglu(dis_list,comm_list,slave_dis,slave_comm);
+ if(gonglvshishu>=COS_ON_para&&gonglvshishu<COS_OFF_para)
+ 	{
+
+	turn_reset(comm_list,slave_comm);
+
+ 	}
+	  
+
 }
 
 #endif
@@ -718,7 +732,8 @@ u8 err;
        	OSSemPend(urgent_sem,0,&err);      	
 //{order_trans_rs485(mybox.myid,0,1,1,0,CONTROL);order_trans_rs485(mybox.myid,0,1,2,0,CONTROL);}
 	
- 	
+
+
 
 
 		  }
@@ -1908,6 +1923,7 @@ if(size==2)
    	   comm_list[i].size=size;
    	   comm_list[i].work_status=work_status;
 	   comm_list[i].group=group;
+	   if(work_status==0)comm_list[i].work_time=0;
 	   break;
 		}
 	}
@@ -1923,6 +1939,8 @@ if(size==5)
    	   comm_list[i].size=size;
    	   comm_list[i].work_status=work_status;
 	   comm_list[i].group=group;
+	   	   if(work_status==0)comm_list[i].work_time=0;
+
 	   break;
 		}
 	}
@@ -1938,6 +1956,8 @@ if(size==10)
    	   comm_list[i].size=size;
    	   comm_list[i].work_status=work_status;
 	   comm_list[i].group=group;
+	   	   if(work_status==0)comm_list[i].work_time=0;
+
 	   break;
 		}
 	}
@@ -1953,6 +1973,8 @@ if(size==20)
    	   comm_list[i].size=size;
    	   comm_list[i].work_status=work_status;
 	   comm_list[i].group=group;
+	   	   if(work_status==0)comm_list[i].work_time=0;
+
 	   break;
 		}
 	}
@@ -5063,20 +5085,24 @@ void EXTI15_10_IRQHandler(void)
 	
 	{
 	if(COMMCAT_para==1)
+
+		{
+	delay_us(1000);//按键消抖
+if(GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_12)==0)	
 {
 if(dis_com==1)
-{
+      {
 order_trans_rs485(mybox.myid,hand_id,1,1,0,CONTROL);
 order_trans_rs485(mybox.myid,hand_id,1,2,0,CONTROL);
 hand_comm_onoff=0;
-}
-
+		}
 if(dis_com==0)
 {
 computer_trans_rs485(mybox.myid,hand_id,1,1,23,CONTROL);//三相一起切命令
 }
 }
-
+	
+  	}
 	}
       EXTI_ClearITPendingBit(EXTI_Line12);
 
@@ -5084,8 +5110,14 @@ computer_trans_rs485(mybox.myid,hand_id,1,1,23,CONTROL);//三相一起切命令
 	
 	{
 	if(COMMCAT_para==1)
+		{
+		delay_us(1000);//按键消抖
+if(GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_14)==0)	
 {
 if(dis_com==1)
+{
+
+
 {
 if(comm_number==0&&hand_comm_onoff==0)
 {
@@ -5102,12 +5134,15 @@ comm_number=0;
 hand_comm_onoff=1;
 
 }
+
+}
 }
 if(dis_com==0)
 {
 computer_trans_rs485(mybox.myid,hand_id,1,1,32,CONTROL);//三相一起投命令
 }	
 }
+  	}
 
 	}
       EXTI_ClearITPendingBit(EXTI_Line14);
@@ -5214,7 +5249,7 @@ TIME_4
 }
 
  void TIM2_IRQHandler(void)   //TIM3中断
-{	 
+{	 u8 j;
 	OSIntEnter();   
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)  //检查TIM4更新中断发生与否
 		{	
@@ -5232,6 +5267,22 @@ if(delay_off==1)
 	      if(delay_off_cont!=0)delay_off_cont--;
 	}
 if(delay_off==0){delay_off_cont=AT24CXX_ReadOneByte(0x2000);delay_off_cont=delay_off_cont*2;}
+
+for(j=slave_comm[8];j<=slave_comm[9]-1;j++)
+if(comm_list[j].work_status==1&&comm_list[j].work_time<turn_reset_time)
+{	comm_list[j].work_time++;
+
+//if(comm_list[j].work_time==turn_reset_time){Light_pad_on(1,16,2,2,2);}
+}
+for(j=slave_comm[6];j<=slave_comm[7]-1;j++)
+if(comm_list[j].work_status==1&&comm_list[j].work_time<turn_reset_time)comm_list[j].work_time++;
+
+for(j=slave_comm[4];j<=slave_comm[5]-1;j++)
+if(comm_list[j].work_status==1&&comm_list[j].work_time<turn_reset_time)comm_list[j].work_time++;
+
+for(j=slave_comm[2];j<=slave_comm[3]-1;j++)
+if(comm_list[j].work_status==1&&comm_list[j].work_time<turn_reset_time)comm_list[j].work_time++;
+
 
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update  );  //清除TIMx更新中断标志
 		
@@ -5276,6 +5327,117 @@ b=b-1;
 if(true_false==0){(*exist)=(~(0x00000001<<b))&(*exist);}
 if(true_false==1){(*exist)=(0x00000001<<b)|(*exist);}
 
+}
+
+void turn_reset(status_comm_node *comm_list,u8 *slave_comm)
+{
+u8 i,j;
+
+for(j=slave_comm[8];j<=slave_comm[9]-1;j++)
+if(comm_list[j].work_status==1&&comm_list[j].work_time>=turn_reset_time)
+{
+
+
+
+for(i=slave_comm[8];i<=slave_comm[9]-1;i++)
+if(comm_list[i].work_status==0)
+{
+{
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
+order_trans_rs485(mybox.myid,comm_list[j].myid,1,comm_list[j].group,0,CONTROL);
+//comm_list[j].work_time=turn_reset_time_ok;
+delay_off=0;
+}
+}
+
+
+
+
+
+}
+
+
+      	}//20  end
+
+
+for(j=slave_comm[6];j<=slave_comm[7]-1;j++)
+if(comm_list[j].work_status==1&&comm_list[j].work_time>=turn_reset_time&&comm_list[j].work_time!=turn_reset_time_ok)		
+
+{
+for(i=slave_comm[6];i<=slave_comm[7]-1;i++)
+if(comm_list[i].work_status==0)
+{
+{
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
+order_trans_rs485(mybox.myid,comm_list[j].myid,1,comm_list[j].group,0,CONTROL);
+//comm_list[j].work_time=turn_reset_time_ok;
+delay_off=0;
+}
+}
+
+
+
+}
+
+	  }	//10 end	
+
+
+for(j=slave_comm[4];j<=slave_comm[5]-1;j++)
+if(comm_list[j].work_status==1&&comm_list[j].work_time>=turn_reset_time&&comm_list[j].work_time!=turn_reset_time_ok)
+{
+for(i=slave_comm[4];i<=slave_comm[5]-1;i++)
+if(comm_list[i].work_status==0)
+{
+{
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
+order_trans_rs485(mybox.myid,comm_list[j].myid,1,comm_list[j].group,0,CONTROL);
+//comm_list[j].work_time=turn_reset_time_ok;
+delay_off=0;
+
+}
+}
+
+}
+
+	  } // 5 end
+
+
+for(j=slave_comm[2];j<=slave_comm[3]-1;j++)
+if(comm_list[j].work_status==1&&comm_list[j].work_time>=turn_reset_time&&comm_list[j].work_time!=turn_reset_time_ok)
+{
+for(i=slave_comm[2];i<=slave_comm[3]-1;i++)
+if(comm_list[i].work_status==0)
+{
+{
+
+if(delay_off==0)delay_off=1;
+if(delay_off_cont==0)
+{
+order_trans_rs485(mybox.myid,comm_list[j].myid,1,comm_list[j].group,0,CONTROL);
+//comm_list[j].work_time=turn_reset_time_ok;
+delay_off=0;
+}
+}
+/*
+{
+order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,1,CONTROL);
+		{
+ change_Queue(slave_comm,comm_list,2);			
+
+
+		}
+}
+
+*/
+}
+
+	  }
 }
 
 #ifdef  USE_FULL_ASSERT

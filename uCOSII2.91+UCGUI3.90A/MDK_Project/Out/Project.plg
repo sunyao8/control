@@ -7,11 +7,6 @@ C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Projec
 Project File Date:  01/20/2014
 
 <h2>Output:</h2>
-Build target 'Target 1'
-linking...
-Program Size: Code=57676 RO-data=27044 RW-data=328 ZI-data=54024  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
@@ -58,133 +53,61 @@ Verify OK.
 Application running ...
 Build target 'Target 1'
 compiling main.c...
-..\User\main.c(862): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
-..\User\main.c(2356): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2359): warning:  #186-D: pointless comparison of unsigned integer with zero
-..\User\main.c(2377): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2593): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2605): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2740): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2752): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2898): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2911): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2176): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(2198): warning:  #177-D: variable "gl" was declared but never referenced
-..\User\main.c(2199): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(2213): warning:  #550-D: variable "ON_HOLD_para" was set but never used
-..\User\main.c(4218): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(877): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2378): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2381): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2399): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2615): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2627): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2762): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2774): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2920): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2933): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2198): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2220): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2221): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2235): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4240): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(512): warning: C3017W: exist may be used before being set
+compiling uctsk_Task.c...
+compiling uctsk_OSView.c...
+compiling stm32f4xx_it.c...
+compiling os_cpu_c.c...
+compiling OS_AppHooks.c...
+compiling os_view.c...
+compiling os_viewc.c...
+compiling GUI_X_uCOS.c...
+compiling GUI_X_Touch.c...
+compiling delay.c...
+compiling ht1621.c...
+..\lcd\src\ht1621.c(554): warning:  #177-D: variable "num12dpSeg" was declared but never referenced
+..\lcd\src\ht1621.c(643): warning:  #177-D: variable "num12dpSeg" was declared but never referenced
+..\lcd\src\ht1621.c(734): warning:  #177-D: variable "num12dpSeg" was declared but never referenced
+..\lcd\src\ht1621.c(825): warning:  #177-D: variable "num12dpSeg" was declared but never referenced
+compiling key.c...
+linking...
+Program Size: Code=58104 RO-data=27048 RW-data=328 ZI-data=54600  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 20 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(877): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2378): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2381): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2399): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2615): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2627): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2762): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2774): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2920): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2933): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2198): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2220): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2221): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2235): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4240): warning:  #177-D: variable "count" was declared but never referenced
 ..\User\main.c(512): warning: C3017W: exist may be used before being set
 linking...
-Program Size: Code=57676 RO-data=27044 RW-data=328 ZI-data=54024  
+Program Size: Code=58072 RO-data=27048 RW-data=328 ZI-data=54600  
 FromELF: creating hex file...
 ".\Out\Project.axf" - 0 Error(s), 16 Warning(s).
-Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
-Hardware: V7.00
-S/N : 20160403 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.300V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 2000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-Application running ...
-Build target 'Target 1'
-compiling main.c...
-..\User\main.c(862): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
-..\User\main.c(2356): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2359): warning:  #186-D: pointless comparison of unsigned integer with zero
-..\User\main.c(2377): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2593): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2605): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2740): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2752): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2898): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2911): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\main.c(2176): warning:  #550-D: variable "status" was set but never used
-..\User\main.c(2198): warning:  #177-D: variable "gl" was declared but never referenced
-..\User\main.c(2199): warning:  #550-D: variable "wugongkvar_95" was set but never used
-..\User\main.c(2213): warning:  #550-D: variable "ON_HOLD_para" was set but never used
-..\User\main.c(4218): warning:  #177-D: variable "count" was declared but never referenced
-..\User\main.c(508): warning: C3017W: exist may be used before being set
-linking...
-Program Size: Code=57676 RO-data=27044 RW-data=328 ZI-data=54024  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 16 Warning(s).
-Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
-Hardware: V7.00
-S/N : 20160403 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.300V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 2000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-Application running ...
