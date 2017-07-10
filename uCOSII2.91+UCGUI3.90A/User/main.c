@@ -72,6 +72,10 @@ typedef struct
   u8 myid[3];      //本电容箱ID号
   u8 size[3];      //容量单位千法
   u8 work_status[3];    //工作状态 1 为投入工作；0 为没有工作
+  u16 c_currentA;
+  u16 c_currentB;
+  u16 c_currentC;
+
 }status_dis_node;
 
  typedef struct  
@@ -118,6 +122,9 @@ u8 vernum=101,gonglvshishu=0;
 u16 dianya_zhi=0,wugongkvar=0,allkvar=0;
 float32_t HV=0,HI=0,A_HV=0,A_HI=0,B_HV=0,B_HI=0,C_HV=0,C_HI=0;
 u32	dianliuzhi=0;
+u32	dianliuzhi_C_A=0;
+u32	dianliuzhi_C_B=0;
+u32	dianliuzhi_C_C=0;
 //#if (FUNCTION_MODULE == DF_THREE)
 u16 dianya_zhi_A=0,dianya_zhi_B=0,dianya_zhi_C=0,wugongkvar_A=0,wugongkvar_B=0,wugongkvar_C=0;
 u16 allkvar_A=0,allkvar_B=0,allkvar_C=0;
@@ -138,7 +145,7 @@ void ADC2_CH14_DMA_Config_B1(void);
 void ADC2_CH15_DMA_Config_C1(void);
 
 void ADC1_CH1_DMA_Config_VC_phase(void);
-void turn_reset(status_comm_node *comm_list,u8 *slave_comm);
+u8 turn_reset(status_comm_node *comm_list,u8 *slave_comm);
 
 //void init_para(void);
 void Init_ADC(void);
@@ -234,9 +241,9 @@ void change_Queue_dis(u8 abc,u8 Level, status_dis_node *dis_list,u8 *slave_dis);
 /************************************MAster data structure*******************/
 void scanf_slave_machine(status_dis_node *dis_list,status_comm_node *comm_list,u8 *slave_dis,u8 *slave_comm);
 u8 inquiry_slave_status_comm(u8 id,u8 *slave_comm,status_comm_node *comm_list); 
-void init_Queue(u8 id,u8 size_1,u8 size_2,u8 work_status_1,u8 work_status_2,u8 *slave_comm,status_comm_node *comm_list);
+void init_Queue(u8 id,u8 size_1,u8 size_2,u8 work_status_1,u8 work_status_2,u8 cruccent_A,u8 cruccent_B,u8 cruccent_C,u8 work_time_1 ,u8 work_time_2 ,u8 *slave_comm,status_comm_node *comm_list);
 void del_comm_listnode(u8 id,u8 group,u8 *slave_comm,status_comm_node *comm_list);
-void flash_comm_list(u8 id,u8 size ,u8 work_status ,u8 group,u8 *slave_comm,status_comm_node *comm_list);
+void flash_comm_list(u8 id,u8 size ,u8 work_status ,u8 group,u8 cruccent_A,u8 cruccent_B,u8 cruccent_C, u8 work_time,u8 *slave_comm,status_comm_node *comm_list);
 void change_Queue(u8 *slave_comm,status_comm_node *comm_list,u8 size);
 void init_listindex(u8 *slave_comm);
 
@@ -246,14 +253,14 @@ void init_listindex(u8 *slave_comm);
 /********************************************************************************/
  void rs485_trans_status_dis(u8 count,u8 *tx_r485,status_dis_node *dis_list,status_comm_node *comm_list);//主机程序，主机命令解析成RS485信息，发送给目的从机
  u8 inquiry_slave_status_dis(u8 count,u8 id,status_dis_node *dis_list,status_comm_node *comm_list);   
-void set_statuslist(u8 count,u8 id,u8 size,u8 work_status,u8 work_time,u8 dis_comm,u8 relay,status_dis_node *dis_list,status_comm_node *comm_list_1,status_comm_node *comm_list_2,u8 group);
+void set_statuslist(u8 count,u8 id,u8 size,u8 work_status,u8 work_time,u8 C_A,u8 C_B,u8 C_C,u8 dis_comm,u8 relay,status_dis_node *dis_list,status_comm_node *comm_list_1,status_comm_node *comm_list_2,u8 group);
 
 void set_bit(u8 b, u8 dis_com,light_status_node *light_status,u8 status_1,u8 status_2,u8 status_3,u8 status_4);
 u8 clear_bit(u8 b,u32 light_pad);
 void set_clear_existence(u8 true_false,u8 b,u32 *exist);
 
 /*************************************MAster data structure_end***************/
-
+void capacitor_current(status_dis_node *dis_list,status_comm_node *comm_list);
 
 
 
@@ -288,6 +295,7 @@ u8 dis_com=0;
 //u8 free_timeout_5=100;//轮休时间控制变量
 
 /**********************************************/
+static  u8 slave_dis[20];
 
 INT32S main (void)
 {
@@ -635,10 +643,9 @@ static  void  App_Taskcomputer	 (void		*p_arg )
 
 {  
 u8 err;
-u8 COS_OFF_para,COS_ON_para;
+u8 COS_ON_para,COS_OFF_para;
  static status_dis_node     dis_list[20];
 
-static  u8 slave_dis[20];
 
 /*
  static status_dis_node     dis_list[20];
@@ -659,21 +666,18 @@ first_init=0;
 }
  scanf_slave_machine(dis_list,comm_list,slave_dis,slave_comm);
   init_Queue_dis(dis_list,slave_dis);
-
+capacitor_current(dis_list,comm_list);
 
 
 if(COMMCAT_para==0) //自动模式
 {
-	 COS_ON_para=AT24CXX_ReadOneByte(0x3000);  //存储DELAY_OFF_para到eeprom
+		 COS_ON_para=AT24CXX_ReadOneByte(0x3000);  //存储DELAY_OFF_para到eeprom
 				 COS_OFF_para=AT24CXX_ReadOneByte(0x4000);  //存储DELAY_OFF_para到eeprom
-
  computer_gonglu(dis_list,comm_list,slave_dis,slave_comm);
- if(gonglvshishu>=COS_ON_para&&gonglvshishu<COS_OFF_para)
- 	{
-
+ if(gonglvshishu<COS_OFF_para&&gonglvshishu>=COS_ON_para)
 	turn_reset(comm_list,slave_comm);
 
- 	}
+
 	  
 
 }
@@ -1210,7 +1214,7 @@ void RS485_Init(u32 bound)
 		{
 
 				
-				if((RS485_RX_BUF[1]=='#')&&(RS485_RX_CNT==8)){OSMboxPost(RS485_STUTAS_MBOX,(void*)&RS485_RX_BUF);}
+				if((RS485_RX_BUF[1]=='#')&&(RS485_RX_CNT==13)){OSMboxPost(RS485_STUTAS_MBOX,(void*)&RS485_RX_BUF);}
 				if((RS485_RX_BUF[1]=='+')&&(RS485_RX_CNT==3)){OSMboxPost(RS485_RT,(void*)&RS485_RX_BUF);}
 				RS485_RX_CNT=0;
 
@@ -1222,7 +1226,7 @@ void RS485_Init(u32 bound)
 		if(RS485_RX_BUF[RS485_RX_CNT-1]==')')
 	{
 
-				if((RS485_RX_BUF[1]=='(')&&(RS485_RX_CNT==10)){OSMboxPost(RS485_STUTAS_MBOX_dis,(void*)&RS485_RX_BUF);}
+				if((RS485_RX_BUF[1]=='(')&&(RS485_RX_CNT==13)){OSMboxPost(RS485_STUTAS_MBOX_dis,(void*)&RS485_RX_BUF);}
 
 				RS485_RX_CNT=0;
 
@@ -1514,7 +1518,7 @@ DELAY_ON_para=AT24CXX_ReadOneByte(0x1000);  //存储DELAY_ON_para到eeprom
 
 }
 */
-void set_statuslist(u8 count,u8 id,u8 size,u8 work_status,u8 work_time,u8 dis_comm,u8 relay,status_dis_node *dis_list,status_comm_node *comm_list_1,status_comm_node *comm_list_2,u8 group)
+void set_statuslist(u8 count,u8 id,u8 size,u8 work_status,u8 work_time,u8 C_A,u8 C_B,u8 C_C,u8 dis_comm,u8 relay,status_dis_node *dis_list,status_comm_node *comm_list_1,status_comm_node *comm_list_2,u8 group)
 {
 if(dis_comm==0)
 {
@@ -1523,6 +1527,10 @@ if(relay==1)
        dis_list[count].myid[0]=id;
    	   dis_list[count].size[0]=size;
    	   dis_list[count].work_status[0]=work_status;
+	   dis_list[count].c_currentA=C_A;
+	    dis_list[count].c_currentB=C_B;
+	   dis_list[count].c_currentC=C_C;
+
 	     ///    Light_pad_onoff(1,id,work_status,3,3);
 
        }
@@ -1531,6 +1539,9 @@ if(relay==2)
 	dis_list[count].myid[1]=id;
    	   dis_list[count].size[1]=size;
    	   dis_list[count].work_status[1]=work_status;
+	   dis_list[count].c_currentA=C_A;
+	    dis_list[count].c_currentB=C_B;
+	   dis_list[count].c_currentC=C_C;
 	  ///       Light_pad_onoff(1,id,3,work_status,3);
 
        }
@@ -1539,7 +1550,10 @@ if(relay==3)
        dis_list[count].myid[2]=id;
    	   dis_list[count].size[2]=size;
    	   dis_list[count].work_status[2]=work_status;
-	  ///       Light_pad_onoff(1,id,3,3,work_status);
+	   dis_list[count].c_currentA=C_A;
+	    dis_list[count].c_currentB=C_B;
+	   dis_list[count].c_currentC=C_C;
+	   ///       Light_pad_onoff(1,id,3,3,work_status);
 
        }
 }
@@ -1568,7 +1582,7 @@ if(dis_comm==1)
 
 }
 /****************************************************************************************************/
-void init_Queue(u8 id,u8 size_1,u8 size_2,u8 work_status_1,u8 work_status_2,u8 *slave_comm,status_comm_node *comm_list)
+void init_Queue(u8 id,u8 size_1,u8 size_2,u8 work_status_1,u8 work_status_2,u8 cruccent_A,u8 cruccent_B,u8 cruccent_C,u8 work_time_1 ,u8 work_time_2 ,u8 *slave_comm,status_comm_node *comm_list)
 {
 u8 i=0;
 {
@@ -1580,6 +1594,11 @@ u8 i=0;
    	   comm_list[i].size=comm_list[i-1].size;
    	   comm_list[i].work_status=comm_list[i-1].work_status;
 	   comm_list[i].group=comm_list[i-1].group;
+	      comm_list[i].work_time=comm_list[i-1].work_time;
+		  comm_list[i].cruccent_A=comm_list[i-1].cruccent_A;
+		  		  comm_list[i].cruccent_B=comm_list[i-1].cruccent_B;
+		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
+
   		}
 	slave_comm[9]++;
 
@@ -1589,6 +1608,11 @@ u8 i=0;
    	   comm_list[i].size=comm_list[i-1].size;
    	   comm_list[i].work_status=comm_list[i-1].work_status;
 	   comm_list[i].group=comm_list[i-1].group;
+	   	      comm_list[i].work_time=comm_list[i-1].work_time;
+		  comm_list[i].cruccent_A=comm_list[i-1].cruccent_A;
+		  		  comm_list[i].cruccent_B=comm_list[i-1].cruccent_B;
+		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
+	  
   		}
 		slave_comm[7]++;
 			
@@ -1598,15 +1622,23 @@ u8 i=0;
    	   comm_list[i].size=comm_list[i-1].size;
    	   comm_list[i].work_status=comm_list[i-1].work_status;
 	   comm_list[i].group=comm_list[i-1].group;
-  		}	
+  	 comm_list[i].work_time=comm_list[i-1].work_time;
+			  comm_list[i].cruccent_A=comm_list[i-1].cruccent_A;
+		  		  comm_list[i].cruccent_B=comm_list[i-1].cruccent_B;
+		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
+
+         }	
 slave_comm[5]++;
 		
 	   comm_list[slave_comm[3]].myid=id;
    	   comm_list[slave_comm[3]].size=size_1;
    	   comm_list[slave_comm[3]].work_status=work_status_1;
 	   comm_list[slave_comm[3]].group=1;
-
-		 slave_comm[3]++;
+	   comm_list[slave_comm[3]].work_time=work_time_1;
+           comm_list[slave_comm[3]].cruccent_A=cruccent_A;
+comm_list[slave_comm[3]].cruccent_B=cruccent_B;
+comm_list[slave_comm[3]].cruccent_C=cruccent_C;
+		   slave_comm[3]++;
 		slave_comm[4]=slave_comm[3]+1;
 		slave_comm[6]=slave_comm[5]+1;
 		slave_comm[8]=slave_comm[7]+1;
@@ -1623,7 +1655,11 @@ slave_comm[5]++;
    	   comm_list[i].size=comm_list[i-1].size;
    	   comm_list[i].work_status=comm_list[i-1].work_status;
 	   comm_list[i].group=comm_list[i-1].group;
-  		}
+  	  	 comm_list[i].work_time=comm_list[i-1].work_time;
+			  comm_list[i].cruccent_A=comm_list[i-1].cruccent_A;
+		  		  comm_list[i].cruccent_B=comm_list[i-1].cruccent_B;
+		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
+	}
 	slave_comm[9]++;
 
 	  	for(i=slave_comm[7];i>slave_comm[6];i--)//10的队列移动
@@ -1632,14 +1668,22 @@ slave_comm[5]++;
    	   comm_list[i].size=comm_list[i-1].size;
    	   comm_list[i].work_status=comm_list[i-1].work_status;
 	   comm_list[i].group=comm_list[i-1].group;
-  		}
+  		  	 comm_list[i].work_time=comm_list[i-1].work_time;
+					  comm_list[i].cruccent_A=comm_list[i-1].cruccent_A;
+		  		  comm_list[i].cruccent_B=comm_list[i-1].cruccent_B;
+		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
+}
 		slave_comm[7]++;
 		
 	   comm_list[slave_comm[5]].myid=id;
    	   comm_list[slave_comm[5]].size=size_1;
    	   comm_list[slave_comm[5]].work_status=work_status_1;
 	   comm_list[slave_comm[5]].group=1;
-
+	   comm_list[slave_comm[5]].work_time=work_time_1;
+                comm_list[slave_comm[5]].cruccent_A=cruccent_A;
+comm_list[slave_comm[5]].cruccent_B=cruccent_B;
+comm_list[slave_comm[5]].cruccent_C=cruccent_C;
+		  
 	    slave_comm[5]++;
 		slave_comm[6]=slave_comm[5]+1;
 		slave_comm[8]=slave_comm[7]+1;
@@ -1654,13 +1698,21 @@ slave_comm[5]++;
    	   comm_list[i].size=comm_list[i-1].size;
    	   comm_list[i].work_status=comm_list[i-1].work_status;
 	   comm_list[i].group=comm_list[i-1].group;
-  		}
+  		  	 comm_list[i].work_time=comm_list[i-1].work_time;
+					  comm_list[i].cruccent_A=comm_list[i-1].cruccent_A;
+		  		  comm_list[i].cruccent_B=comm_list[i-1].cruccent_B;
+		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
+}
 	slave_comm[9]++;
 	
 	   comm_list[slave_comm[7]].myid=id;
    	   comm_list[slave_comm[7]].size=size_1;
    	   comm_list[slave_comm[7]].work_status=work_status_1;
 	   comm_list[slave_comm[7]].group=1;
+	  comm_list[slave_comm[7]].work_time=work_time_1;
+	            comm_list[slave_comm[7]].cruccent_A=cruccent_A;
+comm_list[slave_comm[7]].cruccent_B=cruccent_B;
+comm_list[slave_comm[7]].cruccent_C=cruccent_C;
 
 	       slave_comm[7]++;
 		slave_comm[8]=slave_comm[7]+1;
@@ -1673,7 +1725,12 @@ slave_comm[5]++;
    	   comm_list[slave_comm[9]].size=size_1;
    	   comm_list[slave_comm[9]].work_status=work_status_1;
 	   comm_list[slave_comm[9]].group=1;
-	   	    slave_comm[9]++;
+	   	  comm_list[slave_comm[9]].work_time=work_time_1;
+           comm_list[slave_comm[9]].cruccent_A=cruccent_A;
+comm_list[slave_comm[9]].cruccent_B=cruccent_B;
+comm_list[slave_comm[9]].cruccent_C=cruccent_C;
+
+			slave_comm[9]++;
 		 slave_comm[0]++;
 
   	}
@@ -1690,7 +1747,12 @@ slave_comm[5]++;
    	   comm_list[i].size=comm_list[i-1].size;
    	   comm_list[i].work_status=comm_list[i-1].work_status;
 	   comm_list[i].group=comm_list[i-1].group;
-  		}
+  	  	 comm_list[i].work_time=comm_list[i-1].work_time;
+			  comm_list[i].cruccent_A=comm_list[i-1].cruccent_A;
+		  		  comm_list[i].cruccent_B=comm_list[i-1].cruccent_B;
+		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
+		 
+	}
 	slave_comm[9]++;
 
 	  	for(i=slave_comm[7];i>slave_comm[6];i--)//10的队列移动
@@ -1699,7 +1761,11 @@ slave_comm[5]++;
    	   comm_list[i].size=comm_list[i-1].size;
    	   comm_list[i].work_status=comm_list[i-1].work_status;
 	   comm_list[i].group=comm_list[i-1].group;
-  		}
+  	  	 comm_list[i].work_time=comm_list[i-1].work_time;
+			  comm_list[i].cruccent_A=comm_list[i-1].cruccent_A;
+		  		  comm_list[i].cruccent_B=comm_list[i-1].cruccent_B;
+		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
+	}
 		slave_comm[7]++;
 			
 	  	for(i=slave_comm[5];i>slave_comm[4];i--)//5的队列移动
@@ -1708,13 +1774,21 @@ slave_comm[5]++;
    	   comm_list[i].size=comm_list[i-1].size;
    	   comm_list[i].work_status=comm_list[i-1].work_status;
 	   comm_list[i].group=comm_list[i-1].group;
-  		}	
+  	  	 comm_list[i].work_time=comm_list[i-1].work_time;
+				  comm_list[i].cruccent_A=comm_list[i-1].cruccent_A;
+		  		  comm_list[i].cruccent_B=comm_list[i-1].cruccent_B;
+		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
+	}	
 slave_comm[5]++;
 		
 	   comm_list[slave_comm[3]].myid=id;
    	   comm_list[slave_comm[3]].size=size_2;
    	   comm_list[slave_comm[3]].work_status=work_status_2;
 	   comm_list[slave_comm[3]].group=2;
+	  comm_list[slave_comm[3]].work_time=work_time_2;
+           comm_list[slave_comm[3]].cruccent_A=cruccent_A;
+comm_list[slave_comm[3]].cruccent_B=cruccent_B;
+comm_list[slave_comm[3]].cruccent_C=cruccent_C;
 
 		 slave_comm[3]++;
 		slave_comm[4]=slave_comm[3]+1;
@@ -1733,7 +1807,11 @@ slave_comm[5]++;
    	   comm_list[i].size=comm_list[i-1].size;
    	   comm_list[i].work_status=comm_list[i-1].work_status;
 	   comm_list[i].group=comm_list[i-1].group;
-  		}
+  		  	 comm_list[i].work_time=comm_list[i-1].work_time;
+			  comm_list[i].cruccent_A=comm_list[i-1].cruccent_A;
+		  		  comm_list[i].cruccent_B=comm_list[i-1].cruccent_B;
+		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
+}
 	slave_comm[9]++;
 
 	  	for(i=slave_comm[7];i>slave_comm[6];i--)//10的队列移动
@@ -1742,15 +1820,23 @@ slave_comm[5]++;
    	   comm_list[i].size=comm_list[i-1].size;
    	   comm_list[i].work_status=comm_list[i-1].work_status;
 	   comm_list[i].group=comm_list[i-1].group;
-  		}
+  	  	 comm_list[i].work_time=comm_list[i-1].work_time;
+				  comm_list[i].cruccent_A=comm_list[i-1].cruccent_A;
+		  		  comm_list[i].cruccent_B=comm_list[i-1].cruccent_B;
+		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
+	}
 		slave_comm[7]++;
 		
 	   comm_list[slave_comm[5]].myid=id;
    	   comm_list[slave_comm[5]].size=size_2;
-   	   comm_list[slave_comm[5]].work_status=work_status_2;
+   	   comm_list[slave_comm[5]].work_status=work_status_2;	   
 	   comm_list[slave_comm[5]].group=2;
+ comm_list[slave_comm[5]].work_time=work_time_2;
+           comm_list[slave_comm[5]].cruccent_A=cruccent_A;
+comm_list[slave_comm[5]].cruccent_B=cruccent_B;
+comm_list[slave_comm[5]].cruccent_C=cruccent_C;
 
-	    slave_comm[5]++;
+          slave_comm[5]++;
 		slave_comm[6]=slave_comm[5]+1;
 		slave_comm[8]=slave_comm[7]+1;
 		 slave_comm[0]++;
@@ -1764,15 +1850,23 @@ slave_comm[5]++;
    	   comm_list[i].size=comm_list[i-1].size;
    	   comm_list[i].work_status=comm_list[i-1].work_status;
 	   comm_list[i].group=comm_list[i-1].group;
-  		}
+  	  	 comm_list[i].work_time=comm_list[i-1].work_time;
+			  comm_list[i].cruccent_A=comm_list[i-1].cruccent_A;
+		  		  comm_list[i].cruccent_B=comm_list[i-1].cruccent_B;
+		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
+	}
 	slave_comm[9]++;
 	
 	   comm_list[slave_comm[7]].myid=id;
    	   comm_list[slave_comm[7]].size=size_2;
    	   comm_list[slave_comm[7]].work_status=work_status_2;
 	   comm_list[slave_comm[7]].group=2;
+	comm_list[slave_comm[7]].work_time=work_time_2;
+           comm_list[slave_comm[7]].cruccent_A=cruccent_A;
+comm_list[slave_comm[7]].cruccent_B=cruccent_B;
+comm_list[slave_comm[7]].cruccent_C=cruccent_C;
 
-	       slave_comm[7]++;
+		   slave_comm[7]++;
 		slave_comm[8]=slave_comm[7]+1;
 		 slave_comm[0]++;
 
@@ -1783,7 +1877,12 @@ slave_comm[5]++;
    	   comm_list[slave_comm[9]].size=size_2;
    	   comm_list[slave_comm[9]].work_status=work_status_2;
 	   comm_list[slave_comm[9]].group=2;
-	   	    slave_comm[9]++;
+	   comm_list[slave_comm[9]].work_time=work_time_2;
+           comm_list[slave_comm[9]].cruccent_A=cruccent_A;
+comm_list[slave_comm[9]].cruccent_B=cruccent_B;
+comm_list[slave_comm[9]].cruccent_C=cruccent_C;
+
+			slave_comm[9]++;
 		 slave_comm[0]++;
 
   	}
@@ -1811,7 +1910,7 @@ void change_Queue(u8 *slave_comm,status_comm_node *comm_list,u8 size)
 {
 
 u8 i=0;
-u8 m,s,w,g;
+u8 m,s,w,g,t,a,b,c;
 {
   if(size==2)
   	{
@@ -1819,6 +1918,10 @@ u8 m,s,w,g;
 	s=comm_list[slave_comm[2]].size;
 	w=comm_list[slave_comm[2]].work_status;
 	g=comm_list[slave_comm[2]].group;
+	t=comm_list[slave_comm[2]].work_time;
+	a=comm_list[slave_comm[2]].cruccent_A;
+       b=comm_list[slave_comm[2]].cruccent_B;
+        c=comm_list[slave_comm[2]].cruccent_C;
 
 	for(i=slave_comm[2];i<slave_comm[3]-1;i++)// 2 的队列移动
   		{
@@ -1826,6 +1929,12 @@ u8 m,s,w,g;
    	   comm_list[i].size=comm_list[i+1].size;
    	   comm_list[i].work_status=comm_list[i+1].work_status;
 	   comm_list[i].group=comm_list[i+1].group;
+	    comm_list[i].work_time=comm_list[i+1].work_time;
+		 comm_list[i].cruccent_A=comm_list[i+1].cruccent_A;
+		  comm_list[i].cruccent_B=comm_list[i+1].cruccent_B;
+		 comm_list[i].cruccent_C=comm_list[i+1].cruccent_C;
+
+
   		}
 
 		
@@ -1833,6 +1942,10 @@ u8 m,s,w,g;
    	   comm_list[slave_comm[3]-1].size=s;
    	   comm_list[slave_comm[3]-1].work_status=w;
 	   comm_list[slave_comm[3]-1].group=g;
+	   comm_list[slave_comm[3]-1].work_time=t;
+	comm_list[slave_comm[3]-1].cruccent_A=a;
+       comm_list[slave_comm[3]-1].cruccent_B=b;
+       comm_list[slave_comm[3]-1].cruccent_C=c;
 
   	}
   
@@ -1842,6 +1955,10 @@ u8 m,s,w,g;
 	s=comm_list[slave_comm[4]].size;
 	w=comm_list[slave_comm[4]].work_status;
 	g=comm_list[slave_comm[4]].group;
+	t=comm_list[slave_comm[4]].work_time;
+	a=comm_list[slave_comm[4]].cruccent_A;
+b=comm_list[slave_comm[4]].cruccent_B;
+c=comm_list[slave_comm[4]].cruccent_C;
 
 	for(i=slave_comm[4];i<slave_comm[5]-1;i++)//20的队列移动
   		{
@@ -1849,6 +1966,11 @@ u8 m,s,w,g;
    	   comm_list[i].size=comm_list[i+1].size;
    	   comm_list[i].work_status=comm_list[i+1].work_status;
 	   comm_list[i].group=comm_list[i+1].group;
+	 	    comm_list[i].work_time=comm_list[i+1].work_time;
+		 comm_list[i].cruccent_A=comm_list[i+1].cruccent_A;
+		  comm_list[i].cruccent_B=comm_list[i+1].cruccent_B;
+		 comm_list[i].cruccent_C=comm_list[i+1].cruccent_C;
+  
   		}
 
 		
@@ -1856,7 +1978,10 @@ u8 m,s,w,g;
    	   comm_list[slave_comm[5]-1].size=s;
    	   comm_list[slave_comm[5]-1].work_status=w;
 	   comm_list[slave_comm[5]-1].group=g;
-
+	   comm_list[slave_comm[5]-1].work_time=t;
+	comm_list[slave_comm[5]-1].cruccent_A=a;
+       comm_list[slave_comm[5]-1].cruccent_B=b;
+       comm_list[slave_comm[5]-1].cruccent_C=c;
   	}
 	if(size==10)
   	{
@@ -1864,6 +1989,10 @@ u8 m,s,w,g;
 	s=comm_list[slave_comm[6]].size;
 	w=comm_list[slave_comm[6]].work_status;
 	g=comm_list[slave_comm[6]].group;
+	t=comm_list[slave_comm[6]].work_time;
+	a=comm_list[slave_comm[6]].cruccent_A;
+b=comm_list[slave_comm[6]].cruccent_B;
+c=comm_list[slave_comm[6]].cruccent_C;
 
 	for(i=slave_comm[6];i<slave_comm[7]-1;i++)//20的队列移动
   		{
@@ -1871,6 +2000,11 @@ u8 m,s,w,g;
    	   comm_list[i].size=comm_list[i+1].size;
    	   comm_list[i].work_status=comm_list[i+1].work_status;
 	   comm_list[i].group=comm_list[i+1].group;
+	    comm_list[i].work_time=comm_list[i+1].work_time;
+		 comm_list[i].cruccent_A=comm_list[i+1].cruccent_A;
+		  comm_list[i].cruccent_B=comm_list[i+1].cruccent_B;
+		 comm_list[i].cruccent_C=comm_list[i+1].cruccent_C;
+
   		}
 
 		
@@ -1878,7 +2012,10 @@ u8 m,s,w,g;
    	   comm_list[slave_comm[7]-1].size=s;
    	   comm_list[slave_comm[7]-1].work_status=w;
 	   comm_list[slave_comm[7]-1].group=g;
-
+	comm_list[slave_comm[7]-1].work_time=t;
+	comm_list[slave_comm[7]-1].cruccent_A=a;
+      comm_list[slave_comm[7]-1].cruccent_B=b;
+        comm_list[slave_comm[7]-1].cruccent_C=c;
   	} 
 	if(size==20)
   	{
@@ -1886,13 +2023,21 @@ u8 m,s,w,g;
 	s=comm_list[slave_comm[8]].size;
 	w=comm_list[slave_comm[8]].work_status;
 	g=comm_list[slave_comm[8]].group;
-
+	t=comm_list[slave_comm[8]].work_time;
+	a=comm_list[slave_comm[8]].cruccent_A;
+b=comm_list[slave_comm[8]].cruccent_B;
+c=comm_list[slave_comm[8]].cruccent_C;
 	for(i=slave_comm[8];i<slave_comm[9]-1;i++)//20的队列移动
   		{
 	   comm_list[i].myid=comm_list[i+1].myid;
    	   comm_list[i].size=comm_list[i+1].size;
    	   comm_list[i].work_status=comm_list[i+1].work_status;
 	   comm_list[i].group=comm_list[i+1].group;
+	    comm_list[i].work_time=comm_list[i+1].work_time;
+		 comm_list[i].cruccent_A=comm_list[i+1].cruccent_A;
+		  comm_list[i].cruccent_B=comm_list[i+1].cruccent_B;
+		 comm_list[i].cruccent_C=comm_list[i+1].cruccent_C;
+
   		}
 
 		
@@ -1900,6 +2045,10 @@ u8 m,s,w,g;
    	   comm_list[slave_comm[9]-1].size=s;
    	   comm_list[slave_comm[9]-1].work_status=w;
 	   comm_list[slave_comm[9]-1].group=g;
+	   	comm_list[slave_comm[9]-1].work_time=t;
+	comm_list[slave_comm[9]-1].cruccent_A=a;
+      comm_list[slave_comm[9]-1].cruccent_B=b;
+        comm_list[slave_comm[9]-1].cruccent_C=c;
 
   	}
 }
@@ -1910,7 +2059,7 @@ void flash_comm_list(u8 id,u8 size ,u8 work_status ,u8 group,u8 *slave_comm,stat
 
 
 *********************************************/
-void flash_comm_list(u8 id,u8 size ,u8 work_status ,u8 group,u8 *slave_comm,status_comm_node *comm_list)
+void flash_comm_list(u8 id,u8 size ,u8 work_status ,u8 group,u8 cruccent_A,u8 cruccent_B,u8 cruccent_C, u8 work_time,u8 *slave_comm,status_comm_node *comm_list)
 {
 u8 i;
 if(size==2)
@@ -1923,7 +2072,10 @@ if(size==2)
    	   comm_list[i].size=size;
    	   comm_list[i].work_status=work_status;
 	   comm_list[i].group=group;
-	   if(work_status==0)comm_list[i].work_time=0;
+	   comm_list[i].cruccent_A=cruccent_A;
+	   comm_list[i].cruccent_B=cruccent_B;
+	   comm_list[i].cruccent_C=cruccent_C;
+	   comm_list[i].work_time=work_time;
 	   break;
 		}
 	}
@@ -1939,8 +2091,10 @@ if(size==5)
    	   comm_list[i].size=size;
    	   comm_list[i].work_status=work_status;
 	   comm_list[i].group=group;
-	   	   if(work_status==0)comm_list[i].work_time=0;
-
+	   comm_list[i].cruccent_A=cruccent_A;
+	   comm_list[i].cruccent_B=cruccent_B;
+	   comm_list[i].cruccent_C=cruccent_C;
+	   comm_list[i].work_time=work_time;
 	   break;
 		}
 	}
@@ -1956,8 +2110,10 @@ if(size==10)
    	   comm_list[i].size=size;
    	   comm_list[i].work_status=work_status;
 	   comm_list[i].group=group;
-	   	   if(work_status==0)comm_list[i].work_time=0;
-
+	   comm_list[i].cruccent_A=cruccent_A;
+	   comm_list[i].cruccent_B=cruccent_B;
+	   comm_list[i].cruccent_C=cruccent_C;
+	   comm_list[i].work_time=work_time;
 	   break;
 		}
 	}
@@ -1973,8 +2129,10 @@ if(size==20)
    	   comm_list[i].size=size;
    	   comm_list[i].work_status=work_status;
 	   comm_list[i].group=group;
-	   	   if(work_status==0)comm_list[i].work_time=0;
-
+	   comm_list[i].cruccent_A=cruccent_A;
+	   comm_list[i].cruccent_B=cruccent_B;
+	   comm_list[i].cruccent_C=cruccent_C;
+	   comm_list[i].work_time=work_time;
 	   break;
 		}
 	}
@@ -1998,6 +2156,14 @@ u8 j=0;
    	   comm_list[j].size=comm_list[j+1].size;
    	   comm_list[j].work_status=comm_list[j+1].work_status;
 	   comm_list[j].group=comm_list[j+1].group;
+	      	   comm_list[j].work_time=comm_list[j+1].work_time;
+		   comm_list[j].cruccent_A=comm_list[j+1].cruccent_A;
+			   comm_list[j].cruccent_B=comm_list[j+1].cruccent_B;
+			   comm_list[j].cruccent_C=comm_list[j+1].cruccent_C;
+			   
+	   
+	   
+
 		      }
 	       if(i<slave_comm[3])
 		   	{
@@ -2007,7 +2173,10 @@ u8 j=0;
    	               comm_list[slave_comm[3]].size=0;
    	                comm_list[slave_comm[3]].work_status=0;
 	              comm_list[slave_comm[3]].group=0;
-
+                  comm_list[slave_comm[3]].work_time=0;
+			    comm_list[slave_comm[3]].cruccent_A=0;	  
+			comm_list[slave_comm[3]].cruccent_B=0;	  
+	comm_list[slave_comm[3]].cruccent_C=0;	 
 		          }	
 		   
                       {
@@ -2017,7 +2186,10 @@ u8 j=0;
    	               comm_list[slave_comm[5]].size=0;
    	                comm_list[slave_comm[5]].work_status=0;
 	              comm_list[slave_comm[5]].group=0;
-
+                  comm_list[slave_comm[5]].work_time=0;
+	   			    comm_list[slave_comm[5]].cruccent_A=0;	  
+			comm_list[slave_comm[5]].cruccent_B=0;	  
+	comm_list[slave_comm[5]].cruccent_C=0;	 
 		          }	
 				  
                       {
@@ -2027,7 +2199,10 @@ u8 j=0;
    	               comm_list[slave_comm[7]].size=0;
    	                comm_list[slave_comm[7]].work_status=0;
 	              comm_list[slave_comm[7]].group=0;
-
+                  comm_list[slave_comm[7]].work_time=0;
+	  			    comm_list[slave_comm[7]].cruccent_A=0;	  
+			comm_list[slave_comm[7]].cruccent_B=0;	  
+	comm_list[slave_comm[7]].cruccent_C=0;	 
 		          }			
 				  
 	             {
@@ -2037,8 +2212,11 @@ u8 j=0;
    	               comm_list[slave_comm[9]].size=0;
    	                comm_list[slave_comm[9]].work_status=0;
 	              comm_list[slave_comm[9]].group=0;
-
-		          }
+                  comm_list[slave_comm[9]].work_time=0;
+	  			    comm_list[slave_comm[9]].cruccent_A=0;	  
+			comm_list[slave_comm[9]].cruccent_B=0;	  
+	comm_list[slave_comm[9]].cruccent_C=0;			        
+	}
 		   	}
 		else if(i<slave_comm[5]&&i>slave_comm[3])
 			{
@@ -2049,7 +2227,10 @@ u8 j=0;
    	               comm_list[slave_comm[5]].size=0;
    	                comm_list[slave_comm[5]].work_status=0;
 	              comm_list[slave_comm[5]].group=0;
-
+                  comm_list[slave_comm[5]].work_time=0;
+	 	  			    comm_list[slave_comm[5]].cruccent_A=0;	  
+			comm_list[slave_comm[5]].cruccent_B=0;	  
+	comm_list[slave_comm[5]].cruccent_C=0;	
 		          }	
 				  
                       {
@@ -2059,7 +2240,10 @@ u8 j=0;
    	               comm_list[slave_comm[7]].size=0;
    	                comm_list[slave_comm[7]].work_status=0;
 	              comm_list[slave_comm[7]].group=0;
-
+                  comm_list[slave_comm[7]].work_time=0;
+	 	  			    comm_list[slave_comm[7]].cruccent_A=0;	  
+			comm_list[slave_comm[7]].cruccent_B=0;	  
+	comm_list[slave_comm[7]].cruccent_C=0;	
 		          }			
 				  
 	             {
@@ -2069,7 +2253,10 @@ u8 j=0;
    	               comm_list[slave_comm[9]].size=0;
    	                comm_list[slave_comm[9]].work_status=0;
 	              comm_list[slave_comm[9]].group=0;
-
+                  comm_list[slave_comm[9]].work_time=0;
+	 	  			    comm_list[slave_comm[9]].cruccent_A=0;	  
+			comm_list[slave_comm[9]].cruccent_B=0;	  
+	comm_list[slave_comm[9]].cruccent_C=0;	
 		          }
 		   	}
 		else if(i<slave_comm[7]&&i>slave_comm[5])
@@ -2081,7 +2268,10 @@ u8 j=0;
    	               comm_list[slave_comm[7]].size=0;
    	                comm_list[slave_comm[7]].work_status=0;
 	              comm_list[slave_comm[7]].group=0;
-
+                  comm_list[slave_comm[7]].work_time=0;
+		  			    comm_list[slave_comm[7]].cruccent_A=0;	  
+			comm_list[slave_comm[7]].cruccent_B=0;	  
+	comm_list[slave_comm[7]].cruccent_C=0;		
 		          }			
 				  
 	             {
@@ -2091,7 +2281,10 @@ u8 j=0;
    	               comm_list[slave_comm[9]].size=0;
    	                comm_list[slave_comm[9]].work_status=0;
 	              comm_list[slave_comm[9]].group=0;
-
+                  comm_list[slave_comm[9]].work_time=0;
+	    	  			    comm_list[slave_comm[9]].cruccent_A=0;	  
+			comm_list[slave_comm[9]].cruccent_B=0;	  
+	comm_list[slave_comm[9]].cruccent_C=0;	
 		          }
 		   	}
 		else if(i<slave_comm[9]&&i>slave_comm[7])
@@ -2103,7 +2296,10 @@ u8 j=0;
    	               comm_list[slave_comm[9]].size=0;
    	                comm_list[slave_comm[9]].work_status=0;
 	              comm_list[slave_comm[9]].group=0;
-
+                  comm_list[slave_comm[9]].work_time=0;
+		  			    comm_list[slave_comm[9]].cruccent_A=0;	  
+			comm_list[slave_comm[9]].cruccent_B=0;	  
+	comm_list[slave_comm[9]].cruccent_C=0;	
 		          }
 		   	}
 
@@ -2133,7 +2329,7 @@ u8 inquiry_slave_status_comm(u8 id,u8 *slave_comm,status_comm_node *comm_list)
 	{ 
 if(msg[2]==id)
 		{
- init_Queue(id,msg[3],msg[4],msg[5],msg[6],slave_comm,comm_list);
+ init_Queue(id,msg[3],msg[4],msg[5],msg[6],msg[7],msg[8],msg[9],msg[10],msg[11],slave_comm,comm_list);
 		
 	return 1;
 		}
@@ -2183,9 +2379,9 @@ return 1;
 /**************/
  void rs485_trans_status_dis(u8 count,u8 *tx_r485,status_dis_node *dis_list,status_comm_node *comm_list)//主机程序，主机命令解析成RS485信息，发送给目的从机
  	{
- 	 set_statuslist(count,tx_r485[2],tx_r485[3],tx_r485[6],0,0,1,dis_list,comm_list,0,0);//主机状态信息写入状态表
-	 set_statuslist(count,tx_r485[2],tx_r485[4],tx_r485[7],0,0,2,dis_list,comm_list,0,0);//主机状态信息写入状态表
-      	  set_statuslist(count,tx_r485[2],tx_r485[5],tx_r485[8],0,0,3,dis_list,comm_list,0,0);//主机状态信息写入状态表
+ 	 set_statuslist(count,tx_r485[2],tx_r485[3],tx_r485[6],tx_r485[9],tx_r485[10],tx_r485[11],0,0,1,dis_list,comm_list,0,0);//主机状态信息写入状态表
+	 set_statuslist(count,tx_r485[2],tx_r485[4],tx_r485[7],tx_r485[9],tx_r485[10],tx_r485[11],0,0,2,dis_list,comm_list,0,0);//主机状态信息写入状态表
+      	  set_statuslist(count,tx_r485[2],tx_r485[5],tx_r485[8],tx_r485[9],tx_r485[10],tx_r485[11],0,0,3,dis_list,comm_list,0,0);//主机状态信息写入状态表
 
    } 
  	
@@ -4275,6 +4471,7 @@ for(g_1=1;g_1<=slave_dis[0];g_1++)
 if(i==dis_list[g_1].myid[0])
 	{
 	dis_list[g_1].work_status[0]=2;dis_list[g_1].myid[0]=0;
+	dis_list[g_1].c_currentA=0;dis_list[g_1].c_currentB=0;dis_list[g_1].c_currentC=0;
          break;
        }
 
@@ -4284,7 +4481,8 @@ for(g_2=1;g_2<=slave_dis[0];g_2++)
 if(i==dis_list[g_2].myid[1])
 	{
 	dis_list[g_2].work_status[1]=2;dis_list[g_2].myid[1]=0;
-         break;
+       dis_list[g_2].c_currentA=0;dis_list[g_2].c_currentB=0;dis_list[g_2].c_currentC=0;
+	   break;
        }
 
 }
@@ -4295,7 +4493,8 @@ for(g_3=1;g_3<=slave_dis[0];g_3++)
 if(i==dis_list[g_3].myid[2])
 	{
 	dis_list[g_3].work_status[2]=2;dis_list[g_3].myid[2]=0;
-         break;
+dis_list[g_3].c_currentA=0;dis_list[g_3].c_currentB=0;dis_list[g_3].c_currentC=0;
+		 break;
        }
 
 }
@@ -4304,6 +4503,9 @@ for(f_1=g_1;f_1<slave_dis[0];f_1++)
 dis_list[f_1].myid[0]=dis_list[f_1+1].myid[0];
 dis_list[f_1].work_status[0]=dis_list[f_1+1].work_status[0];
 dis_list[f_1].size[0]=dis_list[f_1+1].size[0];
+dis_list[f_1].c_currentA=dis_list[f_1+1].c_currentA;
+dis_list[f_1].c_currentB=dis_list[f_1+1].c_currentB;
+dis_list[f_1].c_currentC=dis_list[f_1+1].c_currentC;
 
 }
 
@@ -4312,7 +4514,9 @@ for(f_2=g_2;f_2<slave_dis[0];f_2++)
 dis_list[f_2].myid[1]=dis_list[f_2+1].myid[1];
 dis_list[f_2].work_status[1]=dis_list[f_2+1].work_status[1];
 dis_list[f_2].size[1]=dis_list[f_2+1].size[1];
-
+dis_list[f_2].c_currentA=dis_list[f_2+1].c_currentA;
+dis_list[f_2].c_currentB=dis_list[f_2+1].c_currentB;
+dis_list[f_2].c_currentC=dis_list[f_2+1].c_currentC;
 }
 
 for(f_3=g_3;f_3<slave_dis[0];f_3++)
@@ -4320,7 +4524,9 @@ for(f_3=g_3;f_3<slave_dis[0];f_3++)
 dis_list[f_3].myid[2]=dis_list[f_3+1].myid[2];
 dis_list[f_3].work_status[2]=dis_list[f_3+1].work_status[2];
 dis_list[f_3].size[2]=dis_list[f_3+1].size[2];
-
+dis_list[f_3].c_currentA=dis_list[f_3+1].c_currentA;
+dis_list[f_3].c_currentB=dis_list[f_3+1].c_currentB;
+dis_list[f_3].c_currentC=dis_list[f_3+1].c_currentC;
 }
 slave_dis[0]--;
 
@@ -4335,9 +4541,9 @@ if(msg[3]==6)capa1_array[msg[2]-1]=20;
 dis_err[i-1]=0;
 		for(s=1;s<=slave_dis[0];s++)
 			{
-                   if(i==dis_list[s].myid[0])dis_list[s].work_status[0]=msg[6];
-                   if(i==dis_list[s].myid[1])dis_list[s].work_status[1]=msg[7];
-                   if(i==dis_list[s].myid[2])dis_list[s].work_status[2]=msg[8];
+                   if(i==dis_list[s].myid[0]){dis_list[s].work_status[0]=msg[6];dis_list[s].c_currentA=msg[9];dis_list[s].c_currentB=msg[10];dis_list[s].c_currentC=msg[11];}
+                   if(i==dis_list[s].myid[1]){dis_list[s].work_status[1]=msg[7];dis_list[s].c_currentA=msg[9];dis_list[s].c_currentB=msg[10];dis_list[s].c_currentC=msg[11];}
+                   if(i==dis_list[s].myid[2]){dis_list[s].work_status[2]=msg[8];dis_list[s].c_currentA=msg[9];dis_list[s].c_currentB=msg[10];dis_list[s].c_currentC=msg[11];}
 			}
 Light_pad_on(0,i,msg[6],msg[7],msg[8]);
 set_clear_existence(1,i,&hand_light_existence);
@@ -4354,7 +4560,7 @@ set_bit(i, 0,&light_status,msg[6],msg[7], msg[8],0);
 
 j=0;
 {
-for(i=slave_dis[0]+1;i<=32;i++)
+for(i=slave_dis[0]+1;i<=32;i++)// 共补id 开始扫描
 	{  
 
 for(g=0;g<=slave_comm[9]-1;g++)
@@ -4408,8 +4614,8 @@ else  if(msg[2]==i)
 
 	if(flag_comm==1)
 		{
-		 flash_comm_list(i,msg[3] ,msg[5] ,1,slave_comm,comm_list);
-		 flash_comm_list(i,msg[4] ,msg[6] ,2,slave_comm,comm_list);
+		 flash_comm_list(i,msg[3] ,msg[5] ,1,msg[7],msg[8],msg[9],msg[10],slave_comm,comm_list);
+		 flash_comm_list(i,msg[4] ,msg[6] ,2,msg[7],msg[8],msg[9],msg[11],slave_comm,comm_list);
 		}
        }
 
@@ -5268,20 +5474,6 @@ if(delay_off==1)
 	}
 if(delay_off==0){delay_off_cont=AT24CXX_ReadOneByte(0x2000);delay_off_cont=delay_off_cont*2;}
 
-for(j=slave_comm[8];j<=slave_comm[9]-1;j++)
-if(comm_list[j].work_status==1&&comm_list[j].work_time<turn_reset_time)
-{	comm_list[j].work_time++;
-
-//if(comm_list[j].work_time==turn_reset_time){Light_pad_on(1,16,2,2,2);}
-}
-for(j=slave_comm[6];j<=slave_comm[7]-1;j++)
-if(comm_list[j].work_status==1&&comm_list[j].work_time<turn_reset_time)comm_list[j].work_time++;
-
-for(j=slave_comm[4];j<=slave_comm[5]-1;j++)
-if(comm_list[j].work_status==1&&comm_list[j].work_time<turn_reset_time)comm_list[j].work_time++;
-
-for(j=slave_comm[2];j<=slave_comm[3]-1;j++)
-if(comm_list[j].work_status==1&&comm_list[j].work_time<turn_reset_time)comm_list[j].work_time++;
 
 
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update  );  //清除TIMx更新中断标志
@@ -5329,7 +5521,7 @@ if(true_false==1){(*exist)=(0x00000001<<b)|(*exist);}
 
 }
 
-void turn_reset(status_comm_node *comm_list,u8 *slave_comm)
+u8 turn_reset(status_comm_node *comm_list,u8 *slave_comm)
 {
 u8 i,j;
 
@@ -5343,12 +5535,12 @@ for(i=slave_comm[8];i<=slave_comm[9]-1;i++)
 if(comm_list[i].work_status==0)
 {
 {
-if(delay_off==0)delay_off=1;
-if(delay_off_cont==0)
+//if(delay_off==0)delay_off=1;
+//if(delay_off_cont==0)
 {
 order_trans_rs485(mybox.myid,comm_list[j].myid,1,comm_list[j].group,0,CONTROL);
 //comm_list[j].work_time=turn_reset_time_ok;
-delay_off=0;
+//delay_off=0;
 }
 }
 
@@ -5397,9 +5589,9 @@ if(delay_off==0)delay_off=1;
 if(delay_off_cont==0)
 {
 order_trans_rs485(mybox.myid,comm_list[j].myid,1,comm_list[j].group,0,CONTROL);
-//comm_list[j].work_time=turn_reset_time_ok;
 delay_off=0;
-
+//comm_list[j].work_time=0;
+//comm_list[j].work_time=turn_reset_time_ok;
 }
 }
 
@@ -5415,29 +5607,75 @@ for(i=slave_comm[2];i<=slave_comm[3]-1;i++)
 if(comm_list[i].work_status==0)
 {
 {
-
 if(delay_off==0)delay_off=1;
 if(delay_off_cont==0)
 {
 order_trans_rs485(mybox.myid,comm_list[j].myid,1,comm_list[j].group,0,CONTROL);
-//comm_list[j].work_time=turn_reset_time_ok;
 delay_off=0;
+//comm_list[j].work_time=turn_reset_time_ok;
+//comm_list[j].work_time=0;
+
 }
 }
-/*
-{
-order_trans_rs485(mybox.myid,comm_list[i].myid,1,comm_list[i].group,1,CONTROL);
-		{
- change_Queue(slave_comm,comm_list,2);			
 
 
-		}
-}
-
-*/
 }
 
 	  }
+}
+
+
+void capacitor_current(status_dis_node *dis_list,status_comm_node *comm_list)
+{
+u8 j;
+u32 fenbu_C_A=0,fenbu_C_B=0,fenbu_C_C=0;
+dianliuzhi_C_A=0;
+dianliuzhi_C_B=0;
+dianliuzhi_C_C=0;
+
+for(j=1;j<=slave_dis[0];j++){fenbu_C_A=dis_list[j].c_currentA;fenbu_C_B=dis_list[j].c_currentB;fenbu_C_C=dis_list[j].c_currentC;}
+
+
+for(j=slave_comm[8];j<=slave_comm[9]-1;j++)
+	{
+	dianliuzhi_C_A=dianliuzhi_C_A+comm_list[j].cruccent_A;
+		dianliuzhi_C_B=dianliuzhi_C_B+comm_list[j].cruccent_B;
+		dianliuzhi_C_C=dianliuzhi_C_C+comm_list[j].cruccent_C;
+
+        }
+	
+for(j=slave_comm[6];j<=slave_comm[7]-1;j++)
+	{
+	dianliuzhi_C_A=dianliuzhi_C_A+comm_list[j].cruccent_A;
+		dianliuzhi_C_B=dianliuzhi_C_B+comm_list[j].cruccent_B;
+		dianliuzhi_C_C=dianliuzhi_C_C+comm_list[j].cruccent_C;
+
+        }
+for(j=slave_comm[4];j<=slave_comm[5]-1;j++)
+	{
+	dianliuzhi_C_A=dianliuzhi_C_A+comm_list[j].cruccent_A;
+		dianliuzhi_C_B=dianliuzhi_C_B+comm_list[j].cruccent_B;
+		dianliuzhi_C_C=dianliuzhi_C_C+comm_list[j].cruccent_C;
+
+        }
+for(j=slave_comm[2];j<=slave_comm[3]-1;j++)
+	{
+	dianliuzhi_C_A=dianliuzhi_C_A+comm_list[j].cruccent_A;
+		dianliuzhi_C_B=dianliuzhi_C_B+comm_list[j].cruccent_B;
+		dianliuzhi_C_C=dianliuzhi_C_C+comm_list[j].cruccent_C;
+
+        }
+dianliuzhi_C_A=dianliuzhi_C_A/2;
+dianliuzhi_C_B=dianliuzhi_C_B/2;
+dianliuzhi_C_C=dianliuzhi_C_C/2;
+
+
+dianliuzhi_C_A=dianliuzhi_C_A+fenbu_C_A;
+dianliuzhi_C_B=dianliuzhi_C_B+fenbu_C_B;
+dianliuzhi_C_C=dianliuzhi_C_C+fenbu_C_C;
+
+
+
 }
 
 #ifdef  USE_FULL_ASSERT

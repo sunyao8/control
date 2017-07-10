@@ -17,7 +17,8 @@ u8 capa1_array[32],capa2_array[32];
 extern u8 Work_Flag;//设置界面的闪烁标志位
 extern u16 dianya_zhi;
 extern u8 hguestnum,gonglvshishu;
-extern u32 idle_time,scan_time,dianliuzhi;
+extern u32 dianliuzhi;
+extern u32 dianliuzhi_C_A,dianliuzhi_C_B,dianliuzhi_C_C;
 extern u16 wugongkvar,allkvar;
 extern float32_t HV,HI,A_HV,B_HV,C_HV,A_HI,B_HI,C_HI;
 extern s8 L_C_flag;
@@ -886,7 +887,7 @@ break;
 	 case 6:										   //显示投入的电容电流
 
 	 Clera_lcd();
-	 Graf_current_value(0,0,0);
+	 Graf_current_value(dianliuzhi_C_A,dianliuzhi_C_B,dianliuzhi_C_C);
 	 
 //	 Graf_current_value(dianya_zhi_A*10,dianya_zhi_B*10,dianya_zhi_C*10);
 	 break;
