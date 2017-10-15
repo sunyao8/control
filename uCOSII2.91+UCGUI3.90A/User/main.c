@@ -2575,7 +2575,7 @@ dianliuzhi=T*maxValue_C*cruccent_ratio;
 arm_sqrt_f32(1-(arm_cos_f32(angle[0]-angle[1]))*(arm_cos_f32(angle[0]-angle[1])),&sine);
 gonglvshishu=sine*100;
 if(gonglvshishu<10&&gonglvshishu>=0){L_C_flag_B=0;}
-if(dianliuzhi<zero_limit*T){gonglvshishu=100;dianliuzhi=0;L_C_flag_B=1;}//电流小于0.1A 时，电流就清零
+if(dianliuzhi<zero_limit*T|dianya_zhi<=100){gonglvshishu=100;dianliuzhi=0;L_C_flag_B=1;}//电流小于0.1A 时，电流就清零
 else dianliuzhi=0.97*(dianliuzhi/1000);
 arm_sqrt_f32(1-sine*sine,&cose);
 
@@ -2809,7 +2809,7 @@ angle[2]=((angle[2])*PI2)/360;
 
 /***************************************************************/
  dianliuzhi_A=cruccent_ratio*maxValue_C*T;
- if(dianliuzhi_A<=zero_limit*T){dianliuzhi_A=0;gonglvshishu_A=100;L_C_flag_A=1;}
+ if(dianliuzhi_A<=zero_limit*T|dianya_zhi_A<=100){dianliuzhi_A=0;gonglvshishu_A=100;L_C_flag_A=1;}
 else{ 
 	dianliuzhi_A=0.99*dianliuzhi_A/1000;
 	gonglvshishu_A=arm_cos_f32(angle[2])*100;//功率因素
@@ -2956,7 +2956,7 @@ angle[2]=((angle[2])*PI2)/360;
 
 /***************************************************************/
 dianliuzhi_B=cruccent_ratio*maxValue_C*T;
- if(dianliuzhi_B<=zero_limit*T){dianliuzhi_B=0;gonglvshishu_B=100;L_C_flag_B=1;}
+ if(dianliuzhi_B<=zero_limit*T|dianya_zhi_B<=100){dianliuzhi_B=0;gonglvshishu_B=100;L_C_flag_B=1;}
 else {
         dianliuzhi_B=0.99*dianliuzhi_B/1000;
 	gonglvshishu_B=arm_cos_f32(angle[2])*100;//功率因素
@@ -3114,7 +3114,7 @@ angle[2]=((angle[2])*PI2)/360;
 
 /***************************************************************/
 dianliuzhi_C=cruccent_ratio*maxValue_C*T;
- if(dianliuzhi_C<=zero_limit*T){dianliuzhi_C=0;gonglvshishu_C=100;L_C_flag_C=1;}
+ if(dianliuzhi_C<=zero_limit*T|dianya_zhi_C<=100){dianliuzhi_C=0;gonglvshishu_C=100;L_C_flag_C=1;}
 else
 	{
 	dianliuzhi_C=0.99*dianliuzhi_C/1000;

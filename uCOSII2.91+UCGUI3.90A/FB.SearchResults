@@ -1,13 +1,3 @@
----- set_statuslist Matches (12 in 2 files) ----
-Main.c (user):void set_statuslist(u8 count,u8 id,u8 size,u8 work_status,u8 work_time,u8 dis_comm,u8 relay,status_dis_node *dis_list,status_comm_node *comm_list_1,status_comm_node *comm_list_2,u8 group);
-Main.c (user):void set_statuslist(u8 count,u8 id,u8 size,u8 work_status,u8 work_time,u8 dis_comm,u8 relay,status_dis_node *dis_list,status_comm_node *comm_list_1,status_comm_node *comm_list_2,u8 group)
-Main.c (user):set_statuslist(id,status_box.size[0],status_box.work_status[0],status_box.work_time[0],0,1,dis_list,comm_list);
-Main.c (user):set_statuslist(id,status_box.size[1],status_box.work_status[1],status_box.work_time[1],0,2,dis_list,comm_list);
-Main.c (user):set_statuslist(id,status_box.size[2],status_box.work_status[2],status_box.work_time[2],0,3,dis_list,comm_list);
-Main.c (user): 	 set_statuslist(count,tx_r485[2],tx_r485[3],tx_r485[6],0,0,1,dis_list,comm_list,0,0);//主机状态信息写入状态表
-Main.c (user):	 set_statuslist(count,tx_r485[2],tx_r485[4],tx_r485[7],0,0,2,dis_list,comm_list,0,0);//主机状态信息写入状态表
-Main.c (user):      	  set_statuslist(count,tx_r485[2],tx_r485[5],tx_r485[8],0,0,3,dis_list,comm_list,0,0);//主机状态信息写入状态表
-Project.htm (mdk_project\out):<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = rs485_trans_status_dis &rArr; set_statuslist
-Project.htm (mdk_project\out):<BR>[Calls]<UL><LI><a href="#[162]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_statuslist
-Project.htm (mdk_project\out):<P><STRONG><a name="[162]"></a>set_statuslist</STRONG> (Thumb, 92 bytes, Stack size 20 bytes, main.o(i.set_statuslist))
-Project.htm (mdk_project\out):<BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = set_statuslist
+---- CH452_DIG0 Matches (2 in 2 files) ----
+Ch452.c (lcd\src): 	 CH452_I2c_WrByte(CH452_DIG0|OFF_OFF,i);
+Ch452.h (lcd\inc):#define CH452_DIG0      0x0800					// 数码管位0显示,需另加8位数据
