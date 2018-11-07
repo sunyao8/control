@@ -118,7 +118,7 @@ u16 ADC_Converted_VValue=0;
 u16 ADC_Converted_CValue=0;
 u16 ADC_Converted_base=0;
 
-u8 vernum=101,gonglvshishu=0;
+u8 vernum=3,gonglvshishu=0;
 u16 dianya_zhi=0,wugongkvar=0,allkvar=0;
 float32_t HV=0,HI=0,A_HV=0,A_HI=0,B_HV=0,B_HI=0,C_HV=0,C_HI=0;
 u32	dianliuzhi=0;
@@ -262,9 +262,9 @@ void set_clear_existence(u8 true_false,u8 b,u32 *exist);
 /*************************************MAster data structure_end***************/
 void capacitor_current(status_dis_node *dis_list,status_comm_node *comm_list);
 
-
-
-
+void verson_updata();
+void deadtime_deal();
+#define TIME_LIVE 2*365*24*3
 u8 L_C_flag_A=1;//感性容性标准变量
 u8 L_C_flag_B=1;//感性容性标准变量
 u8 L_C_flag_C=1;//感性容性标准变量
@@ -317,7 +317,7 @@ GPIO_Configuration();
 initmybox();//初始化自身信息
  init_light_off();
  LIGHT_backligt_on();
-
+verson_updata();
 os_err = os_err; 
 
 
@@ -448,6 +448,8 @@ u8 i;
  	
 
 OSSemPost(computer_sem);
+order_trans_rs485(0,0,0,0,0,VERSON);
+
 if(KEY_2==1)
 	{
 	}
@@ -520,7 +522,15 @@ u8 status_1,status_2,status_3,status_4;
 u8 exist;
 u8 i;
 	for(;;)
-		{  ParaSet();
+		{  
+ 
+//dianya_zhi=AT24CXX_ReadLenByte_sy(0xe000,2);//显示测试
+//dianliuzhi=AT24CXX_ReadLenByte_sy(0xe000,2);//显示测试
+
+//dianliuzhi=dianliuzhi/1000;
+//dianya_zhi=AT24CXX_ReadOneByte(0x9000);
+
+		ParaSet();
 	if(COMMCAT_para==1)
 {
 
@@ -618,6 +628,10 @@ if(Work_Flag==0)Light_pad_off(dis_com,hand_id,2,2,2);
 		  
 
 }
+
+
+
+
                      delay_ms(100);//100
 
 	        }
@@ -733,12 +747,13 @@ u8 err;
 
           while(1)
           	{
-       	OSSemPend(urgent_sem,0,&err);      	
+ 	OSSemPend(urgent_sem,0,&err);      	
 //{order_trans_rs485(mybox.myid,0,1,1,0,CONTROL);order_trans_rs485(mybox.myid,0,1,2,0,CONTROL);}
 	
+//verson_updata();
+deadtime_deal();
 
-
-
+delay_ms(100);
 
 		  }
 
@@ -795,7 +810,7 @@ HT1621_Init();
 AT24CXX_Init();
 	KEY_Init();          //初始化与按键连接的硬件接口  
 	CH452_Init();
-
+delay_us(500000);
 /***********************采样和DMA**************************************/	
 #if (FUNCTION_MODULE == DF_THREE)
 //ADC2_CH8_DMA_Config_VEE();
@@ -809,7 +824,7 @@ IWDG_Init(6,625);
 
 
 /*************************TIME*******************************/
-TIM4_Int_Init(4999,7199);//10Khz的计数频率，计数10K次为1000ms 
+TIM4_Int_Init(9999,7199);//10Khz的计数频率，计数10K次为1000ms 
 	TIM2_Int_Init(4999+500,7199);//10Khz的计数频率，计数10K次为1000ms 
 
 EXTI_Configuration();
@@ -1349,6 +1364,20 @@ if(ctr==CPT_LL )
 
     	}
 //#endif
+if(ctr==VERSON )
+
+		{
+      rs485buf[0]='Z';//协议头	
+	rs485buf[1]='V';
+	rs485buf[2]='R';
+	rs485buf[3]=vernum;	
+	rs485buf[4]='X';//协议尾
+	RS485_Send_Data(rs485buf,5);//发送5个字节
+	  // 	if(destination==source){mybox.send=send;slave_control(relay, message);}//如果信息发给的自己
+
+    	}
+
+
 }
 
  
@@ -5411,14 +5440,49 @@ TIME_4
 }
 
  void TIM4_IRQHandler(void)   //TIM3中断
-{	 
+{	  static u16 count_rework=0;
+   u16 time_work=0;
 	OSIntEnter();   
 	if (TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET)  //检查TIM4更新中断发生与否
 		{	  
 		TIM_ClearITPendingBit(TIM4, TIM_IT_Update  );  //清除TIMx更新中断标志
                     IWDG_Feed();
-	//if(free_timeout>1)free_timeout--;
+
+
+//if((AT24CXX_ReadOneByte(0xe000))>0&&(AT24CXX_ReadOneByte(0xe000))!=0xff)
+if((AT24CXX_ReadLenByte_sy(0xe000,2))>0&&(AT24CXX_ReadLenByte_sy(0xe000,2))!=0xffff)
+
+{
+	count_rework++;
+	if(count_rework==72*20)//72 次为一分钟，72*20 二十分钟
+//if(count_rework==1)//7次为6秒测试
+		{
+
+	count_rework=0;
+		
+			{
+		        // time_work=  AT24CXX_ReadOneByte(0xe000);
+					 time_work= AT24CXX_ReadLenByte_sy(0xe000,2);
+                  if(time_work>0)
+                 {
+          
+               time_work--;
+	       AT24CXX_WriteLenByte_sy(0xe000, time_work,2);
+	 // AT24CXX_WriteOneByte(0xe000,time_work);
+
+			
+				 }
 		}
+
+
+
+
+	}
+
+		}
+
+if((AT24CXX_ReadLenByte_sy(0xe000,2))==0)OSSemPost(urgent_sem);
+	}
 	   	OSIntExit();  
 
  	}
@@ -5459,6 +5523,9 @@ TIME_4
 	OSIntEnter();   
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)  //检查TIM4更新中断发生与否
 		{	
+
+
+		
 			Work_Flag=!Work_Flag;	
 			if(light_time>0)light_time--;
  if(light_time==0)LIGHT_backligt_off();
@@ -5678,6 +5745,102 @@ dianliuzhi_C_C=dianliuzhi_C_C+fenbu_C_C;
 
 }
 
+void verson_updata()//此功能挂在屏幕显示任务中
+{
+u8 ver;
+u16 time_alive=TIME_LIVE;//年* 天*小时* 分钟1*356*24*60
+
+while(AT24CXX_Check());
+
+if(AT24CXX_Check()==0)
+{
+if(vernum<=23)
+{
+ver=AT24CXX_ReadOneByte(0x9000);
+
+if(ver>23&&ver!=225)//可能flash为非法操作，时间归零
+{
+AT24CXX_WriteLenByte_sy(0xe000,0,2);
+
+}
+
+
+if(vernum==0)  //永生版本
+{
+AT24CXX_WriteLenByte_sy(0xe000, time_alive,2);
+while(1)
+{
+AT24CXX_WriteOneByte(0x9000,0);//回到0 版本号
+if(0==AT24CXX_ReadOneByte(0x9000))break;//保证写进去了
+}
+}
+
+
+if(vernum>ver||ver==255) //更新版本 或 新机器
+{
+AT24CXX_WriteLenByte_sy(0xe000, time_alive,2);
+while(1)
+{
+AT24CXX_WriteOneByte(0x9000,vernum);//写入版本号
+if(vernum==AT24CXX_ReadOneByte(0x9000))break;//保证写进去了
+}
+}
+
+
+}
+
+}
+
+
+
+}
+void deadtime_deal()
+{
+
+	{ 
+OSTaskSuspend(APP_TASK_COMPUTER_PRIO);	//挂起起始任务.
+OSTaskSuspend(APP_TASK_Master_PRIO);	//挂起起始任务.
+dianliuzhi=380;
+gonglvshishu=99;
+dianya_zhi=111;
+wugongkvar=0;
+allkvar=0;
+ HV=0;
+HI=0;
+A_HV=0;
+A_HI=0;
+B_HV=0;
+B_HI=0;
+C_HV=0;
+C_HI=0;
+//dianliuzhi=0;
+dianliuzhi_C_A=0;
+dianliuzhi_C_B=0;
+dianliuzhi_C_C=0;
+ dianya_zhi_A=0;
+ dianya_zhi_B=0;
+ dianya_zhi_C=0;
+ wugongkvar_A=0;
+ wugongkvar_B=0;
+ wugongkvar_C=0;
+ allkvar_A=0;
+ allkvar_B=0;
+ allkvar_C=0;
+dianliuzhi_A=0;
+dianliuzhi_B=0;
+dianliuzhi_C=0;
+ gonglvshishu_A=0;
+ gonglvshishu_B=0;
+ gonglvshishu_C=0;
+
+}
+
+
+
+
+
+
+}
 #ifdef  USE_FULL_ASSERT
 
 /**

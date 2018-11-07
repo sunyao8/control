@@ -59,7 +59,7 @@ void AT24CXX_WriteOneByte(u16 WriteAddr,u8 DataToWrite)
 	IIC_Send_Byte(DataToWrite);     //发送字节							   
 	IIC_Wait_Ack();  		    	   
     IIC_Stop();//产生一个停止条件 
-	delay_ms(10);	 
+	delay_us(1000);	 
 }
 //在AT24CXX里面的指定地址开始写入长度为Len的数据
 //该函数用于写入16bit或者32bit的数据.
@@ -68,11 +68,48 @@ void AT24CXX_WriteOneByte(u16 WriteAddr,u8 DataToWrite)
 //Len        :要写入数据的长度2,4
 void AT24CXX_WriteLenByte(u16 WriteAddr,u32 DataToWrite,u8 Len)
 {  	
-	u8 t;
+	u8 t,data;
 	for(t=0;t<Len;t++)
-	{
-		AT24CXX_WriteOneByte(WriteAddr+t,(DataToWrite>>(8*t))&0xff);
+	{   data=(u8)((DataToWrite>>(8*t))&0xff);
+		AT24CXX_WriteOneByte(WriteAddr+t,data);
 	}												    
+}
+
+void AT24CXX_WriteLenByte_sy(u16 WriteAddr,u16 DataToWrite,u8 Len)
+{ 
+u8 data[2];
+//if(DataToWrite>255)
+{
+	data[0]=DataToWrite&0xff;
+	    data[1]=(DataToWrite>>8)&0xff;
+while(1)
+{     AT24CXX_WriteOneByte(WriteAddr,data[0]);
+	if(data[0]==AT24CXX_ReadOneByte(WriteAddr))break;
+}
+while(1)
+{
+	AT24CXX_WriteOneByte(WriteAddr+0x1000,data[1]);
+		if(data[1]==AT24CXX_ReadOneByte(WriteAddr+0x1000))break;
+
+}
+
+}
+
+/*
+if(DataToWrite<=255)
+{
+data[0]=DataToWrite&0xff;
+AT24CXX_WriteOneByte(WriteAddr,data[0]);
+
+while(1)
+	{
+AT24CXX_WriteOneByte(WriteAddr+0x1000,0x00);
+	if(0==AT24CXX_ReadOneByte(WriteAddr+0x1000))break;
+
+	}//在这里无限循环死机了，0写不进去
+}
+*/
+
 }
 
 //在AT24CXX里面的指定地址开始读出长度为Len的数据
@@ -91,6 +128,29 @@ u32 AT24CXX_ReadLenByte(u16 ReadAddr,u8 Len)
 	}
 	return temp;												    
 }
+
+
+u16 AT24CXX_ReadLenByte_sy(u16 ReadAddr,u8 Len)
+{  	
+u8 data[2];
+u16 temp;
+if(Len==2)
+{
+	
+	data[0]=AT24CXX_ReadOneByte(ReadAddr);
+		//delay_us(2000);
+	data[1]=AT24CXX_ReadOneByte(ReadAddr+0x1000);
+		//delay_us(2000);
+              temp=temp&0x00;
+		temp+=data[1];
+		temp=(temp<<8);
+               temp=data[0]+temp;
+return temp;
+}											    
+return 0;
+}													    
+
+
 //检查AT24CXX是否正常
 //这里用了24XX的最后一个地址(255)来存储标志字.
 //如果用其他24C系列,这个地址要修改

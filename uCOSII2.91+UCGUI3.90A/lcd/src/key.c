@@ -32,8 +32,7 @@ extern u8 L_C_flag_A;//感性容性标准变量
 extern u8 L_C_flag_B;
 extern u8 L_C_flag_C;
 extern u8 light_time;
-
-
+extern u8 vernum;
 
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序为控制器设计，未经许可，不得复制外传
@@ -597,7 +596,8 @@ a=AT24CXX_ReadOneByte(0xa000);
 		if(Work_Flag==0)WriteAll_1621(28,num_SET_Seg+9*3,3);
 		
 			
-		 		 com_ID=AT24CXX_ReadOneByte(0xf000);  //存储DELAY_OFF_para到eeprom
+		 	//	 com_ID=AT24CXX_ReadOneByte(0xf000);  //存储DELAY_OFF_para到eeprom
+		 		 	 com_ID=AT24CXX_ReadOneByte(0xf000);  //存储DELAY_OFF_para到eeprom
 
 		 COMMCAT_para_baiwei=com_ID/100;
 		 COMMCAT_para_shiwei=(com_ID%100)/10;
@@ -621,7 +621,7 @@ a=AT24CXX_ReadOneByte(0xa000);
 			while(KEY_down==0);
 			if(com_ID<1)com_ID=64;
 		 }
-		  AT24CXX_WriteOneByte(0xf000,com_ID);  //存储DELAY_ON_para到eeprom
+		//  AT24CXX_WriteOneByte(0xf000,com_ID);  //存储DELAY_ON_para到eeprom
 
 		break;
 
@@ -818,7 +818,7 @@ break;
 		 break;
 	 case 4:											//显示版本号
 		  Clera_lcd();
-		  Graf_VER(2);
+		  Graf_VER(AT24CXX_ReadOneByte(0x9000));
 		 break;
 
 	 case 5:											//显示电容组号及容量

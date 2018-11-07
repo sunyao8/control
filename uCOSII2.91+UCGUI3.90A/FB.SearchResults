@@ -1,3 +1,2 @@
----- CH452_DIG0 Matches (2 in 2 files) ----
-Ch452.c (lcd\src): 	 CH452_I2c_WrByte(CH452_DIG0|OFF_OFF,i);
-Ch452.h (lcd\inc):#define CH452_DIG0      0x0800					// 数码管位0显示,需另加8位数据
+---- Graf_VER Matches (1 in 0 files) ----
+Key.c (lcd\src):		  Graf_VER(AT24CXX_ReadOneByte(0x9000));

@@ -126,6 +126,7 @@
 #define CPT_B                                                     '@'
 #define CPT_C                                                     '!'
 #define CPT_LL                                                    '^'
+#define VERSON                                                   'Q'
 
 /********************************************************/
 #define  DEF_DISABLED                                      0

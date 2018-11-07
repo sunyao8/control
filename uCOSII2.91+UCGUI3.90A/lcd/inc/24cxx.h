@@ -34,6 +34,8 @@ void AT24CXX_Read(u16 ReadAddr,u8 *pBuffer,u16 NumToRead);   	//从指定地址开始读
 
 u8 AT24CXX_Check(void);  //检查器件
 void AT24CXX_Init(void); //初始化IIC
+u16 AT24CXX_ReadLenByte_sy(u16 ReadAddr,u8 Len);
+void AT24CXX_WriteLenByte_sy(u16 WriteAddr,u16 DataToWrite,u8 Len);
 #endif
 
 
