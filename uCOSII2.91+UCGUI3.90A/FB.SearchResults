@@ -1,2 +1,26 @@
----- Graf_VER Matches (1 in 0 files) ----
-Key.c (lcd\src):		  Graf_VER(AT24CXX_ReadOneByte(0x9000));
+---- AT24CXX_WriteOneByte Matches (25 in 4 files) ----
+24cxx.c (lcd\src):void AT24CXX_WriteOneByte(u16 WriteAddr,u8 DataToWrite)
+24cxx.c (lcd\src):		AT24CXX_WriteOneByte(WriteAddr+t,data);
+24cxx.c (lcd\src):{     AT24CXX_WriteOneByte(WriteAddr,data[0]);
+24cxx.c (lcd\src):	AT24CXX_WriteOneByte(WriteAddr+0x1000,data[1]);
+24cxx.c (lcd\src):{     AT24CXX_WriteOneByte(WriteAddr,data[0]);
+24cxx.c (lcd\src):AT24CXX_WriteOneByte(WriteAddr,data[0]);
+24cxx.c (lcd\src):AT24CXX_WriteOneByte(WriteAddr+0x1000,0x00);
+24cxx.c (lcd\src):		AT24CXX_WriteOneByte(255,0X55);
+24cxx.c (lcd\src):		AT24CXX_WriteOneByte(WriteAddr,*pBuffer);
+24cxx.h (lcd\inc):void AT24CXX_WriteOneByte(u16 WriteAddr,u8 DataToWrite);		//指定地址写入一个字节
+Key.c (lcd\src):		//  AT24CXX_WriteOneByte(0xf000,com_ID);  //存储DELAY_ON_para到eeprom
+Project.htm (mdk_project\out):<LI>Call Chain = AT24CXX_Check &rArr; AT24CXX_WriteOneByte &rArr; IIC_Wait_Ack &rArr; IIC_Stop &rArr; GPIO_Init
+Project.htm (mdk_project\out):<BR>[Calls]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24CXX_WriteOneByte
+Project.htm (mdk_project\out):<LI>Call Chain = AT24CXX_WriteLenByte_sy &rArr; AT24CXX_WriteOneByte &rArr; IIC_Wait_Ack &rArr; IIC_Stop &rArr; GPIO_Init
+Project.htm (mdk_project\out):<BR>[Calls]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24CXX_WriteOneByte
+Project.htm (mdk_project\out):<P><STRONG><a name="[97]"></a>AT24CXX_WriteOneByte</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, 24cxx.o(i.AT24CXX_WriteOneByte))
+Project.htm (mdk_project\out):<LI>Call Chain = AT24CXX_WriteOneByte &rArr; IIC_Wait_Ack &rArr; IIC_Stop &rArr; GPIO_Init
+Project.htm (mdk_project\out):<BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24CXX_WriteOneByte
+Project.htm (mdk_project\out):<BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24CXX_WriteOneByte
+Project.htm (mdk_project\out):<BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24CXX_WriteOneByte
+Project.htm (mdk_project\out):<BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24CXX_WriteOneByte
+Project.htm (mdk_project\out):<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24CXX_WriteOneByte
+Project.htm (mdk_project\out):<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24CXX_WriteOneByte
+Project.htm (mdk_project\out):<LI>Call Chain = verson_updata &rArr; AT24CXX_WriteLenByte_sy &rArr; AT24CXX_WriteOneByte &rArr; IIC_Wait_Ack &rArr; IIC_Stop &rArr; GPIO_Init
+Project.htm (mdk_project\out):<BR>[Calls]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24CXX_WriteOneByte

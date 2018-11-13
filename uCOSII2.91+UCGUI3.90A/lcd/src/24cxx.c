@@ -59,7 +59,7 @@ void AT24CXX_WriteOneByte(u16 WriteAddr,u8 DataToWrite)
 	IIC_Send_Byte(DataToWrite);     //发送字节							   
 	IIC_Wait_Ack();  		    	   
     IIC_Stop();//产生一个停止条件 
-	delay_us(1000);	 
+	delay_ms(10);	 
 }
 //在AT24CXX里面的指定地址开始写入长度为Len的数据
 //该函数用于写入16bit或者32bit的数据.
@@ -78,7 +78,7 @@ void AT24CXX_WriteLenByte(u16 WriteAddr,u32 DataToWrite,u8 Len)
 void AT24CXX_WriteLenByte_sy(u16 WriteAddr,u16 DataToWrite,u8 Len)
 { 
 u8 data[2];
-//if(DataToWrite>255)
+if(Len==2)
 {
 	data[0]=DataToWrite&0xff;
 	    data[1]=(DataToWrite>>8)&0xff;
@@ -94,7 +94,16 @@ while(1)
 }
 
 }
+if(Len==1)
+{
+	data[0]=DataToWrite&0xff;
+while(1)
+{     AT24CXX_WriteOneByte(WriteAddr,data[0]);
+	if(data[0]==AT24CXX_ReadOneByte(WriteAddr))break;
+}
 
+
+}
 /*
 if(DataToWrite<=255)
 {

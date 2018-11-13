@@ -118,7 +118,7 @@ u16 ADC_Converted_VValue=0;
 u16 ADC_Converted_CValue=0;
 u16 ADC_Converted_base=0;
 
-u8 vernum=3,gonglvshishu=0;
+u8 vernum=1,gonglvshishu=0;
 u16 dianya_zhi=0,wugongkvar=0,allkvar=0;
 float32_t HV=0,HI=0,A_HV=0,A_HI=0,B_HV=0,B_HI=0,C_HV=0,C_HI=0;
 u32	dianliuzhi=0;
@@ -132,7 +132,8 @@ u32	dianliuzhi_A=0,dianliuzhi_B=0	,dianliuzhi_C=0;
 u8 gonglvshishu_A=0,gonglvshishu_B=0,gonglvshishu_C=0;
 u8 display_nothing_close_open_warn=0;
 static status_comm_node comm_list[65];
-static  u8 slave_comm[20];
+ u8 slave_comm[12];
+u32 live_alltime,live_alltime_count;
 void ADC3_CH10_DMA_Config_VA(void);
 void ADC2_CH8_DMA_Config_VEE(void);
 void ADC1_CH1_DMA_Config_CA(void);
@@ -448,7 +449,6 @@ u8 i;
  	
 
 OSSemPost(computer_sem);
-order_trans_rs485(0,0,0,0,0,VERSON);
 
 if(KEY_2==1)
 	{
@@ -531,6 +531,11 @@ u8 i;
 //dianya_zhi=AT24CXX_ReadOneByte(0x9000);
 
 		ParaSet();
+if(live_alltime<live_alltime_count)
+	{
+AT24CXX_WriteLenByte_sy(0xe000, live_alltime,2);
+live_alltime_count=AT24CXX_ReadLenByte_sy(0xe000,2);
+}
 	if(COMMCAT_para==1)
 {
 
@@ -682,14 +687,15 @@ first_init=0;
   init_Queue_dis(dis_list,slave_dis);
 capacitor_current(dis_list,comm_list);
 
+order_trans_rs485(0,0,0,0,0,VERSON);
 
 if(COMMCAT_para==0) //自动模式
 {
-		 COS_ON_para=AT24CXX_ReadOneByte(0x3000);  //存储DELAY_OFF_para到eeprom
-				 COS_OFF_para=AT24CXX_ReadOneByte(0x4000);  //存储DELAY_OFF_para到eeprom
+	//	 COS_ON_para=AT24CXX_ReadOneByte(0x3000);  //存储DELAY_OFF_para到eeprom
+	//			 COS_OFF_para=AT24CXX_ReadOneByte(0x4000);  //存储DELAY_OFF_para到eeprom
  computer_gonglu(dis_list,comm_list,slave_dis,slave_comm);
- if(gonglvshishu<COS_OFF_para&&gonglvshishu>=COS_ON_para)
-	turn_reset(comm_list,slave_comm);
+//if(gonglvshishu<COS_OFF_para&&gonglvshishu>=COS_ON_para)
+//turn_reset(comm_list,slave_comm);
 
 
 	  
@@ -1229,7 +1235,7 @@ void RS485_Init(u32 bound)
 		{
 
 				
-				if((RS485_RX_BUF[1]=='#')&&(RS485_RX_CNT==13)){OSMboxPost(RS485_STUTAS_MBOX,(void*)&RS485_RX_BUF);}
+				if((RS485_RX_BUF[RS485_RX_CNT-12]=='#')){OSMboxPost(RS485_STUTAS_MBOX,(void*)&RS485_RX_BUF);}
 				if((RS485_RX_BUF[1]=='+')&&(RS485_RX_CNT==3)){OSMboxPost(RS485_RT,(void*)&RS485_RX_BUF);}
 				RS485_RX_CNT=0;
 
@@ -1241,7 +1247,7 @@ void RS485_Init(u32 bound)
 		if(RS485_RX_BUF[RS485_RX_CNT-1]==')')
 	{
 
-				if((RS485_RX_BUF[1]=='(')&&(RS485_RX_CNT==13)){OSMboxPost(RS485_STUTAS_MBOX_dis,(void*)&RS485_RX_BUF);}
+				if((RS485_RX_BUF[RS485_RX_CNT-12]=='(')){OSMboxPost(RS485_STUTAS_MBOX_dis,(void*)&RS485_RX_BUF);}
 
 				RS485_RX_CNT=0;
 
@@ -5449,8 +5455,7 @@ TIME_4
                     IWDG_Feed();
 
 
-//if((AT24CXX_ReadOneByte(0xe000))>0&&(AT24CXX_ReadOneByte(0xe000))!=0xff)
-if((AT24CXX_ReadLenByte_sy(0xe000,2))>0&&(AT24CXX_ReadLenByte_sy(0xe000,2))!=0xffff)
+if(live_alltime>0&&(live_alltime!=0xffff))
 
 {
 	count_rework++;
@@ -5459,29 +5464,14 @@ if((AT24CXX_ReadLenByte_sy(0xe000,2))>0&&(AT24CXX_ReadLenByte_sy(0xe000,2))!=0xf
 		{
 
 	count_rework=0;
-		
-			{
-		        // time_work=  AT24CXX_ReadOneByte(0xe000);
-					 time_work= AT24CXX_ReadLenByte_sy(0xe000,2);
-                  if(time_work>0)
-                 {
-          
-               time_work--;
-	       AT24CXX_WriteLenByte_sy(0xe000, time_work,2);
-	 // AT24CXX_WriteOneByte(0xe000,time_work);
-
-			
-				 }
-		}
-
-
+       live_alltime--;
 
 
 	}
 
 		}
 
-if((AT24CXX_ReadLenByte_sy(0xe000,2))==0)OSSemPost(urgent_sem);
+if(live_alltime==0)OSSemPost(urgent_sem);
 	}
 	   	OSIntExit();  
 
@@ -5529,6 +5519,7 @@ if((AT24CXX_ReadLenByte_sy(0xe000,2))==0)OSSemPost(urgent_sem);
 			Work_Flag=!Work_Flag;	
 			if(light_time>0)light_time--;
  if(light_time==0)LIGHT_backligt_off();
+
 if(delay_on==1)
 	{
 	      if(delay_on_cont!=0)delay_on_cont--;
@@ -5768,9 +5759,11 @@ AT24CXX_WriteLenByte_sy(0xe000,0,2);
 if(vernum==0)  //永生版本
 {
 AT24CXX_WriteLenByte_sy(0xe000, time_alive,2);
+live_alltime=AT24CXX_ReadLenByte_sy(0xe000,2);
+live_alltime_count=AT24CXX_ReadLenByte_sy(0xe000,2);
 while(1)
 {
-AT24CXX_WriteOneByte(0x9000,0);//回到0 版本号
+AT24CXX_WriteLenByte_sy(0x9000,0,1);//回到0 版本号
 if(0==AT24CXX_ReadOneByte(0x9000))break;//保证写进去了
 }
 }
@@ -5779,9 +5772,11 @@ if(0==AT24CXX_ReadOneByte(0x9000))break;//保证写进去了
 if(vernum>ver||ver==255) //更新版本 或 新机器
 {
 AT24CXX_WriteLenByte_sy(0xe000, time_alive,2);
+live_alltime=AT24CXX_ReadLenByte_sy(0xe000,2);
+live_alltime_count=AT24CXX_ReadLenByte_sy(0xe000,2);
 while(1)
 {
-AT24CXX_WriteOneByte(0x9000,vernum);//写入版本号
+AT24CXX_WriteLenByte_sy(0x9000,vernum,1);//写入版本号
 if(vernum==AT24CXX_ReadOneByte(0x9000))break;//保证写进去了
 }
 }
@@ -5791,7 +5786,8 @@ if(vernum==AT24CXX_ReadOneByte(0x9000))break;//保证写进去了
 
 }
 
-
+live_alltime=AT24CXX_ReadLenByte_sy(0xe000,2);
+live_alltime_count=AT24CXX_ReadLenByte_sy(0xe000,2);
 
 }
 void deadtime_deal()

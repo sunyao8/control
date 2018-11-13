@@ -198,7 +198,7 @@ a=AT24CXX_ReadOneByte(0xa000);
 			
 		 }
 		  
-		  AT24CXX_WriteOneByte(0xa000,a);   //´æ´¢CT_paraµ½eeprom
+		  AT24CXX_WriteLenByte_sy(0xa000,a,1);   //´æ´¢CT_paraµ½eeprom
 		 break;
 
 	  }
@@ -227,17 +227,17 @@ a=AT24CXX_ReadOneByte(0xa000);
 		 	 LIGHT_backligt_on();
 			DELAY_ON_para++;
 			while(KEY_up==0);
-			if(DELAY_ON_para>60)DELAY_ON_para=5;
+			if(DELAY_ON_para>60)DELAY_ON_para=1;
 		 }
 		 if(KEY_down==0)
 		 {
 		 	 LIGHT_backligt_on();
 			DELAY_ON_para--;
 			while(KEY_down==0);
-			if(DELAY_ON_para<5)DELAY_ON_para=60;
+			if(DELAY_ON_para<1)DELAY_ON_para=60;
 		 }
 		  
-		 AT24CXX_WriteOneByte(0x1000,DELAY_ON_para);  //´æ´¢DELAY_ON_paraµ½eeprom
+		 AT24CXX_WriteLenByte_sy(0x1000,DELAY_ON_para,1);  //´æ´¢DELAY_ON_paraµ½eeprom
 		 break;
 	  }
 	  case 3:		  //ÇÐ³ýÑÓÊ±²ÎÊýÉèÖÃ
@@ -264,17 +264,17 @@ a=AT24CXX_ReadOneByte(0xa000);
 		 	 LIGHT_backligt_on();
 			DELAY_OFF_para++;
 			while(KEY_up==0);
-			if(DELAY_OFF_para>60)DELAY_OFF_para=5;
+			if(DELAY_OFF_para>60)DELAY_OFF_para=1;
 		 }
 		 if(KEY_down==0)
 		 {
 		 	 LIGHT_backligt_on();
 			DELAY_OFF_para--;
 			while(KEY_down==0);
-			if(DELAY_OFF_para<5)DELAY_OFF_para=60;
+			if(DELAY_OFF_para<1)DELAY_OFF_para=60;
 		 }
 
-			 AT24CXX_WriteOneByte(0x2000,DELAY_OFF_para);  //´æ´¢DELAY_ON_paraµ½eeprom
+			 AT24CXX_WriteLenByte_sy(0x2000,DELAY_OFF_para,1);  //´æ´¢DELAY_ON_paraµ½eeprom
 
 		  break;
 	  }
@@ -312,7 +312,7 @@ a=AT24CXX_ReadOneByte(0xa000);
 			while(KEY_down==0);
 			if(COS_ON_para<80)COS_ON_para=100;
 		 }
-			 AT24CXX_WriteOneByte(0x3000,COS_ON_para);  //´æ´¢DELAY_ON_paraµ½eeprom
+			 AT24CXX_WriteLenByte_sy(0x3000,COS_ON_para,1);  //´æ´¢DELAY_ON_paraµ½eeprom
 		 break;
 
 	  }
@@ -350,7 +350,7 @@ a=AT24CXX_ReadOneByte(0xa000);
 			while(KEY_down==0);
             if(COS_OFF_para<80)COS_OFF_para=100;
 		 } 
-					 AT24CXX_WriteOneByte(0x4000,COS_OFF_para);  //´æ´¢DELAY_ON_paraµ½eeprom
+					 AT24CXX_WriteLenByte_sy(0x4000,COS_OFF_para,1);  //´æ´¢DELAY_ON_paraµ½eeprom
  
 		 break;
 
@@ -392,7 +392,7 @@ a=AT24CXX_ReadOneByte(0xa000);
 
 		 }
 		  //´æ´¢CT_paraµ½eeprom
- AT24CXX_WriteOneByte(0xb000,V_PROT_para_L);
+ AT24CXX_WriteLenByte_sy(0xb000,V_PROT_para_L,1);
 
 		 break;
 	  }
@@ -431,7 +431,7 @@ a=AT24CXX_ReadOneByte(0xa000);
 
 		 }
 		  //´æ´¢CT_paraµ½eeprom
- AT24CXX_WriteOneByte(0xc000,V_PROT_para_tri);
+ AT24CXX_WriteLenByte_sy(0xc000,V_PROT_para_tri,1);
 
 		 break;
 	  }  
@@ -468,7 +468,7 @@ a=AT24CXX_ReadOneByte(0xa000);
 			if(ON_HOLD_para<2)ON_HOLD_para=12;
 		 }
 		  //´æ´¢CT_paraµ½eeprom
-		 AT24CXX_WriteOneByte(0x5000,ON_HOLD_para);  //´æ´¢DELAY_ON_paraµ½eeprom
+		 AT24CXX_WriteLenByte_sy(0x5000,ON_HOLD_para,1);  //´æ´¢DELAY_ON_paraµ½eeprom
 
 		break;
 
@@ -506,7 +506,7 @@ a=AT24CXX_ReadOneByte(0xa000);
 			if(OFF_HOLD_para<2)OFF_HOLD_para=12;
 		 }
 		  //´æ´¢CT_paraµ½eeprom
-		 AT24CXX_WriteOneByte(0x6000,OFF_HOLD_para);  //´æ´¢DELAY_ON_paraµ½eeprom
+		 AT24CXX_WriteLenByte_sy(0x6000,OFF_HOLD_para,1);  //´æ´¢DELAY_ON_paraµ½eeprom
 
 		break;
 
@@ -545,7 +545,7 @@ a=AT24CXX_ReadOneByte(0xa000);
 			while(KEY_down==0);
 			if(HU_PROT_para<1)HU_PROT_para=100;
 		 }
-		 		 AT24CXX_WriteOneByte(0x7000,HU_PROT_para);  //´æ´¢DELAY_ON_paraµ½eeprom
+		 		 AT24CXX_WriteLenByte_sy(0x7000,HU_PROT_para,1);  //´æ´¢DELAY_ON_paraµ½eeprom
 
 		break;
 
@@ -584,7 +584,7 @@ a=AT24CXX_ReadOneByte(0xa000);
 			while(KEY_down==0);
 			if(HI_PROT_para<1)HI_PROT_para=100;
 		 }
-		 		 		 AT24CXX_WriteOneByte(0x8000,HI_PROT_para);  //´æ´¢DELAY_ON_paraµ½eeprom
+		 		 		 AT24CXX_WriteLenByte_sy(0x8000,HI_PROT_para,1);  //´æ´¢DELAY_ON_paraµ½eeprom
 
 	   break;
 
