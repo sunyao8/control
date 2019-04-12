@@ -33,15 +33,103 @@ compiling main.c...
 ..\User\main.c(5683): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
 ..\User\main.c(522): warning: C3017W: exist may be used before being set
 linking...
-Program Size: Code=59772 RO-data=27044 RW-data=348 ZI-data=54452  
+Program Size: Code=59728 RO-data=27048 RW-data=348 ZI-data=54452  
 FromELF: creating hex file...
 ".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
-Build target 'Target 1'
-compiling key.c...
-linking...
-Program Size: Code=59772 RO-data=27044 RW-data=348 ZI-data=54452  
-FromELF: creating hex file...
-".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: STM32 (connect): Can not attach to CPU. Trying connect under reset.
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: STM32 (connect): Can not attach to CPU. Trying connect under reset.
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+**JLink Warning: Identified core does not match configuration. (Found: Cortex-M3, Configured: Cortex-M4)
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Failed!
 Build target 'Target 1'
 compiling main.c...
 ..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
@@ -67,12 +155,1471 @@ compiling main.c...
 ..\User\main.c(5512): warning:  #177-D: variable "j" was declared but never referenced
 ..\User\main.c(5683): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
 ..\User\main.c(522): warning: C3017W: exist may be used before being set
-compiling 24cxx.c...
-compiling key.c...
+linking...
+Program Size: Code=59832 RO-data=27048 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(902): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2609): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2612): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2630): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2846): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2858): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2993): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3005): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3151): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3164): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2429): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2451): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2452): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2466): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4471): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5450): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5512): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5683): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59824 RO-data=27048 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(902): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2609): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2612): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2630): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2846): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2858): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2993): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3005): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3151): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3164): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2429): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2451): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2452): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2466): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4472): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5451): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5513): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5684): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59828 RO-data=27044 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(902): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2609): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2612): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2630): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2846): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2858): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2993): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3005): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3151): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3164): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2429): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2451): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2452): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2466): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4472): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5452): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5514): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5685): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
 linking...
 Program Size: Code=59816 RO-data=27048 RW-data=348 ZI-data=54452  
 FromELF: creating hex file...
 ".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(902): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2609): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2612): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2630): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2846): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2858): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2993): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3005): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3151): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3164): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2429): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2451): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2452): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2466): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4472): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5450): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5512): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5683): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59828 RO-data=27044 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(902): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2609): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2612): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2630): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2846): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2858): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2993): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3005): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3151): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3164): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2429): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2451): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2452): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2466): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4472): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5450): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5512): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5683): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59836 RO-data=27044 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(902): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2609): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2612): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2630): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2846): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2858): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2993): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3005): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3151): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3164): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2429): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2451): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2452): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2466): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4472): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5450): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5512): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5683): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59820 RO-data=27044 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(902): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2609): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2612): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2630): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2846): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2858): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2993): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3005): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3151): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3164): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2429): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2451): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2452): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2466): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4472): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5449): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5511): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5682): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59820 RO-data=27044 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(902): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2609): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2612): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2630): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2846): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2858): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2993): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3005): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3151): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3164): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2429): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2451): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2452): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2466): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4472): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5449): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5511): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5682): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59820 RO-data=27044 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(902): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2609): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2612): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2630): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2846): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2858): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2993): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3005): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3151): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3164): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2429): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2451): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2452): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2466): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4472): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5449): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5511): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5682): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59820 RO-data=27044 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: STM32 (connect): Can not attach to CPU. Trying connect under reset.
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(902): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2614): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2617): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2635): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2851): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2863): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2998): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3010): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3156): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3169): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2434): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2456): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2457): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2471): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4477): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5454): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5516): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5687): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59812 RO-data=27044 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(902): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2614): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2617): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2635): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2851): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2863): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2998): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3010): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3156): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3169): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2434): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2456): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2457): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2471): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4477): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5454): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5516): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5687): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59820 RO-data=27044 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(902): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2615): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2618): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2636): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2852): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2864): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2999): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3011): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3157): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3170): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2435): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2457): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2458): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2472): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4478): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5455): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5517): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5688): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59816 RO-data=27048 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(902): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2615): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2618): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2636): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2852): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2864): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2999): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3011): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3157): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3170): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2435): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2457): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2458): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2472): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4478): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5456): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5518): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5689): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59820 RO-data=27044 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(903): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2616): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2619): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2637): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2853): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2865): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3000): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3012): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3158): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3171): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2436): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2458): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2459): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2473): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4479): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5457): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5519): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5690): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+Build target 'Target 1'
+linking...
+Program Size: Code=59828 RO-data=27044 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(903): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2616): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2619): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2637): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2853): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2865): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3000): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3012): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3158): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3171): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2436): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2458): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2459): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2473): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4479): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5457): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5519): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5690): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59848 RO-data=27048 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(903): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2615): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2618): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2636): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2852): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2864): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2999): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3011): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3157): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3170): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2435): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2457): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2458): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2472): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4478): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5456): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5518): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5689): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59844 RO-data=27044 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(903): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2615): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2618): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2636): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2852): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2864): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2999): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3011): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3157): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3170): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2435): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2457): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2458): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2472): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4478): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5456): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5518): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5689): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59828 RO-data=27044 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(903): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2615): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2618): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2636): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2852): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2864): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2999): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3011): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3157): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3170): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2435): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2457): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2458): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2472): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4478): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5456): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5518): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5689): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59844 RO-data=27044 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(903): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2615): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2618): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2636): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2852): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2864): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2999): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3011): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3157): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3170): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2435): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2457): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2458): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2472): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4478): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5456): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5518): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5689): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59836 RO-data=27044 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(903): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2615): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2618): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2636): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2852): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2864): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2999): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3011): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3157): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3170): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2435): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2457): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2458): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2472): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4478): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5456): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5518): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5689): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59836 RO-data=27044 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(903): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2615): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2618): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2636): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2852): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2864): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2999): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3011): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3157): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3170): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2435): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2457): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2458): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2472): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4478): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5456): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5518): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5689): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59836 RO-data=27044 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 23 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+* JLink Info: Device "STM32F407VE" selected.
+Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.96 , compiled Dec 22 2014 09:51:48
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N : 20141017 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.300V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.c...
+..\User\main.c(266): warning:  #1295-D: Deprecated declaration verson_updata - give arg types
+..\User\main.c(267): warning:  #1295-D: Deprecated declaration deadtime_deal - give arg types
+..\User\main.c(665): warning:  #177-D: variable "COS_ON_para" was declared but never referenced
+..\User\main.c(665): warning:  #177-D: variable "COS_OFF_para" was declared but never referenced
+..\User\main.c(903): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
+..\User\main.c(2615): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2618): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2637): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2853): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2858): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(2867): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3002): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3007): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(3016): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3162): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(3168): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\User\main.c(3177): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\main.c(2435): warning:  #550-D: variable "status" was set but never used
+..\User\main.c(2457): warning:  #177-D: variable "gl" was declared but never referenced
+..\User\main.c(2458): warning:  #550-D: variable "wugongkvar_95" was set but never used
+..\User\main.c(2472): warning:  #550-D: variable "ON_HOLD_para" was set but never used
+..\User\main.c(4485): warning:  #177-D: variable "count" was declared but never referenced
+..\User\main.c(5463): warning:  #177-D: variable "time_work" was declared but never referenced
+..\User\main.c(5525): warning:  #177-D: variable "j" was declared but never referenced
+..\User\main.c(5696): warning:  #940-D: missing return statement at end of non-void function "turn_reset"
+..\User\main.c(522): warning: C3017W: exist may be used before being set
+linking...
+Program Size: Code=59848 RO-data=27048 RW-data=348 ZI-data=54452  
+FromELF: creating hex file...
+".\Out\Project.axf" - 0 Error(s), 26 Warning(s).
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
+Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 Load "C:\\Users\\Administrator\\Documents\\GitHub\\control\\uCOSII2.91+UCGUI3.90A\\MDK_Project\\Out\\Project.AXF" 
 * JLink Info: Device "STM32F407VE" selected.
 Set JLink Project File to "C:\Users\Administrator\Documents\GitHub\control\uCOSII2.91+UCGUI3.90A\MDK_Project\JLinkSettings.ini"

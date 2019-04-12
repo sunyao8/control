@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Out\Project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Out\Project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Tue Nov 13 21:45:10 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Fri Apr 12 15:33:58 2019
 <BR><P>
 <H3>Maximum Stack Usage =      14872 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2585,7 +2585,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;App_TaskLCD
 </UL>
 
-<P><STRONG><a name="[bb]"></a>computer_gonglu</STRONG> (Thumb, 14278 bytes, Stack size 14696 bytes, main.o(i.computer_gonglu))
+<P><STRONG><a name="[bb]"></a>computer_gonglu</STRONG> (Thumb, 14290 bytes, Stack size 14696 bytes, main.o(i.computer_gonglu))
 <BR><BR>[Stack]<UL><LI>Max Depth = 14856 + Unknown Stack Size
 <LI>Call Chain = computer_gonglu &rArr; __hardfp_atan2 &rArr; atan &rArr; __hardfp_atan &rArr; __kernel_poly &rArr; __aeabi_dmul
 </UL>
@@ -2675,6 +2675,7 @@ Global Symbols
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ParaSet
 <LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;computer_gonglu
 <LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;urgent_task
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;App_Taskcomputer
 <LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;App_TaskMaster
 <LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;App_TaskLCD
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24CXX_WriteOneByte
@@ -2716,7 +2717,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scanf_slave_machine
 </UL>
 
-<P><STRONG><a name="[160]"></a>init_Queue</STRONG> (Thumb, 1916 bytes, Stack size 36 bytes, main.o(i.init_Queue))
+<P><STRONG><a name="[160]"></a>init_Queue</STRONG> (Thumb, 1910 bytes, Stack size 36 bytes, main.o(i.init_Queue))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = init_Queue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;inquiry_slave_status_comm
@@ -3102,11 +3103,12 @@ Local Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(i.main)
 </UL>
-<P><STRONG><a name="[62]"></a>App_Taskcomputer</STRONG> (Thumb, 114 bytes, Stack size 16 bytes, main.o(i.App_Taskcomputer))
+<P><STRONG><a name="[62]"></a>App_Taskcomputer</STRONG> (Thumb, 138 bytes, Stack size 16 bytes, main.o(i.App_Taskcomputer))
 <BR><BR>[Stack]<UL><LI>Max Depth = 14872 + Unknown Stack Size
 <LI>Call Chain = App_Taskcomputer &rArr; computer_gonglu &rArr; __hardfp_atan2 &rArr; atan &rArr; __hardfp_atan &rArr; __kernel_poly &rArr; __aeabi_dmul
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSSemPend
+<BR>[Calls]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSSemPend
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scanf_slave_machine
 <LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;order_trans_rs485
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_listindex

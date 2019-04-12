@@ -664,7 +664,7 @@ static  void  App_Taskcomputer	 (void		*p_arg )
 u8 err;
 u8 COS_ON_para,COS_OFF_para;
  static status_dis_node     dis_list[20];
-
+u8 i;
 
 /*
  static status_dis_node     dis_list[20];
@@ -679,8 +679,9 @@ for(;;)
    	OSSemPend(computer_sem,0,&err);
 #if (FUNCTION_MODULE == DF_THREE)
 if(first_init==1)
-{
+{delay_ms(6000);
 init_listindex(slave_comm);
+for(i=0;i<=64;i++)comm_list[i].myid=0;// qing chu shu ju jie gou
 first_init=0;
 }
  scanf_slave_machine(dis_list,comm_list,slave_dis,slave_comm);
@@ -1636,7 +1637,7 @@ u8 i=0;
 
   		}
 	slave_comm[9]++;
-
+      slave_comm[8]++;
 	  	for(i=slave_comm[7];i>slave_comm[6];i--)//10的队列移动
   		{
 	   comm_list[i].myid=comm_list[i-1].myid;
@@ -1650,7 +1651,8 @@ u8 i=0;
 	  
   		}
 		slave_comm[7]++;
-			
+		      slave_comm[6]++;
+	
 	  	for(i=slave_comm[5];i>slave_comm[4];i--)//5的队列移动
   		{
 	   comm_list[i].myid=comm_list[i-1].myid;
@@ -1664,6 +1666,7 @@ u8 i=0;
 
          }	
 slave_comm[5]++;
+      slave_comm[4]++;
 		
 	   comm_list[slave_comm[3]].myid=id;
    	   comm_list[slave_comm[3]].size=size_1;
@@ -1674,9 +1677,7 @@ slave_comm[5]++;
 comm_list[slave_comm[3]].cruccent_B=cruccent_B;
 comm_list[slave_comm[3]].cruccent_C=cruccent_C;
 		   slave_comm[3]++;
-		slave_comm[4]=slave_comm[3]+1;
-		slave_comm[6]=slave_comm[5]+1;
-		slave_comm[8]=slave_comm[7]+1;
+	
 
 		 slave_comm[0]++;
 
@@ -1696,6 +1697,7 @@ comm_list[slave_comm[3]].cruccent_C=cruccent_C;
 		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
 	}
 	slave_comm[9]++;
+      slave_comm[8]++;
 
 	  	for(i=slave_comm[7];i>slave_comm[6];i--)//10的队列移动
   		{
@@ -1709,7 +1711,8 @@ comm_list[slave_comm[3]].cruccent_C=cruccent_C;
 		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
 }
 		slave_comm[7]++;
-		
+		      slave_comm[6]++;
+
 	   comm_list[slave_comm[5]].myid=id;
    	   comm_list[slave_comm[5]].size=size_1;
    	   comm_list[slave_comm[5]].work_status=work_status_1;
@@ -1720,8 +1723,6 @@ comm_list[slave_comm[5]].cruccent_B=cruccent_B;
 comm_list[slave_comm[5]].cruccent_C=cruccent_C;
 		  
 	    slave_comm[5]++;
-		slave_comm[6]=slave_comm[5]+1;
-		slave_comm[8]=slave_comm[7]+1;
 		 slave_comm[0]++;
 
   	} 
@@ -1739,7 +1740,8 @@ comm_list[slave_comm[5]].cruccent_C=cruccent_C;
 		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
 }
 	slave_comm[9]++;
-	
+	      slave_comm[8]++;
+
 	   comm_list[slave_comm[7]].myid=id;
    	   comm_list[slave_comm[7]].size=size_1;
    	   comm_list[slave_comm[7]].work_status=work_status_1;
@@ -1750,7 +1752,7 @@ comm_list[slave_comm[7]].cruccent_B=cruccent_B;
 comm_list[slave_comm[7]].cruccent_C=cruccent_C;
 
 	       slave_comm[7]++;
-		slave_comm[8]=slave_comm[7]+1;
+		
 		 slave_comm[0]++;
 
   	} 
@@ -1789,6 +1791,7 @@ comm_list[slave_comm[9]].cruccent_C=cruccent_C;
 		 
 	}
 	slave_comm[9]++;
+      slave_comm[8]++;
 
 	  	for(i=slave_comm[7];i>slave_comm[6];i--)//10的队列移动
   		{
@@ -1802,7 +1805,8 @@ comm_list[slave_comm[9]].cruccent_C=cruccent_C;
 		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
 	}
 		slave_comm[7]++;
-			
+		      slave_comm[6]++;
+	
 	  	for(i=slave_comm[5];i>slave_comm[4];i--)//5的队列移动
   		{
 	   comm_list[i].myid=comm_list[i-1].myid;
@@ -1815,6 +1819,7 @@ comm_list[slave_comm[9]].cruccent_C=cruccent_C;
 		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
 	}	
 slave_comm[5]++;
+      slave_comm[4]++;
 		
 	   comm_list[slave_comm[3]].myid=id;
    	   comm_list[slave_comm[3]].size=size_2;
@@ -1826,9 +1831,7 @@ comm_list[slave_comm[3]].cruccent_B=cruccent_B;
 comm_list[slave_comm[3]].cruccent_C=cruccent_C;
 
 		 slave_comm[3]++;
-		slave_comm[4]=slave_comm[3]+1;
-		slave_comm[6]=slave_comm[5]+1;
-		slave_comm[8]=slave_comm[7]+1;
+	
 
 		 slave_comm[0]++;
 
@@ -1848,6 +1851,7 @@ comm_list[slave_comm[3]].cruccent_C=cruccent_C;
 		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
 }
 	slave_comm[9]++;
+      slave_comm[8]++;
 
 	  	for(i=slave_comm[7];i>slave_comm[6];i--)//10的队列移动
   		{
@@ -1861,7 +1865,8 @@ comm_list[slave_comm[3]].cruccent_C=cruccent_C;
 		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
 	}
 		slave_comm[7]++;
-		
+		      slave_comm[6]++;
+
 	   comm_list[slave_comm[5]].myid=id;
    	   comm_list[slave_comm[5]].size=size_2;
    	   comm_list[slave_comm[5]].work_status=work_status_2;	   
@@ -1872,8 +1877,7 @@ comm_list[slave_comm[5]].cruccent_B=cruccent_B;
 comm_list[slave_comm[5]].cruccent_C=cruccent_C;
 
           slave_comm[5]++;
-		slave_comm[6]=slave_comm[5]+1;
-		slave_comm[8]=slave_comm[7]+1;
+
 		 slave_comm[0]++;
 
   	} 
@@ -1891,7 +1895,8 @@ comm_list[slave_comm[5]].cruccent_C=cruccent_C;
 		  comm_list[i].cruccent_C=comm_list[i-1].cruccent_C;
 	}
 	slave_comm[9]++;
-	
+	      slave_comm[8]++;
+
 	   comm_list[slave_comm[7]].myid=id;
    	   comm_list[slave_comm[7]].size=size_2;
    	   comm_list[slave_comm[7]].work_status=work_status_2;
@@ -1902,7 +1907,7 @@ comm_list[slave_comm[7]].cruccent_B=cruccent_B;
 comm_list[slave_comm[7]].cruccent_C=cruccent_C;
 
 		   slave_comm[7]++;
-		slave_comm[8]=slave_comm[7]+1;
+		
 		 slave_comm[0]++;
 
   	} 
@@ -2120,6 +2125,7 @@ if(size==5)
 {
 	for(i=slave_comm[4];i<slave_comm[5];i++)// 2 
 	{
+	
 	if(id==comm_list[i].myid&&group==comm_list[i].group)//锁定节点进行更新
 		{
 	   comm_list[i].myid=id;
@@ -2610,6 +2616,7 @@ dianliuzhi=T*maxValue_C*cruccent_ratio;
 arm_sqrt_f32(1-(arm_cos_f32(angle[0]-angle[1]))*(arm_cos_f32(angle[0]-angle[1])),&sine);
 gonglvshishu=sine*100;
 if(gonglvshishu<10&&gonglvshishu>=0){L_C_flag_B=0;}
+
 if(dianliuzhi<zero_limit*T|dianya_zhi<=100){gonglvshishu=100;dianliuzhi=0;L_C_flag_B=1;}//电流小于0.1A 时，电流就清零
 else dianliuzhi=0.97*(dianliuzhi/1000);
 arm_sqrt_f32(1-sine*sine,&cose);
@@ -2848,6 +2855,8 @@ angle[2]=((angle[2])*PI2)/360;
 else{ 
 	dianliuzhi_A=0.99*dianliuzhi_A/1000;
 	gonglvshishu_A=arm_cos_f32(angle[2])*100;//功率因素
+	if(gonglvshishu_A<10&&gonglvshishu_A>=0){L_C_flag_A=0;}
+
 }
 /*************************电流谐波率****************************************/
 if((dianliuzhi_A==0)&&(gonglvshishu_A==100))A_HI=0;
@@ -2995,6 +3004,8 @@ dianliuzhi_B=cruccent_ratio*maxValue_C*T;
 else {
         dianliuzhi_B=0.99*dianliuzhi_B/1000;
 	gonglvshishu_B=arm_cos_f32(angle[2])*100;//功率因素
+		if(gonglvshishu_B<10&&gonglvshishu_B>=0){L_C_flag_B=0;}
+
 }
 /*************************电流谐波率****************************************/
 if((dianliuzhi_B==0)&&(gonglvshishu_B==100))B_HI=0;
@@ -3154,6 +3165,8 @@ else
 	{
 	dianliuzhi_C=0.99*dianliuzhi_C/1000;
 	gonglvshishu_C=arm_cos_f32(angle[2])*100;//功率因素
+			if(gonglvshishu_C<10&&gonglvshishu_C>=0){L_C_flag_C=0;}
+
 }
 /*************************电流谐波率****************************************/
 if((dianliuzhi_C==0)&&(gonglvshishu_C==100))C_HI=0;
@@ -3297,6 +3310,7 @@ delay_on=0;
 return 0 ;
 }
 
+		
 	  }
 
 
@@ -4605,7 +4619,8 @@ if(i==comm_list[g].myid){flag_comm=1;break;}
 else flag_comm=0;
 }
 if(flag_comm==0)
-		{		
+		{
+	
  inquiry_slave_status_comm(i,slave_comm,comm_list);   
 			
 			}
@@ -4649,15 +4664,13 @@ else  if(msg[2]==i)
 
 	if(flag_comm==1)
 		{
-		 flash_comm_list(i,msg[3] ,msg[5] ,1,msg[7],msg[8],msg[9],msg[10],slave_comm,comm_list);
-		 flash_comm_list(i,msg[4] ,msg[6] ,2,msg[7],msg[8],msg[9],msg[11],slave_comm,comm_list);
+		 flash_comm_list(msg[2],msg[3] ,msg[5] ,1,msg[7],msg[8],msg[9],msg[10],slave_comm,comm_list);
+		 flash_comm_list(msg[2],msg[4] ,msg[6] ,2,msg[7],msg[8],msg[9],msg[11],slave_comm,comm_list);
 		}
        }
 
 }
 	
-
-
 }
 	flag_comm=0;
        j=0;
